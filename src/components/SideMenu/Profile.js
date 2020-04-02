@@ -1,14 +1,14 @@
 //import liraries
 import React, { Component } from 'react';
-import SliderTitle from '../components/SliderTitle';
+import SliderTitle from '../SliderTitle';
 import Feather from 'react-native-vector-icons/Feather';
 import ImagePicker from 'react-native-image-picker';
 import RNFetchBlob from 'rn-fetch-blob';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert, PermissionsAndroid, ToastAndroid, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import { logout, changePhoto } from '../redux/actions/auth';
+import { logout, changePhoto } from '../../redux/actions/auth';
 import { withNavigationFocus } from 'react-navigation';
-import { APP_IMAGE_URL, APP_URL } from '../config/config';
+import { APP_IMAGE_URL, APP_URL } from '../../config/config';
 
 // create a component
 class ProfileOriginal extends Component {
@@ -151,17 +151,17 @@ class ProfileOriginal extends Component {
                     {/* <View style={{ flexDirection: 'row' }}>
                         <SliderTitle title="Profile"/>
                     </View> */}
-                    <TouchableOpacity style={{ backgroundColor: '#ffcc00', padding: 10, flexDirection: 'row-reverse', alignItems: 'center' }} onPress={() => this.handleLogout()}>
+                    <TouchableOpacity style={{ backgroundColor: '#3399ff', padding: 10, flexDirection: 'row-reverse', alignItems: 'center' }} onPress={() => this.handleLogout()}>
                             <Feather name="log-out" size={25} color="red" />
                             <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 18, marginRight: 10, color: 'red' }}>Log Out</Text>
                         </TouchableOpacity>
                     <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-                        <TouchableOpacity onPress={() => this.updateProfilePic()} style={{ borderWidth: 3, borderRadius: 15, padding: 10, borderRadius: 100,borderColor:'#008080' }}>
+                        <TouchableOpacity onPress={() => this.updateProfilePic()} style={{ borderWidth: 3, borderRadius: 15, padding: 10, borderRadius: 100,borderColor:'#00cc00' }}>
                             {this.state.photo !== null
                                 ? <Image source={this.state.photo} style={{ width: 100, height: 100, borderRadius: 100 }} />
-                                : <ActivityIndicator size="large" color="#008080" />
+                                : <ActivityIndicator size="large" color="#00cc00" />
                             }
-                            <Feather name="edit" size={25} style={{ position: 'absolute', right: -15, bottom: -10,color:'#008080' }} />
+                            <Feather name="edit" size={25} style={{ position: 'absolute', right: -15, bottom: -10,color:'#00cc00' }} />
                         </TouchableOpacity>
                         <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 30, color: '#111', textAlign: 'center', marginTop: 10 }}>{this.props.auth.data.name}</Text>
                     </View>
@@ -172,7 +172,7 @@ class ProfileOriginal extends Component {
                             <View>
                                 <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 15 }}>Email            : {this.props.auth.data.email}</Text>
                                 <Text style={{ fontFamily: 'Nunito-Regular', color: '#333', fontSize: 15 }}>Username    : {this.props.auth.data.username}</Text>
-                                <Text style={{ fontFamily: 'Nunito-Regular', color: 'green', fontSize: 15,paddingTop:20 }} onPress={() => this.props.navigation.navigate('ProfileSetting')}>Edit Profile</Text>
+                                <Text style={{ fontFamily: 'Nunito-Regular', color: '#00cc00', fontSize: 15,paddingTop:20 }} onPress={() => this.props.navigation.navigate('ProfileSetting')}>Edit Profile</Text>
                             </View>
                         </View>
                         <TouchableOpacity style={{ backgroundColor: 'white', elevation: 1, marginTop: 20, padding: 10, flexDirection: 'row',justifyContent:'center' }} onPress={() => this.props.navigation.navigate('ReviewHistory')} >
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     headerWrapper: {
-        backgroundColor: '#ffcc00',
+        backgroundColor: '#3399ff',
         flex: 1,
         flexDirection: 'column',
         width: '100%',
