@@ -58,9 +58,9 @@ class BookDetailOriginal extends Component {
     //     Alert.alert("Order Message", "Order Success.")
     // }
 
-    onChange(number) {
-        this.setState({ quantity: number })
-    }
+    // onChange(number) {
+    //     this.setState({ quantity: number })
+    // }
 
     render() {
         return (

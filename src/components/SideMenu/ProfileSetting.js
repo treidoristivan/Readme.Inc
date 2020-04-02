@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
-import { patchUser } from '../redux/actions/auth';
+import { patchUser } from '../../redux/actions/auth';
 
 //component
-import SliderTitle from '../components/SliderTitle';
-import BackButton from '../components/BackButton';
+import SliderTitle from '../SliderTitle';
+import BackButton from '../BackButton';
 
 class ProfileSettingOriginal extends Component {
 	constructor(props) {
@@ -77,7 +77,7 @@ class ProfileSettingOriginal extends Component {
 						</View>
 					</View>
 					<View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-end' }}>
-						<TouchableOpacity style={{ backgroundColor: '#008080', flex: 1, flexDirection: 'row', padding: 20, margin: 20, justifyContent: 'center', borderRadius: 30 }} onPress={() => this.handleSubmit()}>
+						<TouchableOpacity style={{ backgroundColor: '#3399ff', flex: 1, flexDirection: 'row', padding: 10, margin: 20, justifyContent: 'center', borderRadius: 30 }} onPress={() => this.handleSubmit()}>
 							{
 								this.props.auth.isLoading
 									? <ActivityIndicator size="small" color="#fff" />

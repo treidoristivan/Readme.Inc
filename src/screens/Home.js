@@ -33,9 +33,7 @@ class HomeOriginal extends Component {
             <Container>
                 <Header />
                 <SearchBar />
-                <ScrollView
-                    showsVerticalScrollIndicator={false}
-                >
+                <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.content}>
                     <SliderTitle title="List On Top" viewAll onViewAllPressed={() => this.props.navigation.navigate('Search', { sort: [{ name: "rating", value: "desc" }] })} />
                         <CardList />
