@@ -1,24 +1,26 @@
 //import liraries
 import React, { Component } from 'react';
-import { createAppContainer} from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+import {createBottomTabNavigator } from 'react-navigation-tabs';
 import { Root } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import Splash from '../screens/Splash';
-import UserAuthentication from '../screens/UserAuthentication';
-import Register from '../screens/Register';
-import Login from '../screens/Login';
+import AuthorDetail from '../screens/AuthorDetail';
+import BookDetail from '../screens/BookDetail';
+import Category from '../screens/Category';
 import ForgotPassword from '../screens/ForgotPassword';
 import Home from '../screens/Home';
-import SideMenu from '../components/SideMenu';
-import Search from '../screens/Search';
-import Category from '../screens/Category';
-import BookDetail from '../screens/BookDetail';
-import AuthorDetail from '../screens/AuthorDetail';
+import Login from '../screens/Login';
 import Profile from '../screens/Profile';
 import ProfileSetting from '../screens/ProfileSetting';
+import Register from '../screens/Register';
+import Search from '../screens/Search';
+import ReviewHistory from '../screens/ReviewHistory';
+import SideMenu from '../screens/SideMenu';
+import Splash from '../screens/Splash';
+import UserAuthentication from '../screens/UserAuthentication';
+
 
 //Splash 
 const SplashNav = createStackNavigator({
@@ -59,50 +61,22 @@ const AuthNav = createStackNavigator({
         }
     },
 }, {
-    initialRouteName: 'UserAuthentication',
+    // initialRouteName: 'UserAuthentication',
 })
 
-const TopNav = createTopTabNavigator ({
-    SideMenu:{
-        screen: SideMenu,
-        navigationOptions:{
-            tabBarIcon:({tintColor}) => {
-                return <Icon name="menu" size={25} color={tintColor}/>
-            }
-        }
-    },
-    Profile: {
-        screen: ProfileNav,
-        navigationOptions: {
-            tabBarIcon: ({ tintColor }) => {
-                return <Icon name="face-profile" size={25} color={tintColor} />;
-            },
-        },
-    },
-},{
-        initialRouteName: 'SideMenu',
-        tabBarOptions: {
-            activeTintColor: 'white',
-            activeBackgroundColor: '#3399ff',
-            inactiveTintColor: '#3399ff',
-            style: {
-                backgroundColor: 'white',
-                borderTopColor: 'transparent',
-            }
-        }
-    })
+
 
 
 //const ListNav = createListNavigator({
 const CategoryNav = createStackNavigator({
+    // Search: {
+    //     screen: Search,
+    //     navigationOptions: {
+    //         headerShown: false,
+    //     },
+    // },
     Category: {
         screen: Category,
-        navigationOptions: {
-            headerShown: false,
-        },
-    },
-    Search: {
-        screen: Search,
         navigationOptions: {
             headerShown: false,
         },
@@ -120,7 +94,7 @@ const CategoryNav = createStackNavigator({
         },
     },
 }, {
-    initialRouteName: 'Category',
+    // initialRouteName: 'Category',
 })
 
 CategoryNav.navigationOptions = ({ navigation }) => {
@@ -141,12 +115,30 @@ const HomeNav = createStackNavigator({
             headerShown: false,
         },
     },
-    // SideMenu:{
-    //     screen: SideMenu,
-    //     navigationOptions:{
-    //         headerShown:false,
-    //     },
-    // },
+    SideMenu:{
+        screen: SideMenu,
+        navigationOptions:{
+            headerShown:false,
+        },
+    },
+    Profile: {
+        screen: Profile,
+        navigationOptions: {
+            headerShown: false,
+        },
+    },
+    ProfileSetting: {
+        screen: ProfileSetting,
+        navigationOptions: {
+            headerShown: false,
+        },  
+    },
+    ReviewHistory:{
+        screen:ReviewHistory,
+        navigationOptions:{
+            headerShown:false,
+        }
+    },
     Search: {
         screen: Search,
         navigationOptions: {
@@ -166,7 +158,7 @@ const HomeNav = createStackNavigator({
         },
     },
 }, {
-    initialRouteName: 'Home',
+    // initialRouteName: 'Home',
 })
 
 HomeNav.navigationOptions = ({ navigation }) => {
@@ -180,21 +172,26 @@ HomeNav.navigationOptions = ({ navigation }) => {
     }
 }
 
-const AuthorNav = createAuthorNavigator ({
-    Author: {
-        screen: Author,
+const AuthorNav = createStackNavigator ({
+    Search: {
+        screen: Search,
+        navigationOptions: {
+            headerShown: false,
+        },
+    }, AuthorDetail: {
+        screen: AuthorDetail,
         navigationOptions: {
             headerShown:false
         }
     },
     AuthorBook:{
-        screen: Books,
+        screen: BookDetail,
         navigationOptions: {
             headerShown:false
         }
     }
 }, {
-    initialRouteName: 'Author',
+    // initialRouteName: 'Author',
 })
 
 AuthorNav.navigationOptions = ({ navigation }) => {
@@ -223,7 +220,7 @@ const ProfileNav = createStackNavigator({
     },
     
 }, {
-    initialRouteName: 'Profile',
+    // initialRouteName: 'Profile',
 })
 
 ProfileNav.navigationOptions = ({ navigation }) => {
@@ -237,7 +234,29 @@ ProfileNav.navigationOptions = ({ navigation }) => {
     }
 }
 
-
+const MainNav = createStackNavigator ({
+    SideMenu:{
+        screen: SideMenu,
+        navigationOptions:{
+            tabBarIcon:({tintColor}) => {
+                return <Icon name="menu" size={25} color={tintColor}/>
+            }
+        }
+    },
+    
+},{
+        // initialRouteName: 'SideMenu',
+        tabBarOptions: {
+            activeTintColor: 'white',
+            activeBackgroundColor: '#3399ff',
+            inactiveTintColor: '#3399ff',
+            style: {
+                backgroundColor: 'white',
+                borderTopColor: 'transparent',
+            }
+        }
+    })
+   
 const BottomNav = createBottomTabNavigator({
     
     Category: {
@@ -256,8 +275,8 @@ const BottomNav = createBottomTabNavigator({
             },
         },
     },
-    Cart: {
-        screen: CartNav,
+    Author: {
+        screen: AuthorNav,
         navigationOptions: {
             tabBarIcon: ({ tintColor }) => {
                 return <Icon name="feather" size={25} color={tintColor} />;
@@ -266,7 +285,7 @@ const BottomNav = createBottomTabNavigator({
     },
     
 }, {
-    initialRouteName: 'Menu',
+    // initialRouteName: 'Menu',
     tabBarOptions: {
         activeTintColor: 'white',
         activeBackgroundColor: '#3399ff',
@@ -278,16 +297,16 @@ const BottomNav = createBottomTabNavigator({
     }
 })
 
-// const SwitchNav = createSwitchNavigator({
-//     SplashNav,
-//     AuthNav,
-//     BottomNav,
-// }, {
-//     initialRouteName: 'SplashNav',
-// })
+const SwitchNav = createSwitchNavigator({
+    SplashNav,
+    AuthNav,
+    MainNav,
+    BottomNav,
+}, {
+    // initialRouteName: 'SplashNav',
+})
 
 const AppContainer = createAppContainer(SwitchNav)
-
 // create a component
 class Router extends Component {
     render() {

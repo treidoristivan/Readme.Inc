@@ -11,7 +11,7 @@ import SearchBar from '../components/SearchBar';
 import Category from '../components/Category';
 import SliderTitle from '../components/SliderTitle';
 import CardList from '../components/CardList';
-import RestaurantList from '../components/AuthorList';
+import AuthorList from '../components/AuthorList';
 
 // create a component
 class HomeOriginal extends Component {
@@ -22,7 +22,7 @@ class HomeOriginal extends Component {
                 Toast.show({
                     text: 'No Internet Connection',
                     buttonText: 'Okay',
-                    duration: 10000,
+                    duration: 7000,
                     position: 'bottom',
                 })
             }
@@ -41,7 +41,7 @@ class HomeOriginal extends Component {
                         <CardList />
                         <Category />
                         <SliderTitle title="All Genre" viewAll />
-                        <RestaurantList />
+                        <AuthorList />
                     </View>
                 </ScrollView>
             </Container>

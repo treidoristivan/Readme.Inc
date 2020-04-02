@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { getRestaurants } from '../redux/actions/author';
+import { getAuthor } from '../redux/actions/author';
 import { withNavigation } from 'react-navigation';
 import { APP_IMAGE_URL } from '../config/config';
 
@@ -17,7 +17,7 @@ class AuthorOriginal extends Component {
     }
 
     async componentDidMount() {
-        await this.props.dispatch(getRestaurants())
+        await this.props.dispatch(getAuthor())
         await this.setState({
             isLoading: false,
         })

@@ -175,9 +175,9 @@ class ProfileOriginal extends Component {
                                 <Text style={{ fontFamily: 'Nunito-Regular', color: 'green', fontSize: 15,paddingTop:20 }} onPress={() => this.props.navigation.navigate('ProfileSetting')}>Edit Profile</Text>
                             </View>
                         </View>
-                        <TouchableOpacity style={{ backgroundColor: 'white', elevation: 1, marginTop: 20, padding: 10, flexDirection: 'row',justifyContent:'center' }} onPress={() => this.props.navigation.navigate('OrderHistory')} onPress={() => this.props.navigation.navigate('OrderHistory')}>
+                        <TouchableOpacity style={{ backgroundColor: 'white', elevation: 1, marginTop: 20, padding: 10, flexDirection: 'row',justifyContent:'center' }} onPress={() => this.props.navigation.navigate('ReviewHistory')} >
                             <Feather name="file-text" size={25} />
-                            <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 18, marginLeft: 10 }}>Order History</Text>
+                            <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 18, marginLeft: 10 }}>Review History</Text>
                         </TouchableOpacity>
                         
                         {/* <TouchableOpacity style={{ backgroundColor: 'white', elevation: 1, padding: 10, flexDirection: 'row', alignItems: 'center' }} onPress={() => this.handleLogout()}>
