@@ -1,10 +1,9 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, StyleSheet, ImageBackground, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { Button, Text, Badge } from 'native-base';
 import { connect } from 'react-redux';
-import { getItem } from '../redux/actions/book';
+import { getBook } from '../redux/actions/book';
 import { APP_IMAGE_URL } from '../config/config';
 
 
@@ -21,7 +20,7 @@ class AuthorDetail extends Component {
     }
 
     async componentDidMount() {
-        await this.props.dispatch(getItem())
+        await this.props.dispatch(getBook())
         await this.setState({ isLoading: false })
     }
 

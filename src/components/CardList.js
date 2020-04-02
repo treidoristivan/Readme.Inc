@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'rea
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
-import { getPopularItems } from '../redux/actions/book';
+import { getPopularBooks } from '../redux/actions/book';
 import { APP_IMAGE_URL } from '../config/config';
 import formatRupiah from '../helper/formatRupiah';
 
@@ -20,7 +20,7 @@ class CardListOriginal extends Component {
 
     async componentDidMount() {
         const jwt = this.props.auth.data.token;
-        await this.props.dispatch(getPopularItems(jwt));
+        await this.props.dispatch(getPopularBooks(jwt));
         await this.setState({ isLoading: false });
         this.props.navigation.addListener('didFocus', () => this.onFocus());
     }
@@ -28,7 +28,7 @@ class CardListOriginal extends Component {
     async onFocus(){
         await this.setState({isLoading: true});
         const jwt = this.props.auth.data.token;
-        await this.props.dispatch(getPopularItems(jwt));
+        await this.props.dispatch(getPopularBooks(jwt));
         await this.setState({ isLoading: false });
     }
 
@@ -65,7 +65,7 @@ class CardListOriginal extends Component {
                             </View>
                         </View>
                     }
-                    {!this.state.isLoading && this.props.item.data.items.map((v, i) => {
+                    {!this.state.isLoading && this.props.item.data.items || [].map((v, i) => {
                         var img = <View style={[styles.image, { backgroundColor: '#bbb' }]}><Text>No Image</Text></View>
                         if (v.images.length !== 0) {
                             if (v.images[0].filename.substr(0, 4) === 'http') {
@@ -80,7 +80,7 @@ class CardListOriginal extends Component {
                         if (i === 0) {
                             styler.push({ marginLeft: 20 })
                         }
-                        if (i === this.props.item.data.length - 1) {
+                        if (i === this.props.item.data || [].length - 1) {
                             styler.push({ marginRight: 20 })
                         }
                         return (

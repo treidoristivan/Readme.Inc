@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
 import StarRating from 'react-native-star-rating';
 
 // create a component
-class ItemRating extends Component {
+class BookRating extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -81,4 +81,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default ItemRating;
+export default BookRating;

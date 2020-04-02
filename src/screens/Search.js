@@ -4,7 +4,7 @@ import { View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, ActivityIn
 import { Input, Container } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
-import { getItems } from '../redux/actions/book';
+import { getBook } from '../redux/actions/book';
 import { APP_IMAGE_URL } from '../config/config';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import formatRupiah from '../helper/formatRupiah';
@@ -41,7 +41,7 @@ class SearchOriginal extends Component {
             })
         }
         params = arr_params.join('&')
-        await this.props.dispatch(getItems(jwt, params))
+        await this.props.dispatch(getBook(jwt, params))
         await this.setState({ isLoading: false, searchParam: params })
     }
 
@@ -50,11 +50,11 @@ class SearchOriginal extends Component {
         if (prevState.searchValue !== this.state.searchValue) {
             if (this.state.searchValue.length >= 3) {
                 await this.setState({ isLoading: true })
-                await this.props.dispatch(getItems(jwt, this.state.searchParam + `&search[name]=${this.state.searchValue}`))
+                await this.props.dispatch(getBook(jwt, this.state.searchParam + `&search[name]=${this.state.searchValue}`))
                 await this.setState({ isLoading: false })
             } else if (this.state.searchValue.length === 0) {
                 await this.setState({ isLoading: true })
-                await this.props.dispatch(getItems(jwt, this.state.searchParam))
+                await this.props.dispatch(getBook(jwt, this.state.searchParam))
                 await this.setState({ isLoading: false })
             }
         }

@@ -19,7 +19,7 @@ class SplashOriginal extends Component {
         return (
             <View style={styles.container}>
                 <Image source={require('../assets/icons/favicon.png')} style={styles.logo} />
-                <Text style={styles.title}>Readme</Text>
+                {/* <Text style={styles.title}>Readme</Text> */}
             </View>
         );
     }
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#00cc00',
+        backgroundColor: 'white',
     },
     logo: {
         width: 130,

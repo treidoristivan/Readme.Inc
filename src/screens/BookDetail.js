@@ -6,9 +6,8 @@ import Counter from 'react-native-counters';
 import Feather from 'react-native-vector-icons/Feather';
 import { Button, Text } from 'native-base';
 import { connect } from 'react-redux';
-import { APP_URL, APP_IMAGE_URL } from '../config/config';
-import { getItem } from '../redux/actions/book';
-import { postCart } from '../redux/actions/cart';
+import { APP_IMAGE_URL } from '../config/config';
+import { getBook } from '../redux/actions/book';
 import { withNavigation } from 'react-navigation';
 import formatRupiah from '../helper/formatRupiah';
 
@@ -38,26 +37,26 @@ class BookDetailOriginal extends Component {
 
     async componentDidMount() {
         const jwt = this.props.auth.data.token;
-        await this.props.dispatch(getItem(jwt, this.props.navigation.getParam('itemId')))
+        await this.props.dispatch(getBook(jwt, this.props.navigation.getParam('itemId')))
         await this.setState({ isLoading: false })
         await this.setState({
             itemImage: { uri: APP_IMAGE_URL.concat(this.props.item.itemDetail.images[0].filename) }
         });
     }
 
-    async handleAddToCart() {
-        await this.setState({ isLoading: true })
-        const { quantity, description } = this.state
-        const jwt = await this.props.auth.data.token
-        const data = {
-            item_id: this.props.item.itemDetail.id,
-            quantity,
-            description,
-        }
-        await this.props.dispatch(postCart(jwt, data))
-        await this.setState({ isLoading: false, modalVisible: false })
-        Alert.alert("Order Message", "Order Success.")
-    }
+    // async handleAddToCart() {
+    //     await this.setState({ isLoading: true })
+    //     const { quantity, description } = this.state
+    //     const jwt = await this.props.auth.data.token
+    //     const data = {
+    //         item_id: this.props.item.itemDetail.id,
+    //         quantity,
+    //         description,
+    //     }
+    //     await this.props.dispatch(postCart(jwt, data))
+    //     await this.setState({ isLoading: false, modalVisible: false })
+    //     Alert.alert("Order Message", "Order Success.")
+    // }
 
     onChange(number) {
         this.setState({ quantity: number })
@@ -66,48 +65,7 @@ class BookDetailOriginal extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.modalVisible}
-                >
-                    <View style={{ marginTop: 22, flex: 1, flexDirection: 'column' }}>
-                        <TouchableOpacity style={{ flex: 0, flexDirection: 'row', justifyContent: 'flex-end', margin: 20 }} onPress={() => this.setState({modalVisible: false})}>
-                            <Icon name="ios-close-circle" size={30} />
-                        </TouchableOpacity>
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ fontSize: 30, fontFamily: 'Nunito-Regular' }}>It's FREE !!</Text>
-                            <Text style={{ fontSize: 20, fontFamily: 'Nunito-Regular' }}>You can Take Everythings</Text>
-
-                        </View>
-                        <View style={{ flex: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
-                                <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 20 }}>Quantity :</Text>
-                            </View>
-                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
-                                <Counter start={this.state.quantity} minusIcon={minusIcon} plusIcon={plusIcon} onChange={this.onChange.bind(this)} />
-                            </View>
-                        </View>
-                        <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff', margin: 20, padding: 20, elevation: 5, borderRadius: 30 }}>
-                            <TextInput multiline={true} style={{ justifyContent: 'flex-start' }} placeholder="Type a description for your order" value={this.state.description} onChange={(e) => this.setState({ description: e.nativeEvent.text })} />
-                        </View>
-                        <View style={{ flex: 0, flexDirection: 'row',paddingBottom:50 }}>
-                            <TouchableOpacity style={{ backgroundColor: '#008080', borderRadius: 30, flex: 1, margin: 20, padding: 10 }}
-                                onPress={() => {
-                                    this.handleAddToCart();
-                                }}>
-                                {
-                                    this.state.isLoading
-                                        ? <ActivityIndicator size="small" color="#fff" />
-                                        : <Text style={{ color: 'white', fontFamily: 'Nunito-Regular', fontSize: 20, textAlign: 'center', textTransform: 'uppercase' }}>confirm</Text>
-                                }
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
-                {this.state.isLoading 
-                    ?   <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}><ActivityIndicator size="large" color="black" /></View>
-                    :   <>
+               <>
                             {this.state.itemImage !== null ?
                                 <ImageBackground source={this.state.itemImage} style={styles.imageBackground} resizeMethod="auto" resizeMode="cover">
                                     <ButtonBack />
@@ -177,7 +135,7 @@ class BookDetailOriginal extends Component {
                                     }
                                 </ScrollView>
                                 <Button rounded dark style={styles.button} onPress={() => this.setState({ modalVisible: true })}>
-                                    <Text style={styles.buttonText}>Add to cart</Text>
+                                    <Text style={styles.buttonText}>Get Book</Text>
                                 </Button>
                             </View>
                         </>

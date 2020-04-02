@@ -12,7 +12,8 @@ class SideMenu extends Component {
                     <View style={styles.avatarImage}>
                         <Image 
                             style={styles.avatar}
-                            source={require('../images/user.png')} />
+                            source={require('../assets/images/default.png')}
+                            />
                         <Text style={styles.text}>Team Tesla</Text>
                     </View>
 
