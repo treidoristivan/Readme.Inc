@@ -118,12 +118,12 @@ const HomeNav = createStackNavigator({
             headerShown: false,
         },
     },
-    // SideMenu:{
-    //     screen: SideMenu,
-    //     navigationOptions:{
-    //         headerShown:false,
-    //     },
-    // },
+    SideMenu:{
+        screen: SideMenu,
+        navigationOptions:{
+            headerShown:false,
+        },
+    },
     Profile: {
         screen: Profile,
         navigationOptions: {
