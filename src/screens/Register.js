@@ -52,7 +52,7 @@ class RegisterOriginal extends Component {
                     await this.setState({
                         isLoading: false,
                         isSuccess: false,
-                        message: "Register Failed. Try Again.",
+                        message: "Please choose another username",
                     })
                     this.handleRedirect()
                 }
@@ -63,10 +63,10 @@ class RegisterOriginal extends Component {
     async handleRedirect() {
         if (this.state.isSuccess) {
             Alert.alert('Register Success', this.state.message, [
-                { text: 'OK', onPress: () => this.props.navigation.navigate('Home') },
+                { text: 'OK', onPress: () => this.props.navigation.navigate('Verify') },
             ])
         } else {
-            Alert.alert('Register Message', this.state.message)
+            Alert.alert('Register Failed', this.state.message)
         }
     }
 

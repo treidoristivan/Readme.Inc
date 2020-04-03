@@ -31,6 +31,30 @@ const auth = (state = initialState, action) => {
                 isSuccess: action.payload.data.success,
             }
 
+        case 'VERIFY_PENDING':
+            return {
+                ...state,
+                isLoading: true,
+                isError: false,
+                isSuccess: false
+            }
+        case 'VERIFY_REJECTED':
+            return {
+                ...state,
+                data: [],
+                isLoading: false,
+                isError: true,
+                isSuccess: false
+            }
+        case 'VERIFY_FULFILLED':
+            return {
+                ...state,
+                data: action.payload.data.data,
+                isLoading: false,
+                isError: false,
+                isSuccess: action.payload.data.success,
+                }
+
         case 'REGISTER_PENDING':
             return {
                 ...state,

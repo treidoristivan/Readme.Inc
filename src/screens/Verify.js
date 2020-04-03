@@ -11,8 +11,6 @@ class VerifyOriginal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: '',
-            password: '',
             isLoading: false,
             isSuccess: false,
             message: '',
@@ -40,7 +38,7 @@ class VerifyOriginal extends Component {
                     await this.setState({
                         isLoading: false,
                         isSuccess: true,
-                        message: "Verification Success.",
+                        message: "Happy reading",
                     })
                     this.handleRedirect()
                 } else {
@@ -48,7 +46,7 @@ class VerifyOriginal extends Component {
                     await this.setState({
                         isLoading: false,
                         isSuccess: false,
-                        message: "Verification Failed. Try Again.",
+                        message: "Wrong verification code. Please ensure your verification code",
                     })
                     this.handleRedirect()
                 }
@@ -58,11 +56,11 @@ class VerifyOriginal extends Component {
 
     handleRedirect() {
         if (this.state.isSuccess) {
-            Alert.alert('Verification Message', this.state.message, [
-                { text: 'OK', onPress: () => this.props.navigation.navigate('Home') },
+            Alert.alert('Verification Success', this.state.message, [
+                { text: 'OK', onPress: () => this.props.navigation.navigate('Login') },
             ])
         } else {
-            Alert.alert('Verfication Message', this.state.message)
+            Alert.alert('Verfication Failed', this.state.message)
         }
     }
 
