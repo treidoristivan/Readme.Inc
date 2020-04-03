@@ -10,7 +10,7 @@ export const login = (data) => {
 export const register = (data) => {
     return {
         type: 'REGISTER',
-        payload: Post(APP_URL.concat('/register'), null, data)
+        payload: Post(APP_URL.concat('/auth/register'), null, data)
     }
 }
 

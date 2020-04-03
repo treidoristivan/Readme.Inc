@@ -19,10 +19,10 @@ class UserAuthenticationOriginal extends Component {
                     </View>
                     <View style={styles.buttonWrapper}>
                         <TouchableOpacity style={styles.loginButton} onPress={() => this.props.navigation.navigate('Login')}>
-                            <Text style={styles.buttonText}>Login</Text>
+                            <Text style={styles.buttonText}>Sign In</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.registerButton} onPress={() => this.props.navigation.navigate('Register')}>
-                            <Text style={styles.buttonText}>Register</Text>
+                            <Text style={styles.buttonText}>Sign Up</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.epilogWrapper}>

@@ -67,7 +67,7 @@ class SearchOriginal extends Component {
                     <BackButton />
                     <View style={styles.searchWrapper}>
                         <IonIcon name="ios-search" style={styles.searchIcon} />
-                        <Input style={styles.searchInput} placeholder="Check Your Favorite Meal" value={this.state.searchValue} onChange={(e) => this.setState({ searchValue: e.nativeEvent.text })} />
+                        <Input style={styles.searchInput} placeholder="Check Your Favorite Books" value={this.state.searchValue} onChange={(e) => this.setState({ searchValue: e.nativeEvent.text })} />
                     </View>
                 </View>
                 {

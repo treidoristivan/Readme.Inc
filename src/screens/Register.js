@@ -11,7 +11,6 @@ class RegisterOriginal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: '',
             username: '',
             email: '',
             password: '',
@@ -22,9 +21,8 @@ class RegisterOriginal extends Component {
     }
 
     async handleSubmit() {
-        const { name, username, email, password } = this.state
+        const { username, email, password } = this.state
         const data = {
-            name,
             username,
             email,
             password,
@@ -77,7 +75,7 @@ class RegisterOriginal extends Component {
             <View style={styles.container}>
                 <View style={styles.headerWrapper}>
                     <Image source={require('../assets/icons/favicon.png')} style={styles.logo} />
-                    <Text style={styles.logoText}>Book&Food</Text>
+                    <Text style={styles.logoText}>Readme</Text>
                 </View>
                 <ScrollView showsVerticalScrollIndicator={false} >
                     <View style={styles.illustWrapper}>
@@ -85,9 +83,9 @@ class RegisterOriginal extends Component {
                     </View>
                     
                     <View style={styles.formWrapper}>
-                        <View style={styles.input}>
+                        {/* <View style={styles.input}>
                             <Input placeholder="Fullname" value={this.state.name} onChange={(e) => this.setState({ name: e.nativeEvent.text })} />
-                        </View>
+                        </View> */}
                         <View style={styles.input}>
                             <Input placeholder="Username" textContentType="username" value={this.state.username} onChange={(e) => this.setState({ username: e.nativeEvent.text })} />
                         </View>

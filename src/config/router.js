@@ -279,20 +279,20 @@ const BottomNav = createBottomTabNavigator({
     }
 })
 
-const DrawerNavigator = createDrawerNavigator({
-    Dashboard:{
-        screen:BottomNav
-    },
-    MyProfile:{
-        screen:ProfileNav
-    },
+// const DrawerNavigator = createDrawerNavigator({
+//     Dashboard:{
+//         screen:BottomNav
+//     },
+//     MyProfile:{
+//         screen:ProfileNav
+//     },
     
-})
+// })
 
 const SwitchNav = createSwitchNavigator({
     SplashNav,
     AuthNav,
-    DrawerNavigator,
+    BottomNav,
 
    
 }, {

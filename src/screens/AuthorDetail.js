@@ -36,7 +36,6 @@ class AuthorDetail extends Component {
     render() {
         return (
             <View style={styles.container}>
-                {console.log('Cobaaaaaaaaaaaa',this.props.item.data.items)}
                 {!this.state.isLoading &&                     <>
                         <ImageBackground source={{ uri: APP_IMAGE_URL.concat(this.props.navigation.state.params.logo) }} style={styles.imageBackground} resizeMethod="auto" resizeMode="cover">
                             <ButtonBack />
