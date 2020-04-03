@@ -9,12 +9,19 @@ import { withNavigation } from 'react-navigation';
 import { APP_IMAGE_URL } from '../config/config';
 
 class HeaderOriginal extends Component {
+    // toggleDrawer = () => {
+    //     //Props to open/close the drawer
+    //     this.props.navigationProps.toggleDrawer();
+    //   };
     render() {
         return (
             <Head androidStatusBarColor="#222" style={styles.head}>
                 {this.props.auth.data &&
                     <View style={styles.headWrapper}>
-                        <TouchableWithoutFeedback  onPress={() => this.props.navigation.navigate('SideMenu')}>
+                        <TouchableWithoutFeedback  
+                        //onPress={()=> this.props.navigation.openDrawer()}
+                        // onPress={() => this.props.navigation.navigate('SideMenu')}
+                        >
                         <Icon name="menu" size={30} />  
                         </TouchableWithoutFeedback>
 
