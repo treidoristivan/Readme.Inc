@@ -67,13 +67,13 @@ class SearchOriginal extends Component {
                     <BackButton />
                     <View style={styles.searchWrapper}>
                         <IonIcon name="ios-search" style={styles.searchIcon} />
-                        <Input style={styles.searchInput} placeholder="Check Your Favorite Meal" value={this.state.searchValue} onChange={(e) => this.setState({ searchValue: e.nativeEvent.text })} />
+                        <Input style={styles.searchInput} placeholder="Check Your Favorite Books" value={this.state.searchValue} onChange={(e) => this.setState({ searchValue: e.nativeEvent.text })} />
                     </View>
                 </View>
                 {
                     this.state.isLoading
                     ?   <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                            <ActivityIndicator size="large" color="black" />
+                            <ActivityIndicator size="large" color='#3399ff' />
                         </View>
                     :   <ScrollView showsVerticalScrollIndicator={false}>
                             {!this.state.isLoading && this.props.item.data.items.map((v, i) => {
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#eee',
         height: 50,
-        borderRadius: 10,
+        borderRadius: 25,
         padding: 20,
         marginLeft: 20,
     },
@@ -169,7 +169,8 @@ const styles = StyleSheet.create({
     searchInput: {
         fontFamily: 'Nunito-Regular',
         fontSize: 14,
-        color: '#3399ff'
+        color: '#3399ff',
+        
     },
     info: {
         flex: 1,

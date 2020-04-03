@@ -34,7 +34,7 @@ class CategoryOriginal extends Component {
                 >
                     {this.state.isLoading &&
                         <View style={{flexDirection: 'row'}}>
-                            <View style={[styles.card, { marginLeft: 20 }]}>
+                            <View style={[styles.card, { marginLeft: 30 }]}>
                                 <View style={styles.cardWrapper}>
                                     <View style={{ backgroundColor: '#eee', width: 50, height: 50 }}></View>
                                     <View style={{ backgroundColor: '#eee', height: 10, width: 50, marginTop: 5 }}></View>

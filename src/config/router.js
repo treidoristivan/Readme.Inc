@@ -281,25 +281,32 @@ const BottomNav = createBottomTabNavigator({
         inactiveTintColor: '#3399ff',
         style: {
             backgroundColor: 'white',
-            borderTopColor: 'transparent',
+            borderTopWidth:1,
+            borderTopColor: '#3399ff',
+            paddingBottom:3,
+            height:60,
+            shadowColor:  '#00cc00',
+            shadowOpacity: 0.8,
+            shadowRadius: 20,
+            shadowOffset: { width: 0, height: 0 }
         }
     }
 })
 
-const DrawerNavigator = createDrawerNavigator({
-    Dashboard:{
-        screen:BottomNav
-    },
-    MyProfile:{
-        screen:ProfileNav
-    },
+// const DrawerNavigator = createDrawerNavigator({
+//     Dashboard:{
+//         screen:BottomNav
+//     },
+//     MyProfile:{
+//         screen:ProfileNav
+//     },
     
-})
+// })
 
 const SwitchNav = createSwitchNavigator({
     SplashNav,
     AuthNav,
-    DrawerNavigator,
+    BottomNav,
 
    
 }, {
