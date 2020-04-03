@@ -3,14 +3,35 @@ import { APP_URL, Post, Get, Patch } from '../../config/config';
 export const login = (data) => {
     return {
         type: 'LOGIN',
-        payload: Post(APP_URL.concat('/login'), null, data)
+        payload: Post(APP_URL.concat('/auth/login'), null, data)
+    }
+}
+
+export const verify = (data) => {
+    return {
+        type: 'VERIFY',
+        payload: Post(APP_URL.concat('/auth/verify'), null, data)
     }
 }
 
 export const register = (data) => {
     return {
         type: 'REGISTER',
-        payload: Post(APP_URL.concat('/register'), null, data)
+        payload: Post(APP_URL.concat('/auth/register'), null, data)
+    }
+}
+
+export const forgotPasswordRequest = (data) => {
+    return {
+        type: 'FORGOT_PASSWORD_REQUEST',
+        payload: Post(APP_URL.concat('/forgot-password'), null, data)
+    }
+}
+
+export const forgotPasswordSuccess = (data) => {
+    return {
+        type: 'FORGOT_PASSWORD_SUCCESS',
+        payload: Post(APP_URL.concat('/forgot-password/success'), null, data)
     }
 }
 

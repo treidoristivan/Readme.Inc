@@ -15,6 +15,7 @@ import ForgotPassword from '../screens/ForgotPassword';
 import Home from '../screens/Home';
 import SideMenu from '../screens/SideMenu'
 import Login from '../screens/Login';
+import Verify from '../screens/Verify'
 import Profile from '../components/SideMenu/Profile';
 import ProfileSetting from '../components/SideMenu/ProfileSetting';
 import Register from '../screens/Register';
@@ -47,6 +48,12 @@ const AuthNav = createStackNavigator({
     },
     Login: {
         screen: Login,
+        navigationOptions: {
+            headerShown: false,
+        },
+    },
+    Verify: {
+        screen: Verify,
         navigationOptions: {
             headerShown: false,
         },

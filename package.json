@@ -9,7 +9,6 @@
     "test": "jest",
     "lint": "eslint .",
     "postinstall": "npx jetify"
-
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.7.1",

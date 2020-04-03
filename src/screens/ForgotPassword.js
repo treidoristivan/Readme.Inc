@@ -1,4 +1,4 @@
-//import liraries
+// import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Input } from 'native-base';
