@@ -29,11 +29,11 @@ class CategoryOriginal extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView
-                    horizontal
+                    vertikal
                     showsHorizontalScrollIndicator={false}
                 >
                     {this.state.isLoading &&
-                        <View style={{flexDirection: 'row'}}>
+                        <View style={{flexDirection: 'column'}}>
                             <View style={[styles.card, { marginLeft: 20 }]}>
                                 <View style={styles.cardWrapper}>
                                     <View style={{ backgroundColor: '#eee', width: 50, height: 50 }}></View>
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'flex-start',
     },
-    card: { backgroundColor: '#fff', width: 100, height: 120, borderRadius: 12, margin: 10, elevation: 5 },
+    card: { backgroundColor: '#fff', width: 150, height: 120, borderRadius: 12, margin: 10, elevation: 5 },
     cardWrapper: { flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' },
     title: { marginTop: 10, textAlign: 'center', fontFamily: 'Nunito-Regular' },
 });

@@ -96,7 +96,7 @@ class BookDetailOriginal extends Component {
                                             </TouchableOpacity>
                                         ))}
                                     </View>
-                                    <Text style={{ fontFamily: 'Nunito-Regular', marginTop: 10 }}>Suggested Menu</Text>
+                                    <Text style={{ fontFamily: 'Nunito-Regular', marginTop: 10 }}>We Found Related Books for You</Text>
                                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                                         {this.props.item.itemDetail.suggests.map((v, i) => {
                                             console.log(v);

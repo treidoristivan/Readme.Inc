@@ -73,7 +73,7 @@ class LoginOriginal extends Component {
             <View style={styles.container}>
                 <View style={styles.headerWrapper}>
                     <Image source={require('../assets/icons/favicon.png')} style={styles.logo} />
-                    <Text style={styles.logoText}>Book&Food</Text>
+                    <Text style={styles.logoText}>Readme</Text>
                 </View>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.illustWrapper}>

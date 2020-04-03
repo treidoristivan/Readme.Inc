@@ -11,7 +11,7 @@ class ForgotPasswordOriginal extends Component {
             <View style={styles.container}>
                 <View style={styles.headerWrapper}>
                     <Image source={require('../assets/icons/favicon.png')} style={styles.logo} />
-                    <Text style={styles.logoText}>Book&Food</Text>
+                    <Text style={styles.logoText}>Readme</Text>
                 </View>
                 <View style={styles.illustWrapper}>
                     <Image source={require('../assets/images/forgot_password.png')} style={styles.illust} />
