@@ -44,7 +44,7 @@ class RegisterOriginal extends Component {
                     await this.setState({
                         isLoading: false,
                         isSuccess: true,
-                        message: "Register Success.",
+                        message: "Please check your email to verify your account",
                     })
                     this.handleRedirect()
                 } else {
@@ -62,7 +62,7 @@ class RegisterOriginal extends Component {
 
     async handleRedirect() {
         if (this.state.isSuccess) {
-            Alert.alert('Register Message', this.state.message, [
+            Alert.alert('Register Success', this.state.message, [
                 { text: 'OK', onPress: () => this.props.navigation.navigate('Home') },
             ])
         } else {

@@ -87,9 +87,9 @@ class LoginOriginal extends Component {
                         <View style={styles.input}>
                             <Input placeholder="Password" secureTextEntry textContentType="password" value={this.state.password} onChange={(e) => this.setState({ password: e.nativeEvent.text })} />
                         </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'stretch' }}>
-                            <Text style={{ textAlign: 'left', marginTop: 30,marginRight:10, color: '#3399ff' }} onPress={() => this.props.navigation.navigate('ForgotPassword')}>Forgot Password?</Text>
-                            <Text style={{ textAlign: 'right', marginTop: 30,marginRight:10, color: '#3399ff' }} onPress={() => this.props.navigation.navigate('Verify')}>Verify</Text>
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            <Text style={{ flex: 1, textAlign: 'left', marginTop: 30,marginRight:10, color: '#3399ff' }} onPress={() => this.props.navigation.navigate('ForgotPassword')}>Forgot Password?</Text>
+                            <Text style={{ flex: 1, textAlign: 'right', marginTop: 30,marginRight:10, color: '#3399ff' }} onPress={() => this.props.navigation.navigate('Verify')}>Verify Account</Text>
                         </View>
                         <TouchableOpacity style={styles.loginButton} onPress={() => this.handleSubmit()}>
                             {this.props.auth.isLoading
