@@ -20,7 +20,7 @@ class HeaderOriginal extends Component {
                     <View style={styles.headWrapper}>
                         <TouchableWithoutFeedback  
                         //onPress={()=> this.props.navigation.openDrawer()}
-                        // onPress={() => this.props.navigation.navigate('SideMenu')}
+                        onPress={() => this.props.navigation.navigate('SideMenu')}
                         >
                         <Icon name="menu" size={30} />  
                         </TouchableWithoutFeedback>

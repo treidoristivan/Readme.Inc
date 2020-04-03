@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
     },
     searchbarWrapper: { paddingLeft: 20, paddingRight: 20, },
-    searchbar: { backgroundColor: '#3399ff', borderRadius: 12, paddingLeft: 15, opacity:0.7, height: 50 },
+    searchbar: { backgroundColor: '#3399ff', borderRadius: 25, paddingLeft: 15, opacity:0.7, height: 50 },
     searchIcon: { fontSize: 25, color: 'white' },
     searchInput: { fontFamily: 'Nunito-Regular', fontSize: 18, color: 'white' }
 });

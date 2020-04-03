@@ -95,7 +95,7 @@ class LoginOriginal extends Component {
                             }
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.registerButton} onPress={() => this.props.navigation.navigate('Register')}>
-                            <Text style={[styles.buttonText, { color: 'black' }]}>Sign Up</Text>
+                            <Text style={styles.buttonText}>Sign Up</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
@@ -147,13 +147,12 @@ const styles = StyleSheet.create({
     },
     loginButton: {
         backgroundColor: '#3399ff',
-        padding: 15,
-        borderRadius: 12,
+        padding: 10,
+        borderRadius: 20,
         justifyContent: 'center',
         flex: 0,
         flexDirection: 'row',
         marginTop: 15,
-        marginRight: 5
     },
     buttonText: {
         fontFamily: 'Nunito-Regular',
@@ -161,20 +160,20 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase'
     },
     registerButton: {
-        backgroundColor: '#eee',
+        backgroundColor: '#00cc00',
         padding: 10,
-        borderRadius: 12,
+        borderRadius: 20,
         justifyContent: 'center',
         flex: 0,
         flexDirection: 'row',
         marginTop: 10,
-        marginLeft: 5
     },
     input: {
         flex: 0,
         flexDirection: 'row',
         margin: 5,
-        borderBottomWidth: 2
+        borderBottomWidth: 1,
+        borderBottomColor:'#3399ff'
     },
 });
 
