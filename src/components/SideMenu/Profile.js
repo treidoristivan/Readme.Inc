@@ -5,6 +5,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import ImagePicker from 'react-native-image-picker';
 import RNFetchBlob from 'rn-fetch-blob';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert, PermissionsAndroid, ToastAndroid, ActivityIndicator } from 'react-native';
+import {Avatar} from 'react-native-element';
 import { connect } from 'react-redux';
 import { logout, changePhoto } from '../../redux/actions/auth';
 import { withNavigationFocus } from 'react-navigation';

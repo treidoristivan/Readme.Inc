@@ -142,11 +142,6 @@ const styles = StyleSheet.create({
         width: 200,
         height: 150
     },
-    
-    title: {
-        fontFamily: 'Nunito-Regular',
-        fontSize: 30
-    },
     formWrapper: {
         flex: 1,
         flexDirection: 'column',
@@ -154,13 +149,13 @@ const styles = StyleSheet.create({
     },
     registerButton: {
         backgroundColor: '#3399ff',
-        padding: 20,
-        borderRadius: 12,
+        padding: 10,
+        borderRadius: 20,
         justifyContent: 'center',
         flex: 0,
         flexDirection: 'row',
-        marginTop: 10,
-        marginRight: 5
+        marginTop: 30,
+        marginRight: 0
     },
     buttonText: {
         fontFamily: 'Nunito-Regular',
@@ -170,18 +165,21 @@ const styles = StyleSheet.create({
     loginButton: {
         backgroundColor: '#00cc00',
         padding: 10,
-        borderRadius: 12,
+        borderRadius: 20,
         justifyContent: 'center',
         flex: 0,
         flexDirection: 'row',
         marginTop: 10,
-        marginLeft: 5
+        
     },
     input: {
         flex: 1,
         flexDirection: 'column',
         margin: 5,
+        marginHorizontal:10,
         borderBottomWidth: 1,
+        borderBottomColor: '#3399ff',
+        
        
     },
 });
