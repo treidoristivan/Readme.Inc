@@ -1,0 +1,889 @@
+{
+	"info": {
+		"_postman_id": "7ee924d2-efaa-44b5-af29-0103a1e3047c",
+		"name": "Project Week 5",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authifikasi",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "Kevin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Kevin",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "Kevinmaulana@gmail.com",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:4444/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "Kevin Maulana",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Kevin",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "kevinmaulanan@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:4444/authentikasi/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"authentikasi",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "Kevin Maulana",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Kevin",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "kevinmaulanan@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:4444/authentikasi/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"authentikasi",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Books",
+			"item": [
+				{
+					"name": "All Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4444/books/all?search[book_name]=B",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"books",
+								"all"
+							],
+							"query": [
+								{
+									"key": "search[book_name]",
+									"value": "B"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "id Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "id Genre Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "id Author Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Books",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nameBook",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "descriptionBook",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "idAuthor",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "idList",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:4444/books",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Genre from Books",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idBook",
+									"value": "18",
+									"type": "text"
+								},
+								{
+									"key": "idGenre",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:4444/books/genre",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"books",
+								"genre"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Genre",
+			"item": [
+				{
+					"name": "Add Genre",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nameGenre",
+									"value": "Pertualangan",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:4444/genre",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"genre"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Author",
+			"item": [
+				{
+					"name": "Get All Author",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Author By Id Author",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Author",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4444/author/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"author",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get My Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update My Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcl9mdWxsbmFtZSI6IktldmluIiwidXNlcl9pbWFnZSI6bnVsbCwidXNlcm5hbWUiOiJLZXZpbiIsImVtYWlsIjoia2V2aW5tYXVsYW5hMjcwM0BnbWFpbC5jb20iLCJpZF91c2VyX2RldGFpbCI6MSwiaWF0IjoxNTg1ODA0NDU5fQ.-K56C932GGn7wBTEBm_UdaaJ1R196xojNB_TjintOZA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "images",
+									"type": "file",
+									"src": "/E:/IMG-20200320-WA0011.jpg"
+								},
+								{
+									"key": "fullname",
+									"value": "Kevin Maulana Nasrullah",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:4444/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Book Favorite",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Favorite Book",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete My Favorite Book",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "List",
+			"item": [
+				{
+					"name": "Add List By Id Users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idUser",
+									"value": "100",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "idBook",
+									"value": "120",
+									"type": "text"
+								},
+								{
+									"key": "nameList",
+									"value": "Pertualangan",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:4444/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get List By Id User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcl9mdWxsbmFtZSI6IktldmluIE1hdWxhbmEgTmFzcnVsbGFoIiwidXNlcl9pbWFnZSI6Ii91cGxvYWRzLzE1ODU4MDQ3MTk2MDkuanBlZyIsInVzZXJuYW1lIjoiS2V2aW4iLCJlbWFpbCI6ImtldmlubWF1bGFuYTI3MDNAZ21haWwuY29tIiwiaWRfdXNlcl9kZXRhaWwiOjEsImlhdCI6MTU4NTgwNjM1MX0.7gAAtbckXpaBmLW50gH3mAEgxBMq4RMZZvTXfOuoPGU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idUser",
+									"value": "100",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "idBook",
+									"value": "120",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "nameList",
+									"value": "Pertualangan",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:4444/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete List By Id User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcl9mdWxsbmFtZSI6IktldmluIE1hdWxhbmEgTmFzcnVsbGFoIiwidXNlcl9pbWFnZSI6Ii91cGxvYWRzLzE1ODU4MDQ3MTk2MDkuanBlZyIsInVzZXJuYW1lIjoiS2V2aW4iLCJlbWFpbCI6ImtldmlubWF1bGFuYTI3MDNAZ21haWwuY29tIiwiaWRfdXNlcl9kZXRhaWwiOjEsImlhdCI6MTU4NTgwNjM1MX0.7gAAtbckXpaBmLW50gH3mAEgxBMq4RMZZvTXfOuoPGU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idBook",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "idList",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "nameList",
+									"value": "Pertualangan",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:4444/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"list"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Review",
+			"item": [
+				{
+					"name": "review",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcl9mdWxsbmFtZSI6IktldmluIE1hdWxhbmEgTmFzcnVsbGFoIiwidXNlcl9pbWFnZSI6Ii91cGxvYWRzLzE1ODU4MDQ3MTk2MDkuanBlZyIsInVzZXJuYW1lIjoiS2V2aW4iLCJlbWFpbCI6ImtldmlubWF1bGFuYTI3MDNAZ21haWwuY29tIiwiaWRfdXNlcl9kZXRhaWwiOjEsImlhdCI6MTU4NTgwNjM1MX0.7gAAtbckXpaBmLW50gH3mAEgxBMq4RMZZvTXfOuoPGU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idBook",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "review",
+									"value": "Buku ini memang terbaik",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:4444/review",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Review",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcl9mdWxsbmFtZSI6IktldmluIE1hdWxhbmEgTmFzcnVsbGFoIiwidXNlcl9pbWFnZSI6Ii91cGxvYWRzLzE1ODU4MDQ3MTk2MDkuanBlZyIsInVzZXJuYW1lIjoiS2V2aW4iLCJlbWFpbCI6ImtldmlubWF1bGFuYTI3MDNAZ21haWwuY29tIiwiaWRfdXNlcl9kZXRhaWwiOjEsImlhdCI6MTU4NTgwNjM1MX0.7gAAtbckXpaBmLW50gH3mAEgxBMq4RMZZvTXfOuoPGU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idBook",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "review",
+									"value": "Buku ini memang terbaik Disini",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:4444/review",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Review",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcl9mdWxsbmFtZSI6IktldmluIE1hdWxhbmEgTmFzcnVsbGFoIiwidXNlcl9pbWFnZSI6Ii91cGxvYWRzLzE1ODU4MDQ3MTk2MDkuanBlZyIsInVzZXJuYW1lIjoiS2V2aW4iLCJlbWFpbCI6ImtldmlubWF1bGFuYTI3MDNAZ21haWwuY29tIiwiaWRfdXNlcl9kZXRhaWwiOjEsImlhdCI6MTU4NTgwNjM1MX0.7gAAtbckXpaBmLW50gH3mAEgxBMq4RMZZvTXfOuoPGU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idBook",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "review",
+									"value": "Buku ini memang terbaik Disini",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:4444/review",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Review By id Book",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcl9mdWxsbmFtZSI6IktldmluIE1hdWxhbmEgTmFzcnVsbGFoIiwidXNlcl9pbWFnZSI6Ii91cGxvYWRzLzE1ODU4MDQ3MTk2MDkuanBlZyIsInVzZXJuYW1lIjoiS2V2aW4iLCJlbWFpbCI6ImtldmlubWF1bGFuYTI3MDNAZ21haWwuY29tIiwiaWRfdXNlcl9kZXRhaWwiOjEsImlhdCI6MTU4NTgwNjM1MX0.7gAAtbckXpaBmLW50gH3mAEgxBMq4RMZZvTXfOuoPGU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idBook",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "review",
+									"value": "Buku ini memang terbaik",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:4444/review",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"review"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Rating",
+			"item": [
+				{
+					"name": "rating",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcl9mdWxsbmFtZSI6IktldmluIE1hdWxhbmEgTmFzcnVsbGFoIiwidXNlcl9pbWFnZSI6Ii91cGxvYWRzLzE1ODU4MDQ3MTk2MDkuanBlZyIsInVzZXJuYW1lIjoiS2V2aW4iLCJlbWFpbCI6ImtldmlubWF1bGFuYTI3MDNAZ21haWwuY29tIiwiaWRfdXNlcl9kZXRhaWwiOjEsImlhdCI6MTU4NTgwNjM1MX0.7gAAtbckXpaBmLW50gH3mAEgxBMq4RMZZvTXfOuoPGU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idBook",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "review",
+									"value": "Buku ini memang terbaik",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:4444/review",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update rating",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcl9mdWxsbmFtZSI6IktldmluIE1hdWxhbmEgTmFzcnVsbGFoIiwidXNlcl9pbWFnZSI6Ii91cGxvYWRzLzE1ODU4MDQ3MTk2MDkuanBlZyIsInVzZXJuYW1lIjoiS2V2aW4iLCJlbWFpbCI6ImtldmlubWF1bGFuYTI3MDNAZ21haWwuY29tIiwiaWRfdXNlcl9kZXRhaWwiOjEsImlhdCI6MTU4NTgwNjM1MX0.7gAAtbckXpaBmLW50gH3mAEgxBMq4RMZZvTXfOuoPGU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idBook",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "review",
+									"value": "Buku ini memang terbaik",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:4444/review",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"review"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
