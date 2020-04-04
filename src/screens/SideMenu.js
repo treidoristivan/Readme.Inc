@@ -33,7 +33,7 @@ class SideMenu extends Component {
                         </View>
                         <Icon style={styles.rightIcon} name='menu-right' color='#fff' size={25}/>     
                     </View>
-                <ScrollView style={styles.scrollContainer}>
+                <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
                     <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Home')}>
                         <View style={[styles.items, styles.itemSelected]} >
                         <Icon style={styles.iconWithText} name='home-outline' color='#fff' size={25} />
@@ -48,10 +48,13 @@ class SideMenu extends Component {
                     <Icon style={styles.iconWithText} name='thumb-up' color='#fff' size={25} />
                         <Text style={styles.text}>Recommendations</Text>
                     </View>
+                    <TouchableOpacity style={styles.imageWrapper} onPress={() => this.props.navigation.navigate('BestBooks')}>
                     <View style={[styles.items, styles.noSelectedItems]}>
-                    <Icon style={styles.iconWithText} name='trophy' color='#fff' size={25} />
+                        <Icon style={styles.iconWithText} name='trophy' color='#fff' size={25} />
                         <Text style={styles.text}>Best Books of 2019</Text>
                     </View>
+                    </TouchableOpacity>
+
                     <View style={[styles.items, styles.noSelectedItems]}>
                     <Icon style={styles.iconWithText} name='link' color='#fff' size={25} />
                         <Text style={styles.text}>Goodreads Original</Text>
@@ -76,7 +79,7 @@ const styles = StyleSheet.create({
     menu: {
         paddingTop: 40,
         flex: 1,
-        width:250,
+        width:280,
         height,
         backgroundColor: '#3399ff',
         
@@ -101,7 +104,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#fff',
-        fontSize: 20
+        fontSize: 16
     },
     textWithIcon: {
         flexDirection: 'row',

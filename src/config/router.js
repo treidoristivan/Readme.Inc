@@ -24,6 +24,12 @@ import Splash from '../screens/Splash';
 import UserAuthentication from '../screens/UserAuthentication';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 
+//Component Side Menu
+import BestBooks from '../components/SideMenu/BestBooks';
+import MyBooks from '../components/SideMenu/MyBooks';
+import ReadingChallenge from '../components/SideMenu/ReadingChallenge';
+import Recommendations from '../components/SideMenu/Recommendations';
+import Setting from '../components/SideMenu/Setting';
 
 //Splash 
 const SplashNav = createStackNavigator({
@@ -72,12 +78,6 @@ const AuthNav = createStackNavigator({
 
 //const ListNav = createListNavigator({
 const CategoryNav = createStackNavigator({
-    // Search: {
-    //     screen: Search,
-    //     navigationOptions: {
-    //         headerShown: false,
-    //     },
-    // },
     Category: {
         screen: Category,
         navigationOptions: {
@@ -110,6 +110,54 @@ CategoryNav.navigationOptions = ({ navigation }) => {
         tabBarVisible,
     }
 }
+
+const MenuNav = createStackNavigator ({
+    BestBooks: {
+        screen:BestBooks,
+        navigationOptions:{
+            headerShown:false,
+        }
+    },
+    MyBooks: {
+        screen:MyBooks,
+        navigationOptions:{
+            headerShown:false,
+        }
+    },
+    ReadingChallenge: {
+        screen:ReadingChallenge,
+        navigationOptions:{
+            headerShown:false,
+        }
+    },
+    Recommendations: {
+        screen:Recommendations,
+        navigationOptions:{
+            headerShown:false,
+        }
+    },
+    Setting: {
+        screen:Setting,
+        navigationOptions:{
+            headerShown:false,
+        }
+    },
+
+},{
+    // initialRouteName: 'Author',
+})
+
+MenuNav.navigationOptions = ({ navigation }) => {
+    let tabBarVisible = true;
+    if (navigation.state.index > 0) {
+        tabBarVisible = false;
+    }
+
+    return {
+        tabBarVisible,
+    }
+}
+
 //
 const HomeNav = createStackNavigator({
     Home: {
@@ -300,6 +348,7 @@ const SwitchNav = createSwitchNavigator({
     SplashNav,
     AuthNav,
     BottomNav,
+    MenuNav
 
    
 }, {

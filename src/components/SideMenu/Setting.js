@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default class ReadingChallenge extends Component {
+export default class Setting extends Component {
   render() {
     return (
       <div>
