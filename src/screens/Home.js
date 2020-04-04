@@ -8,10 +8,10 @@ import { withNavigation } from 'react-navigation';
 // Components
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
-import Category from '../components/Category';
 import SliderTitle from '../components/SliderTitle';
-import CardList from '../components/CardList';
-import AuthorList from '../components/AuthorList';
+import ListCategory from '../components/ListCategory';
+import ListCard from '../components/ListCard';
+import ListAuthor from '../components/ListAuthor';
 
 // create a component
 class HomeOriginal extends Component {
@@ -37,11 +37,10 @@ class HomeOriginal extends Component {
                     <View style={styles.content}>
 
                     <SliderTitle title="List On Top" viewAll onViewAllPressed={() => this.props.navigation.navigate('Search', { sort: [{ name: "rating", value: "desc" }] })} />
-                        <CardList />
-                        <Category />
-                        
+                        <ListCard />
+                        <ListCategory />  
                     <SliderTitle title="All Genre" viewAll />
-                        <AuthorList />
+                        {/* <ListAuthor /> */}
                     </View>
                 </ScrollView>
             </Container>

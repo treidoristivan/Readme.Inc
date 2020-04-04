@@ -5,6 +5,7 @@ import { withNavigationFocus } from 'react-navigation';
 import { connect } from 'react-redux';
 import { getCategories } from '../redux/actions/category';
 import { APP_ICON_URL } from '../config/config';
+import imagePlaceholder from '../assets/images/default.png'
 
 // create a component
 class CategoryOriginal extends Component {
@@ -26,12 +27,16 @@ class CategoryOriginal extends Component {
     }
 
     render() {
+        console.log('In component Category', this.props.category.data)
         return (
             <View style={styles.container}>
-                <ScrollView vertikal showsVertialScrollIndicator={false}>
+                <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                >
                     {this.state.isLoading &&
-                        <View style={{flexDirection: 'column'}}>
-                            <View style={[styles.card, { marginLeft: 20 }]}>
+                        <View style={{flexDirection: 'row'}}>
+                            <View style={[styles.card, { marginLeft: 30 }]}>
                                 <View style={styles.cardWrapper}>
                                     <View style={{ backgroundColor: '#eee', width: 50, height: 50 }}></View>
                                     <View style={{ backgroundColor: '#eee', height: 10, width: 50, marginTop: 5 }}></View>
@@ -60,7 +65,7 @@ class CategoryOriginal extends Component {
                             styler.push({ marginRight: 20 })
                         }
                         return (
-                            <TouchableOpacity style={styler} key={i} onPress={() => this.props.navigation.navigate('Search', {search: [{name:"category", value: v.id}]})}>
+                            <TouchableOpacity style={styler} key={i} onPress={() => this.props.navigation.navigate('CategoryDetail', {categoryId: v.id})}>
                                 <View style={styles.cardWrapper}>
                                     <Image style={{ width: 50, height: 50 }} source={{ uri: APP_ICON_URL.concat(v.icon) }} />
                                     <Text style={styles.title}>{v.genre_name}</Text>
@@ -81,7 +86,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'flex-start',
     },
-    card: { backgroundColor: '#fff', width: 150, height: 120, borderRadius: 12, margin: 10, elevation: 5 },
+    card: { backgroundColor: '#fff', width: 100, height: 120, borderRadius: 12, margin: 10, elevation: 5 },
     cardWrapper: { flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' },
     title: { marginTop: 10, textAlign: 'center', fontFamily: 'Nunito-Regular' },
 });
@@ -92,7 +97,7 @@ const mapStateToProps = state => {
     }
 }
 
-const Category = withNavigationFocus(CategoryOriginal)
+const ListCategory = withNavigationFocus(CategoryOriginal)
 
 //make this component available to the app
-export default connect(mapStateToProps)(Category);
+export default connect(mapStateToProps)(ListCategory);

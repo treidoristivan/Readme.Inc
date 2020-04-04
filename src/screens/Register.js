@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     illust: {
-        width: 200,
+        width: 300,
         height: 150
     },
     formWrapper: {

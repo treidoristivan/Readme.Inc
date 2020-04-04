@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     illust: {
-        width: 150,
+        width: 250,
         height: 150
     },
     
