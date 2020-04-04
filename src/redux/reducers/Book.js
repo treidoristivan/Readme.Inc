@@ -76,6 +76,7 @@ const book = (state = initialState, action) => {
                 isSuccess: false,
             }
         case 'GET_BOOK_FULFILLED':
+            console.log('GET_BOOK_FULFILLED', action.payload)
             return {
                 ...state,
                 itemDetail: action.payload.data.data,

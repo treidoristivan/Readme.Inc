@@ -14,10 +14,11 @@ export const getBooks = (jwt, params) => {
     }
 }
 
-export const getBook = (jwt, id) => {
+export const getBook = (id) => {
+    console.log('getBook')
     return {
         type: 'GET_BOOK',
-        payload: Get(APP_URL.concat('/books/book/' + id), jwt)
+        payload: Get(APP_URL.concat('/books/book/' + id))
     }
 }
 

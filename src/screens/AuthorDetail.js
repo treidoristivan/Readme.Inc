@@ -49,7 +49,7 @@ class AuthorDetailOriginal extends Component {
                             styler.push({ marginRight: 20 })
                         }
                         return (
-                            <TouchableOpacity style={styler} key={i} onPress={() => this.props.navigation.navigate('Search', {search: [{name:"category", value: v.id}]})}>
+                            <TouchableOpacity style={styler} key={i} onPress={() => this.props.navigation.navigate('BookDetail', {bookId: v.id})}>
                                 <View style={styles.cardWrapper}>
                                     <Image style={{ width: 50, height: 50 }} source={{ uri: v.book_image }} />
                                     <Text style={styles.title}>{v.book_name}</Text>
