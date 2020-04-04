@@ -62,7 +62,7 @@ class AuthorOriginal extends Component {
                             styled.push({ marginRight: 20 })
                         }
                         return (
-                            <TouchableOpacity style={styled} key={i} onPress={() => this.props.navigation.navigate('AuthorDetail')}>
+                            <TouchableOpacity style={styled} key={i} onPress={() => this.props.navigation.navigate('AuthorDetail', { authorId: v.id })}>
                                 <View style={styles.cardWrapper}>
                                     {img}
                                     <Text style={styles.title}>{v.author_name}</Text>
