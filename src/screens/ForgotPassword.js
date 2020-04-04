@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         backgroundColor: '#fff',
         padding: 20,
+        
     },
     headerWrapper: {
         flex: 0,
@@ -53,16 +54,15 @@ const styles = StyleSheet.create({
         height: 30,
         
     },
-    logoText: {
-        marginLeft: 4,
-        fontFamily: 'Nunito-Regular'
-    },
+
     illustWrapper: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom:50,
+        paddingVertical:70,
+       
+        
     },
     illust: {
         width: 180,
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     formWrapper: {
         flex: 0,
         flexDirection: 'column',
-        marginBottom: 80
+        paddingBottom:100
     },
     loginButton: {
         backgroundColor: '#3399ff',
