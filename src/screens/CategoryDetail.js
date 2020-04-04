@@ -7,7 +7,7 @@ import { getCategories } from '../redux/actions/category';
 import { APP_ICON_URL } from '../config/config';
 
 // create a component
-class CategoryOriginal extends Component {
+class CategoryDetailOriginal extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -28,24 +28,9 @@ class CategoryOriginal extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                >
+                <ScrollView vertikal showsVertialScrollIndicator={false}>
                     {this.state.isLoading &&
-                        <View style={{flexDirection: 'row'}}>
-                            <View style={[styles.card, { marginLeft: 30 }]}>
-                                <View style={styles.cardWrapper}>
-                                    <View style={{ backgroundColor: '#eee', width: 50, height: 50 }}></View>
-                                    <View style={{ backgroundColor: '#eee', height: 10, width: 50, marginTop: 5 }}></View>
-                                </View>
-                            </View>
-                            <View style={[styles.card, { marginLeft: 20 }]}>
-                                <View style={styles.cardWrapper}>
-                                    <View style={{ backgroundColor: '#eee', width: 50, height: 50 }}></View>
-                                    <View style={{ backgroundColor: '#eee', height: 10, width: 50, marginTop: 5 }}></View>
-                                </View>
-                            </View>
+                        <View style={{flexDirection: 'column'}}>
                             <View style={[styles.card, { marginLeft: 20 }]}>
                                 <View style={styles.cardWrapper}>
                                     <View style={{ backgroundColor: '#eee', width: 50, height: 50 }}></View>
@@ -84,7 +69,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'flex-start',
     },
-    card: { backgroundColor: '#fff', width: 100, height: 120, borderRadius: 12, margin: 10, elevation: 5 },
+    card: { backgroundColor: '#fff', width: 150, height: 120, borderRadius: 12, margin: 10, elevation: 5 },
     cardWrapper: { flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' },
     title: { marginTop: 10, textAlign: 'center', fontFamily: 'Nunito-Regular' },
 });
@@ -95,7 +80,7 @@ const mapStateToProps = state => {
     }
 }
 
-const Category = withNavigationFocus(CategoryOriginal)
+const CategoryDetail = withNavigationFocus(CategoryDetailOriginal)
 
 //make this component available to the app
-export default connect(mapStateToProps)(Category);
+export default connect(mapStateToProps)(CategoryDetail);

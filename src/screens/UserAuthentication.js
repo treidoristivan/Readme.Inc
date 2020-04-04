@@ -92,7 +92,8 @@ const styles = StyleSheet.create({
     loginButton: {
         backgroundColor: '#3399ff',
         padding: 10,
-        borderRadius: 12,
+        borderBottomLeftRadius:20,
+        borderTopLeftRadius:20,
         justifyContent: 'center',
         flex: 1,
         flexDirection: 'row',
@@ -107,7 +108,8 @@ const styles = StyleSheet.create({
     registerButton: {
         backgroundColor: '#00cc00',
         padding: 10,
-        borderRadius: 12,
+        borderBottomRightRadius:20,
+        borderTopRightRadius:20,
         justifyContent: 'center',
         flex: 1,
         flexDirection: 'row',

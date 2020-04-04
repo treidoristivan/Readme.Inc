@@ -101,7 +101,7 @@ const mapStateToProps = state => {
     }
 }
 
-const AuthorList = withNavigation(AuthorOriginal)
+const ListAuthor = withNavigation(AuthorOriginal)
 
 //make this component available to the app
-export default connect(mapStateToProps)(AuthorList);
+export default connect(mapStateToProps)(ListAuthor);
