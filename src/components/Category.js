@@ -5,6 +5,7 @@ import { withNavigationFocus } from 'react-navigation';
 import { connect } from 'react-redux';
 import { getCategories } from '../redux/actions/category';
 import { APP_ICON_URL } from '../config/config';
+import imagePlaceholder from '../assets/images/default.png'
 
 // create a component
 class CategoryOriginal extends Component {
@@ -26,6 +27,7 @@ class CategoryOriginal extends Component {
     }
 
     render() {
+        console.log('In component Category', this.props.category.data)
         return (
             <View style={styles.container}>
                 <ScrollView
@@ -54,19 +56,19 @@ class CategoryOriginal extends Component {
                             </View>
                         </View>
                     }
-                    {!this.state.isLoading && this.props.category.data.categories.map((v, i) => {
+                    {!this.state.isLoading && this.props.category.data.map((v, i) => {
                         var styler = [styles.card]
                         if (i === 0) {
                             styler.push({ marginLeft: 20 })
                         }
-                        if (i === this.props.category.data.categories.length - 1) {
+                        if (i === this.props.category.data.length - 1) {
                             styler.push({ marginRight: 20 })
                         }
                         return (
                             <TouchableOpacity style={styler} key={i} onPress={() => this.props.navigation.navigate('Search', {search: [{name:"category", value: v.id}]})}>
                                 <View style={styles.cardWrapper}>
                                     <Image style={{ width: 50, height: 50 }} source={{ uri: APP_ICON_URL.concat(v.icon) }} />
-                                    <Text style={styles.title}>{v.name}</Text>
+                                    <Text style={styles.title}>{v.genre_name}</Text>
                                 </View>
                             </TouchableOpacity>
                         )
