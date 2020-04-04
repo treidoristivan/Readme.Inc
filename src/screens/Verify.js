@@ -20,7 +20,7 @@ class VerifyOriginal extends Component {
 
     async handleSubmit() {
         const { verificationCode } = this.state
-        const data = { verificationCode }
+        const data = { verificationCode: verificationCode.toLowerCase() }
         await this.props.dispatch(verify(data))
     }
 
@@ -55,10 +55,8 @@ class VerifyOriginal extends Component {
     }
 
     handleRedirect() {
-        if (this.state.isSuccess) {
-            Alert.alert('Verification Success', this.state.message, [
-                { text: 'OK', onPress: () => this.props.navigation.navigate('Login') },
-            ])
+        if (this.props.auth.isSuccess) {
+            this.props.navigation.navigate('Login')
         } else {
             Alert.alert('Verfication Failed', this.state.message)
         }

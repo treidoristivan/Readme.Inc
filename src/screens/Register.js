@@ -61,10 +61,8 @@ class RegisterOriginal extends Component {
     }
 
     async handleRedirect() {
-        if (this.state.isSuccess) {
-            Alert.alert('Register Success', this.state.message, [
-                { text: 'OK', onPress: () => this.props.navigation.navigate('Verify') },
-            ])
+        if (this.props.auth.isSuccess) {
+            this.props.navigation.navigate('Verify')
         } else {
             Alert.alert('Register Failed', this.state.message)
         }
