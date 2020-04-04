@@ -59,10 +59,8 @@ class LoginOriginal extends Component {
     }
 
     handleRedirect() {
-        if (this.state.isSuccess) {
-            Alert.alert('Login Message', this.state.message, [
-                { text: 'OK', onPress: () => this.props.navigation.navigate('Home') },
-            ])
+        if (this.props.auth.isSuccess) {
+            this.props.navigation.navigate('Home')
         } else {
             Alert.alert('Login Message', this.state.message)
         }

@@ -10,14 +10,14 @@ export const getPopularBooks = (jwt) => {
 export const getBooks = (jwt, params) => {
     return {
         type: 'GET_BOOKS',
-        payload: Get(APP_URL.concat('/item?' + params), jwt)
+        payload: Get(APP_URL.concat('/books/all' + params), jwt)
     }
 }
 
 export const getBook = (jwt, id) => {
     return {
         type: 'GET_BOOK',
-        payload: Get(APP_URL.concat('/item/' + id), jwt)
+        payload: Get(APP_URL.concat('/books/book/' + id), jwt)
     }
 }
 

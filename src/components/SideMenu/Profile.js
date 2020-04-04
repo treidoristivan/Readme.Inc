@@ -1,6 +1,5 @@
 //import liraries
 import React, { Component } from 'react';
-import SliderTitle from '../SliderTitle';
 import Feather from 'react-native-vector-icons/Feather';
 import ImagePicker from 'react-native-image-picker';
 import RNFetchBlob from 'rn-fetch-blob';

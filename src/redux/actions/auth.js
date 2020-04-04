@@ -8,6 +8,7 @@ export const login = (data) => {
 }
 
 export const verify = (data) => {
+    console.log('verify', data)
     return {
         type: 'VERIFY',
         payload: Post(APP_URL.concat('/auth/verify'), null, data)
