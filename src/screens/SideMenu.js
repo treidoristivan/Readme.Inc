@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, Dimensions, Image, ScrollView,TouchableOpacity,TouchableWithoutFeedback } from 'react-native'
+import { Text, View, StyleSheet, Dimensions, Image, ScrollView,TouchableOpacity,TouchableWithoutFeedback,Linking } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const {width, height} = Dimensions.get('window')
@@ -55,14 +55,19 @@ class SideMenu extends Component {
                     </View>
                     </TouchableOpacity>
 
+                    <TouchableOpacity style={styles.imageWrapper} onPress={ ()=> Linking.openURL('https://play.google.com/store/apps/details?id=com.goodreads') }>
                     <View style={[styles.items, styles.noSelectedItems]}>
                     <Icon style={styles.iconWithText} name='link' color='#fff' size={25} />
                         <Text style={styles.text}>Goodreads Original</Text>
                     </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.imageWrapper} onPress={() => this.props.navigation.navigate('Setting')}>
                     <View style={[styles.items, styles.noSelectedItems]}>
                     <Icon style={styles.iconWithText} name='settings-outline' color='#fff' size={25} />
-                        <Text style={styles.text}>Setting & Support</Text>
+                        <Text style={styles.text}>Help & Support</Text>
                     </View>
+                    </TouchableOpacity>
                     
                     <View style={[styles.items, styles.noSelectedItems]}>
                     <Icon style={styles.iconWithText} name='logout' color='#fff' size={25} />
