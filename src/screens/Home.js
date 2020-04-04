@@ -40,7 +40,7 @@ class HomeOriginal extends Component {
                         <ListCard />
                         <ListCategory />  
                     <SliderTitle title="All Genre" viewAll />
-                        {/* <ListAuthor /> */}
+                        <ListAuthor />
                     </View>
                 </ScrollView>
             </Container>

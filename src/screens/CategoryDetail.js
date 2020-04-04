@@ -16,19 +16,19 @@ class CategoryDetailOriginal extends Component {
     }
 
     async componentDidMount() {
-        await this.props.dispatch(getBooksByGenre(2));
+        await this.props.dispatch(getBooksByGenre(this.props.navigation.state.params.categoryId));
         await this.setState({ isLoading: false });
         this.props.navigation.addListener('didFocus', () => this.onFocus(this.props));
     }
 
     async onFocus(props) {
-        props.dispatch(getBooksByGenre(2));
+        props.dispatch(getBooksByGenre(this.props.navigation.state.params.categoryId));
     }
 
     render() {
         console.log('Category Detail, genre detail', this.props)
         console.log('Books in this genre', this.props.books.data)
-        console.log('BOOK PARAMS', this.props.route)
+        console.log('BOOK PARAMS', this.props.navigation.state.params.categoryId)
         return (
             <View style={styles.container}>
                 <ScrollView vertikal showsVertialScrollIndicator={false}>
