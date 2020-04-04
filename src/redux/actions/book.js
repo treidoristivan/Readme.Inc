@@ -21,6 +21,20 @@ export const getBook = (jwt, id) => {
     }
 }
 
+export const getBooksByGenre = (jwt, genreId) => {
+    return {
+        type: 'GET_BOOKS_BY_GENRE',
+        payload: Get(APP_URL.concat('/books/genre/' + genreId), jwt)
+    }
+}
+
+export const getBooksByAuthor = (jwt, authorId) => {
+    return {
+        type: 'GET_BOOKS_BY_AUTHOR',
+        payload: Get(APP_URL.concat('/books/author/' + authorId), jwt)
+    }
+}
+
 // export const getLastOrdered = (jwt, ids) => {
 //     return {
 //         type: 'GET_LAST_ORDERED',
