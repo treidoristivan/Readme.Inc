@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AuthorDetail from '../screens/AuthorDetail';
 import BookDetail from '../screens/BookDetail';
 import Category from '../screens/Category';
+import CategoryDetail from '../screens/CategoryDetail';
 import ForgotPassword from '../screens/ForgotPassword';
 import Home from '../screens/Home';
 import SideMenu from '../screens/SideMenu'
@@ -73,13 +74,16 @@ const AuthNav = createStackNavigator({
     //  initialRouteName: 'UserAuthentication',
 })
 
-
-
-
 //const ListNav = createListNavigator({
 const CategoryNav = createStackNavigator({
     Category: {
         screen: Category,
+        navigationOptions: {
+            headerShown: false,
+        },
+    },
+    CategoryDetail:{
+        screen: CategoryDetail,
         navigationOptions: {
             headerShown: false,
         },

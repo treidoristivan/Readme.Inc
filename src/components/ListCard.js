@@ -6,7 +6,6 @@ import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import { getPopularBooks } from '../redux/actions/book';
 import { APP_IMAGE_URL } from '../config/config';
-import formatRupiah from '../helper/formatRupiah';
 
 
 // create a component
@@ -94,7 +93,6 @@ class CardListOriginal extends Component {
                                         <Text style={styles.restaurant}>{v.restaurant}</Text>
                                         <View style={styles.info}>
                                             <Text style={styles.startCount}><IonIcon name="ios-star" style={styles.star} size={15} /> {v.rating}</Text>
-                                            <Text style={styles.price}>{formatRupiah(v.price, 'Rp.')}</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -124,7 +122,7 @@ const styles = StyleSheet.create({
     price: { fontFamily: 'Nunito-Regular', color: 'green' }
 });
 
-const CardList = withNavigation(CardListOriginal)
+const ListCard = withNavigation(CardListOriginal)
 
 const mapStateToProps = state => {
     return {
@@ -134,4 +132,4 @@ const mapStateToProps = state => {
 }
 
 //make this component available to the app
-export default connect(mapStateToProps)(CardList);
+export default connect(mapStateToProps)(ListCard);
