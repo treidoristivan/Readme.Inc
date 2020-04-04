@@ -16,17 +16,19 @@ class CategoryDetailOriginal extends Component {
     }
 
     async componentDidMount() {
-        await this.props.dispatch(getBooksByGenre());
+        await this.props.dispatch(getBooksByGenre(2));
         await this.setState({ isLoading: false });
         this.props.navigation.addListener('didFocus', () => this.onFocus(this.props));
     }
 
     async onFocus(props) {
-        props.dispatch(getBooksByGenre());
+        props.dispatch(getBooksByGenre(2));
     }
 
     render() {
         console.log('Category Detail, genre detail', this.props)
+        console.log('Books in this genre', this.props.books.data)
+        console.log('BOOK PARAMS', this.props.route)
         return (
             <View style={styles.container}>
                 <ScrollView vertikal showsVertialScrollIndicator={false}>
@@ -40,19 +42,21 @@ class CategoryDetailOriginal extends Component {
                             </View>
                         </View>
                     }
-                    {!this.state.isLoading && this.props.book.data.map((v, i) => {
+                    {!this.state.isLoading && this.props.books.data.map((v, i) => {
                         var styler = [styles.card]
                         if (i === 0) {
                             styler.push({ marginLeft: 20 })
                         }
-                        if (i === this.props.book.data.length - 1) {
+                        if (i === this.props.books.data.length - 1) {
                             styler.push({ marginRight: 20 })
                         }
                         return (
                             <TouchableOpacity style={styler} key={i} onPress={() => this.props.navigation.navigate('Search', {search: [{name:"category", value: v.id}]})}>
                                 <View style={styles.cardWrapper}>
-                                    <Image style={{ width: 50, height: 50 }} source={{ uri: APP_ICON_URL.concat(v.icon) }} />
-                                    <Text style={styles.title}>{v.name}</Text>
+                                    <Image style={{ width: 50, height: 50 }} source={{ uri: v.book_image }} />
+                                    <Text style={styles.title}>{v.book_name}</Text>
+                                    <Text style={styles.title}>{v.total_reviewers}</Text>
+                                    <Text style={styles.title}>{v.avg_rating}</Text>
                                 </View>
                             </TouchableOpacity>
                         )

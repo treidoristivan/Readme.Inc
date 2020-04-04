@@ -21,10 +21,11 @@ export const getBook = (jwt, id) => {
     }
 }
 
-export const getBooksByGenre = (jwt, genreId) => {
+export const getBooksByGenre = (genreId) => {
+    console.log('getBooksByGenre')
     return {
         type: 'GET_BOOKS_BY_GENRE',
-        payload: Get(APP_URL.concat('/books/genre/' + genreId), jwt)
+        payload: Get(APP_URL.concat('/books/genre/' + genreId))
     }
 }
 

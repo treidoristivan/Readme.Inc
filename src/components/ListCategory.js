@@ -65,7 +65,7 @@ class CategoryOriginal extends Component {
                             styler.push({ marginRight: 20 })
                         }
                         return (
-                            <TouchableOpacity style={styler} key={i} onPress={() => this.props.navigation.navigate('CategoryDetail', {categoryId: v.id})}>
+                            <TouchableOpacity style={styler} key={i} onPress={() => this.props.navigation.navigate('CategoryDetail', { categoryId: v.id })}>
                                 <View style={styles.cardWrapper}>
                                     <Image style={{ width: 50, height: 50 }} source={{ uri: APP_ICON_URL.concat(v.icon) }} />
                                     <Text style={styles.title}>{v.genre_name}</Text>

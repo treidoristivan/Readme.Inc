@@ -100,9 +100,10 @@ const book = (state = initialState, action) => {
                 isSuccess: false,
             }
         case 'GET_BOOKS_BY_GENRE_FULFILLED':
+            console.log('GET_BOOKS_BY_GENRE', action.payload)
             return {
                 ...state,
-                itemDetail: action.payload.data.data,
+                data: action.payload.data.data,
                 isLoading: false,
                 isError: false,
                 isSuccess: action.payload.data.success,
@@ -126,7 +127,7 @@ const book = (state = initialState, action) => {
         case 'GET_BOOKS_BY_AUTHOR_FULFILLED':
             return {
                 ...state,
-                itemDetail: action.payload.data.data,
+                data: action.payload.data.data,
                 isLoading: false,
                 isError: false,
                 isSuccess: action.payload.data.success,
