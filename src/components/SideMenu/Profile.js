@@ -27,6 +27,7 @@ class ProfileOriginal extends Component {
         // const jwt = await this.props.auth.data.token
         // if (jwt !== null) {
         await this.props.dispatch(logout())
+        this.props.navigation.navigate('Login')
         // }
     }
 

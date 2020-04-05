@@ -1,30 +1,34 @@
-//import libraries
+//import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
-import { verify } from '../redux/actions/auth';
+import { forgotPasswordSuccess } from '../redux/actions/auth';
 
 // create a component
-class VerifyOriginal extends Component {
+class ForgotPasswordSuccessOriginal extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            verificationCode: '',
+            newPassword: '',
+            confirmPassword: '',
             isLoading: false,
             isSuccess: false,
-            message: '',
-            verificationCode: ''
+            message: ''
         }
     }
 
     async handleSubmit() {
-        const { verificationCode } = this.state
-        const data = { verificationCode: verificationCode.toLowerCase() }
-        if (verificationCode) {
-            await this.props.dispatch(verify(data))
+        const { verificationCode, newPassword, confirmPassword } = this.state
+        const data = {
+            verificationCode, newPassword, confirmPassword
+        }
+        if (newPassword === confirmPassword) {
+            await this.props.dispatch(forgotPasswordSuccess(data))
         } else {
-            Alert.alert('Verification Failed', 'Please provide the verification code')
+            Alert.alert('Reset Password Failed', 'New Password and Confirm Password Must Match')
         }
     }
 
@@ -38,19 +42,19 @@ class VerifyOriginal extends Component {
             } else {
                 console.log('sudah fulfill')
                 if (this.props.auth.isSuccess) {
-                    console.log('berhasil login')
+                    console.log('berhasil reset password')
                     await this.setState({
                         isLoading: false,
                         isSuccess: true,
-                        message: "Happy reading",
+                        message: "Reset Password Success.",
                     })
                     this.handleRedirect()
                 } else {
-                    console.log('gagal login')
+                    console.log('gagal reset password')
                     await this.setState({
                         isLoading: false,
                         isSuccess: false,
-                        message: "Wrong verification code. Please ensure your verification code",
+                        message: "Reset Password Failed. Try Again.",
                     })
                     this.handleRedirect()
                 }
@@ -59,12 +63,12 @@ class VerifyOriginal extends Component {
     }
 
     handleRedirect() {
-        if (this.props.navigation.state.routeName === 'Verify') {
+        if (this.props.navigation.state.routeName === 'ForgotPasswordSuccess') {
             if (this.state.isSuccess) {
                 this.setState({ isSuccess: false })
                 this.props.navigation.navigate('Login')
             } else {
-                Alert.alert('Verification Failed', this.state.message)
+                Alert.alert('Reset Password Failed', this.state.message)
             }
         }
     }
@@ -78,17 +82,24 @@ class VerifyOriginal extends Component {
                 </View>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.illustWrapper}>
-                        <Image source={require('../assets/images/verify.png')} style={styles.illust} />
+                        <Image source={require('../assets/images/forgot_password.png')} style={styles.illust} />
+                        <Text style={styles.title}>Reset Password</Text>
                     </View>
                     
                     <View style={styles.formWrapper}>
                         <View style={styles.input}>
                             <Input placeholder="Verification Code" value={this.state.verificationCode} onChange={(e) => this.setState({ verificationCode: e.nativeEvent.text })} />
                         </View>
+                        <View style={styles.input}>
+                            <Input placeholder="New Password" secureTextEntry textContentType="password" value={this.state.newPassword} onChange={(e) => this.setState({ newPassword: e.nativeEvent.text })} />
+                        </View>
+                        <View style={styles.input}>
+                            <Input placeholder="Confirm Password" secureTextEntry textContentType="password" value={this.state.confirmPassword} onChange={(e) => this.setState({ confirmPassword: e.nativeEvent.text })} />
+                        </View>
                         <TouchableOpacity style={styles.loginButton} onPress={() => this.handleSubmit()}>
                             {this.props.auth.isLoading
                                 ? <ActivityIndicator size="small" color="#fff" />
-                                : <Text style={styles.buttonText}>Verify</Text>
+                                : <Text style={styles.buttonText}>Submit</Text>
                             }
                         </TouchableOpacity>
                     </View>
@@ -126,13 +137,13 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     illust: {
-        width: 200,
-        height: 200
+        width: 180,
+        height: 130,
     },
     
     title: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 30
+        fontSize: 20
     },
     formWrapper: {
         flex: 0,
@@ -142,12 +153,11 @@ const styles = StyleSheet.create({
     loginButton: {
         backgroundColor: '#3399ff',
         padding: 10,
-        borderRadius: 25,
+        borderRadius: 20,
         justifyContent: 'center',
         flex: 0,
         flexDirection: 'row',
         marginTop: 15,
-        marginRight: 5
     },
     buttonText: {
         fontFamily: 'Nunito-Regular',
@@ -155,24 +165,24 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase'
     },
     registerButton: {
-        backgroundColor: '#eee',
+        backgroundColor: '#00cc00',
         padding: 10,
-        borderRadius: 12,
+        borderRadius: 20,
         justifyContent: 'center',
         flex: 0,
         flexDirection: 'row',
         marginTop: 10,
-        marginLeft: 5
     },
     input: {
         flex: 0,
         flexDirection: 'row',
         margin: 5,
-        borderBottomWidth: 2
+        borderBottomWidth: 1,
+        borderBottomColor:'#3399ff'
     },
 });
 
-const Verify = withNavigation(VerifyOriginal)
+const ForgotPasswordSuccess = withNavigation(ForgotPasswordSuccessOriginal)
 
 const mapStateToProps = state => {
     return {
@@ -181,4 +191,4 @@ const mapStateToProps = state => {
 }
 
 //make this component available to the app
-export default connect(mapStateToProps)(Verify);
+export default connect(mapStateToProps)(ForgotPasswordSuccess);

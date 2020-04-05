@@ -4,6 +4,7 @@ const initialState = {
     isLoading: false,
     isError: false,
     isSuccess: true,
+    isLoggedIn: false
 }
 
 const auth = (state = initialState, action) => {
@@ -27,6 +28,7 @@ const auth = (state = initialState, action) => {
             return {
                 ...state,
                 data: action.payload.data.data,
+                isLoggedIn: true,
                 token: action.payload.data.token,
                 isLoading: false,
                 isError: false,

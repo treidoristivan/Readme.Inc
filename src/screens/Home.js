@@ -9,6 +9,7 @@ import { withNavigation } from 'react-navigation';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import SliderTitle from '../components/SliderTitle';
+import SliderBar from '../components/SliderBar';
 import ListCategory from '../components/ListCategory';
 import ListCard from '../components/ListCard';
 import ListAuthor from '../components/ListAuthor';
@@ -35,7 +36,7 @@ class HomeOriginal extends Component {
                 <SearchBar />
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.content}>
-
+                    <SliderBar />
                     <SliderTitle title="List On Top" viewAll onViewAllPressed={() => this.props.navigation.navigate('Search', { sort: [{ name: "rating", value: "desc" }] })} />
                         <ListCard />
                         <ListCategory />  

@@ -2,9 +2,16 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
 
 // create a component
 class UserAuthenticationOriginal extends Component {
+    componentDidMount() {
+        if (this.props.auth.isLoggedIn) {
+            this.props.navigation.navigate('Home')
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -126,5 +133,11 @@ const styles = StyleSheet.create({
 
 const UserAuthentication = withNavigation(UserAuthenticationOriginal)
 
+const mapStateToProps = state => {
+    return {
+        auth: state.auth
+    }
+}
+
 //make this component available to the app
-export default UserAuthentication;
+export default connect(mapStateToProps)(UserAuthentication);

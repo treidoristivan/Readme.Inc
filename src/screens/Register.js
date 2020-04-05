@@ -1,6 +1,7 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert, ActivityIndicator } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -14,6 +15,7 @@ class RegisterOriginal extends Component {
             username: '',
             email: '',
             password: '',
+            confirmPassword: '',
             isLoading: false,
             isSuccess: false,
             message: '',
@@ -27,7 +29,15 @@ class RegisterOriginal extends Component {
             email,
             password,
         }
-        await this.props.dispatch(register(data))
+        if (username && email && password ) {
+            if (password) {
+                await this.props.dispatch(register(data))
+            } else {
+                Alert.alert('Register Failed', 'Password and Confirm Password Must Match')
+            }
+        } else {
+            Alert.alert('Register Failed', 'Please provide the required fields')
+        }
     }
 
     async componentDidUpdate(prevProps) {
@@ -61,10 +71,13 @@ class RegisterOriginal extends Component {
     }
 
     async handleRedirect() {
-        if (this.props.auth.isSuccess) {
-            this.props.navigation.navigate('Verify')
-        } else {
-            Alert.alert('Register Failed', this.state.message)
+        if (this.props.navigation.state.routeName === 'Register') {
+            if (this.state.isSuccess) {
+                this.setState({ isSuccess: false })
+                this.props.navigation.navigate('Verify')
+            } else {
+                Alert.alert('Register Failed', this.state.message)
+            }
         }
     }
 
@@ -92,7 +105,13 @@ class RegisterOriginal extends Component {
                         </View>
                         <View style={styles.input}>
                             <Input placeholder="Password" secureTextEntry textContentType="password" value={this.state.password} onChange={(e) => this.setState({ password: e.nativeEvent.text })} />
+                            <TouchableOpacity>
+                            <Icon name='eye-outline' color='#3399ff' size={23} style={styles.eye}/>  
+                            </TouchableOpacity>
                         </View>
+                        {/* <View style={styles.input}>
+                            <Input placeholder="Confirm Password" secureTextEntry textContentType="password" value={this.state.confirmPassword} onChange={(e) => this.setState({ confirmPassword: e.nativeEvent.text })} />
+                        </View> */}
                         <TouchableOpacity style={styles.registerButton} onPress={() => this.handleSubmit()}>
                             {this.props.auth.isLoading
                                 ? <ActivityIndicator size="small" color="#fff" />
@@ -171,15 +190,16 @@ const styles = StyleSheet.create({
         
     },
     input: {
-        flex: 1,
-        flexDirection: 'column',
+        flex: 0,
+        flexDirection: 'row',
         margin: 5,
-        marginHorizontal:10,
         borderBottomWidth: 1,
-        borderBottomColor: '#3399ff',
-        
-       
+        borderBottomColor:'#3399ff'
     },
+    eye: {
+        marginVertical:10,
+        marginRight:10
+    }
 });
 
 const Register = withNavigation(RegisterOriginal)
