@@ -8,7 +8,7 @@ import { Root, Tab } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //Components Screens
-import Autor from '../screens/Author';
+import Author from '../screens/Author';
 import AuthorDetail from '../screens/AuthorDetail';
 import BookDetail from '../screens/BookDetail';
 import Category from '../screens/Category';

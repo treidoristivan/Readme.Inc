@@ -58,8 +58,8 @@ class CategoryDetailOriginal extends Component {
                                </View>
                                 <View style={styles.cardWrapper}>
                                     <Text style={styles.title}>{v.book_name}</Text>
-                                    <Text style={styles.title}>{v.total_reviewers}</Text>
-                                    <Text style={styles.title}>{v.avg_rating}</Text>
+                                    <Text >Reviews : {v.total_reviewers}</Text>
+                                    <Text >Rating : {v.avg_rating}</Text>
                                 </View>
                                 </View>
                             </TouchableOpacity>
@@ -76,12 +76,13 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'stretch',
+        backgroundColor:'#3399ff'
     },
-    card: { backgroundColor: '#fff', width: 300, height: 150, borderRadius: 12, margin: 10,marginLeft:25, elevation: 5 },
+    card: { backgroundColor: '#fff', width: 300, height: 165, borderRadius: 12, margin: 10,marginLeft:25, elevation: 5 },
     cardImg: { flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start'},
-    cardWrapper: { flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'stretch'},
+    cardWrapper: { flex: 1, flexDirection: 'column', justifyContent: 'flex-start',alignItems:'flex-start', alignSelf:'stretch'},
     img: {width:60, height:80,marginLeft:15},
-    title: { marginTop: 10, textAlign: 'center', fontFamily: 'Nunito-Regular' },
+    title: { marginTop: 10,paddingBottom:10, fontFamily: 'Nunito-Regular',color:'#3399ff' },
 });
 
 const mapStateToProps = state => {
