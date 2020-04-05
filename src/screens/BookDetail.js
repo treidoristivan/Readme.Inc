@@ -11,7 +11,7 @@ import { getBook } from '../redux/actions/book';
 import { withNavigation } from 'react-navigation';
 import formatRupiah from '../helper/formatRupiah';
 import { getMyFavoriteBook, deleteMyFavoriteBook, postMyFavoriteBook } from '../redux/actions/user';
-import { getRatingByIdBook, postRatingByIdBoot, updateRatingByIdBook, postRatingByIdBook } from '../redux/actions/rating';
+import { getRatingByIdBook, updateRatingByIdBook, postRatingByIdBook } from '../redux/actions/rating';
 
 import { getReviewByIdBook, postReviewByIdBook } from '../redux/actions/review'
 
@@ -40,8 +40,10 @@ class BookDetailOriginal extends Component {
             statsBook: true,
             modalReview: false,
             review: '',
-            colorStar: 0
+            colorStar: 0,
+            propsRating : null
         }
+   
     }
 
     toogleReview() {
@@ -75,44 +77,62 @@ class BookDetailOriginal extends Component {
         await this.props.dispatch(getRatingByIdBook(data, this.props.auth.token))
         if (this.props.rating.data == []) {
             this.setState({ colorStar: 0 })
+            console.log('thisthisthisthisthisthisthisthisthis',this.props.rating.data.length)
         } else {
+            console.log('thisthisthisthisthisthisthisthisthis',this.props.rating.data.length)
             this.setState({ colorStar: this.props.rating.data[0].rating })
         }
+     
     }
+    
 
-    handleDeleteFavorite(id) {
+    handleDeleteFavorite() {
         const data = {
-            idBook: id
+            idBook: this.props.navigation.state.params.bookId
         }
         this.props.dispatch(deleteMyFavoriteBook(data, this.props.auth.token))
         this.props.dispatch(getMyFavoriteBook(this.props.auth.token))
         this.setState({ addFavorite: !this.state.addFavorite })
     }
 
-    handleAddFavorite(id) {
+    handleAddFavorite() {
         const data = {
-            idBook: id
+            idBook: this.props.navigation.state.params.bookId
         }
 
         this.props.dispatch(postMyFavoriteBook(data, this.props.auth.token))
         this.props.dispatch(getMyFavoriteBook(this.props.auth.token))
-        this.setState({ addFavorite: !this.state.addFavorite })
+        this.setState({ addFavorite: !this.state.addFavorite }) 
+        this.setState({ addFavorite: this.props.rating.data.length }) 
     }
 
 
-    async handleAddRating() {
-        if (this.props.rating == []) {
+    async handleAddRating(countStar) {
+        console.log('countcountcountcountcountcountcount',countStar)
+        console.log('countcountcountcountcountcountcount',countStar)
+        console.log('countcountcountcountcountcountcount',countStar)
+        console.log('countcountcountcountcountcountcount',countStar)
+        console.log('countcountcountcountcountcountcount',countStar)
+   
+        this.setState({colorStar:countStar})
+        if (!this.props.rating.data[0] ) {
+            console.log('woi',this.props.navigation.state.params.bookId)
             const data = {
-                idBook: id,
-                rating: this.state.colorStar
+                idBook: this.props.navigation.state.params.bookId,
+                rating: countStar
             }
+            this.setState({colorStar:countStar})
+            console.log('datadatadatadata',data)
             await this.props.dispatch(postRatingByIdBook(data, this.props.auth.token))
             await this.props.dispatch(getRatingByIdBook(data, this.props.auth.token))
         } else {
+            console.log('woi this',this.props.navigation.state.params.bookId)
             const data = {
-                idBook: id,
-                rating: this.state.colorStar
+                idBook: this.props.navigation.state.params.bookId,
+                rating: countStar
             }
+            this.setState({colorStar:countStar})
+            console.log('datadatadata',data)
             await this.props.dispatch(updateRatingByIdBook(data, this.props.auth.token))
             await this.props.dispatch(getRatingByIdBook(data, this.props.auth.token))
         }
@@ -153,10 +173,10 @@ class BookDetailOriginal extends Component {
     // }
 
     render() {
-        console.log('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', this.props.rating.data)
+        console.log('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwkkkw', this.props.rating.data)
         return (
-
             <View style={styles.container}>
+            
                 <Text style={styles.description}>{this.props.book.itemDetail.description}</Text>
                 <>
                     {this.state.itemImage !== null ?
@@ -182,27 +202,27 @@ class BookDetailOriginal extends Component {
                             <View style={styles.infoWrapper}>
                                 <View style={styles.ratingWrapper}>
                                     <TouchableOpacity onPress={() =>
-                                        this.setState({ colorStar: 1 })
+                                        this.handleAddRating(1)
 
                                     }>
 
                                         <Icon name="ios-star" size={30} style={{ backgorundColor: '#000', color: `${this.state.colorStar >= 1 ? '#e3bd00' : '#aba'}`, marginRight: 2 }} />
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity onPress={() => this.setState({ colorStar: 2 })}>
+                                    <TouchableOpacity onPress={() => this.handleAddRating(2)}>
                                         <Icon name="ios-star" size={30} style={{ backgorundColor: '#000', color: `${this.state.colorStar >= 2 ? '#e3bd00' : '#aba'}`, marginRight: 2 }} />
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity onPress={() => this.setState({ colorStar: 3 })}>
+                                    <TouchableOpacity onPress={() => this.handleAddRating(3)}>
                                         <Icon name="ios-star" size={30} style={{ backgorundColor: '#000', color: `${this.state.colorStar >= 3 ? '#e3bd00' : '#aba'}`, marginRight: 2 }} />
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity onPress={() => this.setState({ colorStar: 4 })}>
+                                    <TouchableOpacity onPress={() => this.handleAddRating(4)}>
                                         <Icon name="ios-star" size={30} style={{ backgorundColor: '#000', color: `${this.state.colorStar >= 4 ? '#e3bd00' : '#aba'}`, marginRight: 2 }} />
                                     </TouchableOpacity>
 
 
-                                    <TouchableOpacity onPress={() => this.setState({ colorStar: 5 })}>
+                                    <TouchableOpacity onPress={() => this.handleAddRating(5)}>
                                         <Icon name="ios-star" size={30} style={{ backgorundColor: '#000', color: `${this.state.colorStar >= 5 ? '#e3bd00' : '#aba'}`, marginRight: 2 }} />
                                     </TouchableOpacity>
 

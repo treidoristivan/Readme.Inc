@@ -2,8 +2,10 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
+import SliderTitle from '../SliderTitle';
 import { getMyFavoriteBook } from '../../redux/actions/user';
 import { withNavigation } from 'react-navigation';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { APP_ICON_URL, APP_URL } from '../../config/config';
 
 // create a component
@@ -28,24 +30,33 @@ class MyFavoriteBooks extends Component {
     console.log(this.props.user)
     return (
       <View style={styles.container}>
+        <View style={styles.headerWrapper}>
+            <Text style={{ fontSize: 25, padding: 20 }}>My Books</Text>
+        </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.contentWrapper}>
             {!this.state.isLoading && this.props.user.data.map((v, i) => {
-              var image = APP_ICON_URL.concat(v.icon)
               var styler = [styles.card]
-              if (i === 0) {
-                styler.push({ marginLeft: 20 })
-              }
-              if (i === this.props.user.data.length - 1) {
-                styler.push({ marginRight: 20 })
-              }
-              return (
-                <TouchableOpacity style={styles.categoryCard} key={i} onPress={() => this.props.navigation.navigate('BookDetail', { bookId: v.id_book })}>
-                  <Image source={{ uri: `${v.book_image}` }} style={{ width: 40, height: 40 }} />
-                  <Text style={{ marginTop: 5, fontFamily: 'Nunito-Regular', fontSize: 14, textAlign: 'center' }}>{v.book_name}</Text>
-
-                </TouchableOpacity>
-              )
+										if (i === 0) {
+												styler.push()
+										}
+										if (i === this.props.user.data.length - 1) {
+												styler.push()
+										}
+                    console.log('avg_rating', v.avg_rating)
+										return (
+												<TouchableOpacity style={styler} key={i} onPress={() => this.props.navigation.navigate('BookDetail', {bookId: v.id_book})}>
+														<View style={styles.cardWrapper}>
+																<View style={styles.card2}>
+																<Image style={{ width: 60, height: 80,marginTop:25 }} source={{ uri: v.book_image }} />
+																</View>
+																<Text style={styles.title}>{v.book_name}</Text>
+																{/* <View style={{flex:1, flexDirection:'row'}}>
+																<Text style={styles.title}>Rating : <Icon name="ios-star" size={15} style={styles.star}> </Icon>{v.avg_rating}</Text>
+																</View> */}
+														</View>
+												</TouchableOpacity>
+										)
             })}
           </View>
         </ScrollView>
@@ -56,14 +67,13 @@ class MyFavoriteBooks extends Component {
 
 // define your styles
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
+  container: { 
+    flex: 1, 
+    justifyContent: 'center', 
     alignItems: 'flex-start',
-    padding: 20,
-    backgroundColor: 'white',
+    marginLeft:10 
   },
+
   headerWrapper: {
     flex: 0,
     flexDirection: 'row',
@@ -88,6 +98,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 120,
   },
+  card: { backgroundColor: '#3399ff', width: 320, height: 180,borderRadius:20, margin: 10,marginTop:50, elevation: 5 },
+  card2: {backgroundColor:'#3399ff', width:120, height:120,borderRadius:60,marginTop:-100,alignItems:'center'},
+  cardWrapper: { flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' },
+  title: { marginTop: 10, textAlign: 'center', fontFamily: 'Nunito-Regular',color:'white' },
+  star: {
+      color: '#e3bd00',
+  },
+  best: {
+    width: 450,
+    height: 260,
+    marginLeft:-60
+  }
 });
 
 const mapStateToProps = state => {
