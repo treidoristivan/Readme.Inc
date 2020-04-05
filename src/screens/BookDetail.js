@@ -36,12 +36,12 @@ class BookDetailOriginal extends Component {
     }
 
     async componentDidMount() {
-        const jwt = this.props.auth.data.token;
-        await this.props.dispatch(getBook(jwt, this.props.navigation.getParam('itemId')))
+        // const jwt = this.props.auth.data.token;
+        await this.props.dispatch(getBook(this.props.navigation.state.params.bookId))
         await this.setState({ isLoading: false })
-        await this.setState({
-            itemImage: { uri: APP_IMAGE_URL.concat(this.props.item.itemDetail.images[0].filename) }
-        });
+        // await this.setState({
+        //     itemImage: { uri: this.props.book.itemDetail }
+        // });
     }
 
     // async handleAddToCart() {
@@ -63,9 +63,15 @@ class BookDetailOriginal extends Component {
     // }
 
     render() {
+        console.log('BookDetail', this.props.book.itemDetail)
         return (
             <View style={styles.container}>
-               <>
+                <Text>Book Detail</Text>
+                <Image style={{ width: 50, height: 50 }} source={{ uri: this.props.book.itemDetail.book_image }} />
+                <Text>{this.props.book.itemDetail.book_image}</Text>
+                <Text>{this.props.book.itemDetail.book_name}</Text>
+                <Text>{this.props.book.itemDetail.author_name}</Text>
+               {/* <>
                             {this.state.itemImage !== null ?
                                 <ImageBackground source={this.state.itemImage} style={styles.imageBackground} resizeMethod="auto" resizeMode="cover">
                                     <ButtonBack />
@@ -138,8 +144,7 @@ class BookDetailOriginal extends Component {
                                     <Text style={styles.buttonText}>Get Book</Text>
                                 </Button>
                             </View>
-                        </>
-                }
+                        </> */}
             </View>
         );
     }
@@ -222,8 +227,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        item: state.item,
-        auth: state.auth,
+        book: state.book
     }
 }
 

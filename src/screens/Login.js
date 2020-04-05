@@ -1,6 +1,7 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator, Alert } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -59,16 +60,18 @@ class LoginOriginal extends Component {
     }
 
     handleRedirect() {
-        if (this.state.isSuccess) {
-            Alert.alert('Login Message', this.state.message, [
-                { text: 'OK', onPress: () => this.props.navigation.navigate('Home') },
-            ])
-        } else {
-            Alert.alert('Login Message', this.state.message)
+        if (this.props.navigation.state.routeName === 'Login') {
+            if (this.state.isSuccess) {
+                this.setState({ isSuccess: false })
+                this.props.navigation.navigate('Home')
+            } else {
+                Alert.alert('Login Message', this.state.message)
+            }
         }
     }
 
     render() {
+        console.log('IN HERE LOGIN', this.props.navigation.state.routeName)
         return (
             <View style={styles.container}>
                 <View style={styles.headerWrapper}>
@@ -86,8 +89,14 @@ class LoginOriginal extends Component {
                         </View>
                         <View style={styles.input}>
                             <Input placeholder="Password" secureTextEntry textContentType="password" value={this.state.password} onChange={(e) => this.setState({ password: e.nativeEvent.text })} />
+                            <TouchableOpacity>
+                            <Icon name='eye-outline' color='#3399ff' size={23} style={styles.eye}/>  
+                            </TouchableOpacity>
                         </View>
-                        <Text style={{ textAlign: 'right', marginTop: 30,marginRight:10, color: '#3399ff' }} onPress={() => this.props.navigation.navigate('ForgotPassword')}>Forgot Password?</Text>
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            <Text style={{ flex: 1, textAlign: 'left', marginTop: 30,marginRight:10, color: '#3399ff' }} onPress={() => this.props.navigation.navigate('ForgotPassword')}>Forgot Password?</Text>
+                            <Text style={{ flex: 1, textAlign: 'right', marginTop: 30,marginRight:10, color: '#3399ff' }} onPress={() => this.props.navigation.navigate('Verify')}>Verify Account</Text>
+                        </View>
                         <TouchableOpacity style={styles.loginButton} onPress={() => this.handleSubmit()}>
                             {this.props.auth.isLoading
                                 ? <ActivityIndicator size="small" color="#fff" />
@@ -99,7 +108,7 @@ class LoginOriginal extends Component {
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
-            </View >
+            </View>
         );
     }
 }
@@ -175,6 +184,10 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor:'#3399ff'
     },
+    eye: {
+        marginVertical:10,
+        marginRight:10
+    }
 });
 
 const Login = withNavigation(LoginOriginal)

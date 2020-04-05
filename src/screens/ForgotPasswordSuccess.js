@@ -1,42 +1,34 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert, ActivityIndicator } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
-import { register } from '../redux/actions/auth';
+import { forgotPasswordSuccess } from '../redux/actions/auth';
 
 // create a component
-class RegisterOriginal extends Component {
+class ForgotPasswordSuccessOriginal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: '',
-            email: '',
-            password: '',
+            verificationCode: '',
+            newPassword: '',
             confirmPassword: '',
             isLoading: false,
             isSuccess: false,
-            message: '',
+            message: ''
         }
     }
 
     async handleSubmit() {
-        const { username, email, password } = this.state
+        const { verificationCode, newPassword, confirmPassword } = this.state
         const data = {
-            username,
-            email,
-            password,
+            verificationCode, newPassword, confirmPassword
         }
-        if (username && email && password ) {
-            if (password) {
-                await this.props.dispatch(register(data))
-            } else {
-                Alert.alert('Register Failed', 'Password and Confirm Password Must Match')
-            }
+        if (newPassword === confirmPassword) {
+            await this.props.dispatch(forgotPasswordSuccess(data))
         } else {
-            Alert.alert('Register Failed', 'Please provide the required fields')
+            Alert.alert('Reset Password Failed', 'New Password and Confirm Password Must Match')
         }
     }
 
@@ -50,19 +42,19 @@ class RegisterOriginal extends Component {
             } else {
                 console.log('sudah fulfill')
                 if (this.props.auth.isSuccess) {
-                    console.log('berhasil register')
+                    console.log('berhasil reset password')
                     await this.setState({
                         isLoading: false,
                         isSuccess: true,
-                        message: "Please check your email to verify your account",
+                        message: "Reset Password Success.",
                     })
                     this.handleRedirect()
                 } else {
-                    console.log('gagal register')
+                    console.log('gagal reset password')
                     await this.setState({
                         isLoading: false,
                         isSuccess: false,
-                        message: "Please choose another username",
+                        message: "Reset Password Failed. Try Again.",
                     })
                     this.handleRedirect()
                 }
@@ -70,13 +62,13 @@ class RegisterOriginal extends Component {
         }
     }
 
-    async handleRedirect() {
-        if (this.props.navigation.state.routeName === 'Register') {
+    handleRedirect() {
+        if (this.props.navigation.state.routeName === 'ForgotPasswordSuccess') {
             if (this.state.isSuccess) {
                 this.setState({ isSuccess: false })
-                this.props.navigation.navigate('Verify')
+                this.props.navigation.navigate('Login')
             } else {
-                Alert.alert('Register Failed', this.state.message)
+                Alert.alert('Reset Password Failed', this.state.message)
             }
         }
     }
@@ -88,38 +80,27 @@ class RegisterOriginal extends Component {
                     <Image source={require('../assets/icons/favicon.png')} style={styles.logo} />
                     <Text style={styles.logoText}>Readme</Text>
                 </View>
-                <ScrollView showsVerticalScrollIndicator={false} >
+                <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.illustWrapper}>
-                        <Image source={require('../assets/images/register.png')} style={styles.illust} />
+                        <Image source={require('../assets/images/forgot_password.png')} style={styles.illust} />
+                        <Text style={styles.title}>Reset Password</Text>
                     </View>
                     
                     <View style={styles.formWrapper}>
-                        {/* <View style={styles.input}>
-                            <Input placeholder="Fullname" value={this.state.name} onChange={(e) => this.setState({ name: e.nativeEvent.text })} />
-                        </View> */}
                         <View style={styles.input}>
-                            <Input placeholder="Username" textContentType="username" value={this.state.username} onChange={(e) => this.setState({ username: e.nativeEvent.text })} />
+                            <Input placeholder="Verification Code" value={this.state.verificationCode} onChange={(e) => this.setState({ verificationCode: e.nativeEvent.text })} />
                         </View>
                         <View style={styles.input}>
-                            <Input placeholder="Email" textContentType="emailAddress" keyboardType="email-address" value={this.state.email} onChange={(e) => this.setState({ email: e.nativeEvent.text })} />
+                            <Input placeholder="New Password" secureTextEntry textContentType="password" value={this.state.newPassword} onChange={(e) => this.setState({ newPassword: e.nativeEvent.text })} />
                         </View>
                         <View style={styles.input}>
-                            <Input placeholder="Password" secureTextEntry textContentType="password" value={this.state.password} onChange={(e) => this.setState({ password: e.nativeEvent.text })} />
-                            <TouchableOpacity>
-                            <Icon name='eye-outline' color='#3399ff' size={23} style={styles.eye}/>  
-                            </TouchableOpacity>
-                        </View>
-                        {/* <View style={styles.input}>
                             <Input placeholder="Confirm Password" secureTextEntry textContentType="password" value={this.state.confirmPassword} onChange={(e) => this.setState({ confirmPassword: e.nativeEvent.text })} />
-                        </View> */}
-                        <TouchableOpacity style={styles.registerButton} onPress={() => this.handleSubmit()}>
+                        </View>
+                        <TouchableOpacity style={styles.loginButton} onPress={() => this.handleSubmit()}>
                             {this.props.auth.isLoading
                                 ? <ActivityIndicator size="small" color="#fff" />
-                                : <Text style={styles.buttonText}>Register</Text>
+                                : <Text style={styles.buttonText}>Submit</Text>
                             }
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.loginButton} onPress={() => this.props.navigation.navigate('Login')}>
-                            <Text style={[styles.buttonText, { color: 'white' }]}>i have an account</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
@@ -150,36 +131,40 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Regular'
     },
     illustWrapper: {
-        flex: 0,
+        flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
     },
     illust: {
-        width: 300,
-        height: 150
+        width: 180,
+        height: 130,
+    },
+    
+    title: {
+        fontFamily: 'Nunito-Regular',
+        fontSize: 20
     },
     formWrapper: {
-        flex: 1,
+        flex: 0,
         flexDirection: 'column',
         marginTop: 20
     },
-    registerButton: {
+    loginButton: {
         backgroundColor: '#3399ff',
         padding: 10,
         borderRadius: 20,
         justifyContent: 'center',
         flex: 0,
         flexDirection: 'row',
-        marginTop: 30,
-        marginRight: 0
+        marginTop: 15,
     },
     buttonText: {
         fontFamily: 'Nunito-Regular',
         color: '#fff',
         textTransform: 'uppercase'
     },
-    loginButton: {
+    registerButton: {
         backgroundColor: '#00cc00',
         padding: 10,
         borderRadius: 20,
@@ -187,7 +172,6 @@ const styles = StyleSheet.create({
         flex: 0,
         flexDirection: 'row',
         marginTop: 10,
-        
     },
     input: {
         flex: 0,
@@ -196,19 +180,15 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor:'#3399ff'
     },
-    eye: {
-        marginVertical:10,
-        marginRight:10
-    }
 });
 
-const Register = withNavigation(RegisterOriginal)
+const ForgotPasswordSuccess = withNavigation(ForgotPasswordSuccessOriginal)
 
 const mapStateToProps = state => {
     return {
-        auth: state.auth,
+        auth: state.auth
     }
 }
 
 //make this component available to the app
-export default connect(mapStateToProps)(Register);
+export default connect(mapStateToProps)(ForgotPasswordSuccess);

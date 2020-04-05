@@ -24,9 +24,10 @@ const category = (state = initialState, action) => {
                 isSuccess: false,
             }
         case 'GET_CATEGORIES_FULFILLED':
+            console.log('In reducer category', action.payload.data.data)
             return {
                 ...state,
-                count: action.payload.data.data.categories.length,
+                count: action.payload.data.data.length,
                 data: action.payload.data.data,
                 isLoading: false,
                 isError: false,

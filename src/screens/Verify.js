@@ -1,31 +1,31 @@
-// import liraries
+//import libraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
-import { forgotPasswordRequest } from '../redux/actions/auth'
+import { verify } from '../redux/actions/auth';
 
 // create a component
-class ForgotPasswordOriginal extends Component {
+class VerifyOriginal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: '',
-            email: '',
             isLoading: false,
             isSuccess: false,
             message: '',
+            verificationCode: ''
         }
     }
 
     async handleSubmit() {
-        const { username, email } = this.state
-        const data = {
-            username,
-            email
+        const { verificationCode } = this.state
+        const data = { verificationCode: verificationCode.toLowerCase() }
+        if (verificationCode) {
+            await this.props.dispatch(verify(data))
+        } else {
+            Alert.alert('Verification Failed', 'Please provide the verification code')
         }
-        await this.props.dispatch(forgotPasswordRequest(data))
     }
 
     async componentDidUpdate(prevProps) {
@@ -38,19 +38,19 @@ class ForgotPasswordOriginal extends Component {
             } else {
                 console.log('sudah fulfill')
                 if (this.props.auth.isSuccess) {
-                    console.log('berhasil forgot password')
+                    console.log('berhasil login')
                     await this.setState({
                         isLoading: false,
                         isSuccess: true,
-                        message: "Forgot Password Request Success.",
+                        message: "Happy reading",
                     })
                     this.handleRedirect()
                 } else {
-                    console.log('gagal forgot password')
+                    console.log('gagal login')
                     await this.setState({
                         isLoading: false,
                         isSuccess: false,
-                        message: "Forgot Password Request Failed. Try Again.",
+                        message: "Wrong verification code. Please ensure your verification code",
                     })
                     this.handleRedirect()
                 }
@@ -59,12 +59,12 @@ class ForgotPasswordOriginal extends Component {
     }
 
     handleRedirect() {
-        if (this.props.navigation.state.routeName === 'ForgotPassword') {
+        if (this.props.navigation.state.routeName === 'Verify') {
             if (this.state.isSuccess) {
                 this.setState({ isSuccess: false })
-                this.props.navigation.navigate('ForgotPasswordSuccess')
+                this.props.navigation.navigate('Login')
             } else {
-                Alert.alert('Login Message', this.state.message)
+                Alert.alert('Verification Failed', this.state.message)
             }
         }
     }
@@ -76,25 +76,23 @@ class ForgotPasswordOriginal extends Component {
                     <Image source={require('../assets/icons/favicon.png')} style={styles.logo} />
                     <Text style={styles.logoText}>Readme</Text>
                 </View>
-                <View style={styles.illustWrapper}>
-                    <Image source={require('../assets/images/forgot_password.png')} style={styles.illust} />
-                    <Text style={styles.title}>Forgot Password</Text>
-                </View>
-                <View style={styles.formWrapper}>
-                    <View style={styles.input}>
-                        <Input placeholder="Username" textContentType="username" value={this.state.username} onChange={(e) => this.setState({ username: e.nativeEvent.text })} />
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <View style={styles.illustWrapper}>
+                        <Image source={require('../assets/images/verify.png')} style={styles.illust} />
                     </View>
-                    <View style={styles.input}>
-                        <Input placeholder="Email" value={this.state.email} onChange={(e) => this.setState({ email: e.nativeEvent.text })} />
+                    
+                    <View style={styles.formWrapper}>
+                        <View style={styles.input}>
+                            <Input placeholder="Verification Code" value={this.state.verificationCode} onChange={(e) => this.setState({ verificationCode: e.nativeEvent.text })} />
+                        </View>
+                        <TouchableOpacity style={styles.loginButton} onPress={() => this.handleSubmit()}>
+                            {this.props.auth.isLoading
+                                ? <ActivityIndicator size="small" color="#fff" />
+                                : <Text style={styles.buttonText}>Verify</Text>
+                            }
+                        </TouchableOpacity>
                     </View>
-                    <Text style={{ alignSelf: 'flex-end', textAlign: 'left', marginTop: 30, marginRight:10, color: '#3399ff' }} onPress={() => this.props.navigation.navigate('ForgotPasswordSuccess')}>Have a code?</Text>
-                    <TouchableOpacity style={styles.loginButton} onPress={() => this.handleSubmit()}>
-                        {this.props.auth.isLoading
-                            ? <ActivityIndicator size="small" color="#fff" />
-                            : <Text style={styles.buttonText}>Submit</Text>
-                        }
-                    </TouchableOpacity>
-                </View>
+                </ScrollView>
             </View>
         );
     }
@@ -107,7 +105,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         backgroundColor: '#fff',
         padding: 20,
-        
     },
     headerWrapper: {
         flex: 0,
@@ -116,41 +113,40 @@ const styles = StyleSheet.create({
     },
     logo: {
         width: 30,
-        height: 30,
-        
+        height: 30
     },
-
+    logoText: {
+        marginLeft: 4,
+        fontFamily: 'Nunito-Regular'
+    },
     illustWrapper: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center',
-        paddingVertical:70,
-       
-        
+        alignItems: 'center'
     },
     illust: {
-        width: 180,
-        height: 130,
+        width: 200,
+        height: 200
     },
     
     title: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 20
+        fontSize: 30
     },
     formWrapper: {
         flex: 0,
         flexDirection: 'column',
-        paddingBottom:100
+        marginTop: 20
     },
     loginButton: {
         backgroundColor: '#3399ff',
         padding: 10,
-        borderRadius: 20,
+        borderRadius: 25,
         justifyContent: 'center',
         flex: 0,
         flexDirection: 'row',
-        marginTop: 20,
+        marginTop: 15,
         marginRight: 5
     },
     buttonText: {
@@ -158,17 +154,25 @@ const styles = StyleSheet.create({
         color: '#fff',
         textTransform: 'uppercase'
     },
+    registerButton: {
+        backgroundColor: '#eee',
+        padding: 10,
+        borderRadius: 12,
+        justifyContent: 'center',
+        flex: 0,
+        flexDirection: 'row',
+        marginTop: 10,
+        marginLeft: 5
+    },
     input: {
         flex: 0,
         flexDirection: 'row',
         margin: 5,
-        borderBottomWidth: 1,
-        borderBottomColor:'#3399ff',
-        
+        borderBottomWidth: 2
     },
 });
 
-const ForgotPassword = withNavigation(ForgotPasswordOriginal)
+const Verify = withNavigation(VerifyOriginal)
 
 const mapStateToProps = state => {
     return {
@@ -177,4 +181,4 @@ const mapStateToProps = state => {
 }
 
 //make this component available to the app
-export default connect(mapStateToProps)(ForgotPassword);
+export default connect(mapStateToProps)(Verify);
