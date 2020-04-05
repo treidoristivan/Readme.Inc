@@ -38,22 +38,11 @@ class AuthorOriginal extends Component {
                                     <View style={{ backgroundColor: '#eee', height: 10, width: 250, marginTop: 5 }}></View>
                                 </View>
                             </View>
-                            <View style={[styles.card, { marginHorizontal: 30 }]}>
-                                <View style={styles.cardWrapper}>
-                                    <View style={{ backgroundColor: '#eee', width: 250, height: 50 }}></View>
-                                    <View style={{ backgroundColor: '#eee', height: 10, width: 250, marginTop: 5 }}></View>
-                                </View>
-                            </View>
-                            <View style={[styles.card, { marginHorizontal: 30 }]}>
-                                <View style={styles.cardWrapper}>
-                                    <View style={{ backgroundColor: '#eee', width: 250, height: 50 }}></View>
-                                    <View style={{ backgroundColor: '#eee', height: 10, width: 250, marginTop: 5 }}></View>
-                                </View>
-                            </View>
+                            
                         </>
                     }
                     {!this.state.isLoading && this.props.author.data.map((v, i) => {
-                        var img = <Image source={{ uri: v.author_image }} style={{ width: 250, height: 50, borderRadius: 50, }} resizeMode="cover" />
+                        var img = <Image source={{ uri: v.author_image }} style={{ width: 100, height: 100, borderRadius: 70, }} resizeMode="cover" />
                         var styled = [styles.card]
                         if (i === 0) {
                             styled.push({ marginHorizontal: 30 })
@@ -63,9 +52,12 @@ class AuthorOriginal extends Component {
                         }
                         return (
                             <TouchableOpacity style={styled} key={i} onPress={() => this.props.navigation.navigate('AuthorDetail', { authorId: v.id })}>
+                            <View style={styles.card}>
                                 <View style={styles.cardWrapper}>
                                     {img}
+                                    <Text style={styles.titles}>Author Name :</Text>
                                     <Text style={styles.title}>{v.author_name}</Text>
+                                </View>
                                 </View>
                             </TouchableOpacity>
                         )
@@ -83,9 +75,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'flex-start',
     },
-    card: { backgroundColor: '#fff', width: 300, height: 120, margin: 10, elevation: 5, },
+    card: { backgroundColor: '#3399ff', width: 250, height: 150, marginHorizontal: 35,marginVertical:10, elevation: 5, },
     cardWrapper: { flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' },
-    title: { marginTop: 10, textAlign: 'center', fontFamily: 'Nunito-Regular' },
+    title: {textAlign: 'center', fontFamily: 'Nunito-Regular',color:'white', fontSize:17 },
+    titles: {textAlign: 'center', fontFamily: 'Nunito-Regular',color:'white', fontSize:10 },
+
 });
 
 const mapStateToProps = state => {
