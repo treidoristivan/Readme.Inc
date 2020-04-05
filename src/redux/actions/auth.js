@@ -1,6 +1,8 @@
 import { APP_URL, Post, Get, Patch } from '../../config/config';
 
 export const login = (data) => {
+    console.log(data)
+    console.log(APP_URL)
     return {
         type: 'LOGIN',
         payload: Post(APP_URL.concat('/auth/login'), null, data)
@@ -36,17 +38,18 @@ export const forgotPasswordSuccess = (data) => {
     }
 }
 
-export const logout = (jwt) => {
+export const logout = () => {
     return {
         type: 'LOGOUT',
-        payload: Get(APP_URL.concat('/logout'), jwt)
     }
 }
 
-export const changePhoto = (photo) => {
+export const changePhoto = (jwt, formData) => {
+    console.log('jwt', jwt)
+    console.log('FORMdATA', formData)
     return {
         type: 'CHANGE_PHOTO',
-        photo,
+        payload: Patch(APP_URL.concat('/users'), jwt, formData)
     }
 }
 

@@ -1,9 +1,9 @@
 import { APP_URL, Get, Post } from '../../config/config';
 
-export const getPopularBooks = (jwt) => {
+export const getPopularBooks = () => {
     return {
         type: 'GET_POPULAR_BOOKS',
-        payload: Get(APP_URL.concat('/item?sort[created_at]=desc'), jwt)
+        payload: Get(APP_URL.concat('/books/popular'), null)
     }
 }
 
