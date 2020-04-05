@@ -29,13 +29,11 @@ class BestBooksOriginal extends Component {
 	render() {
 			return (
 				<View style={styles.container}>
-					<View>
-					<Image
-          style={styles.best}
-          source={require('../../assets/images/best.png')}
-        />
-					</View>
+					
 						<ScrollView vertikal showsVertialScrollIndicator={false}>
+						<View>
+					<Image style={styles.best} source={require('../../assets/images/best.png')} />
+					</View>
 								{this.state.isLoading &&
 										<View style={{flexDirection: 'column'}}>
 												<View style={styles.card}>

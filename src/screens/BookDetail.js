@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         flex: 1,
         flexDirection: 'column',
-        marginTop: -200,
+        marginTop: -300,
         borderTopRightRadius: 50,
         borderTopLeftRadius: 50,
         paddingHorizontal: 30,

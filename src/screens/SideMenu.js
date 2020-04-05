@@ -63,13 +63,15 @@ class SideMenu extends Component {
                         </View>
                     </TouchableWithoutFeedback>
 
-                    <View style={[styles.items, styles.noSelectedItems]}>
+                    {/* <View style={[styles.items, styles.noSelectedItems]}>
                         <Text style={styles.text}>Reading Challenge</Text>
-                    </View>
+                    </View> */}
+                 <TouchableOpacity style={styles.imageWrapper} onPress={() => this.props.navigation.navigate('Recommendations')}>
                     <View style={[styles.items, styles.noSelectedItems]}>
                         <Icon style={styles.iconWithText} name='thumb-up' color='#fff' size={25} />
                         <Text style={styles.text}>Recommendations</Text>
                     </View>
+                    </TouchableOpacity>
                     <TouchableOpacity style={styles.imageWrapper} onPress={() => this.props.navigation.navigate('BestBooks')}>
                         <View style={[styles.items, styles.noSelectedItems]}>
                             <Icon style={styles.iconWithText} name='trophy' color='#fff' size={25} />

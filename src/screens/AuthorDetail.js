@@ -54,7 +54,7 @@ class AuthorDetailOriginal extends Component {
                                     <View style={styles.card2}>
                                     <Image style={{ width: 60, height: 80,marginTop:25 }} source={{ uri: v.book_image }} />
                                     </View>
-                                    <Text style={styles.title}>{v.book_name}</Text>
+                                    <Text numberOfLines={2} style={styles.title}>{v.book_name}</Text>
                                     <View style={{flex:1, flexDirection:'row'}}>
                                     <Text style={styles.title}>Review : <Icon name="md-text" size={15} style={styles.star}> </Icon>{v.total_reviewers}</Text>
                                     <Text style={styles.title}>       Rating : <Icon name="ios-star" size={15} style={styles.star}> </Icon>{v.avg_rating}</Text>
