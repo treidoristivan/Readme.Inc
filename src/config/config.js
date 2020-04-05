@@ -13,7 +13,7 @@ export const APP_URL = "http://3.88.30.184:4444"
 export const APP_ICON_URL = "http://3.88.30.184:4444/icons/"
 export const APP_IMAGE_URL = "http://3.88.30.184:4444/images/"
 
-export const Get = (url, token = null, contentType = 'application/json') => {
+export const Get = (url, token = null, body, contentType = 'application/json') => {
     return new Promise((resolve, reject) => {
         axios.defaults.headers.Authorization = `Bearer ${token}`
         axios({
@@ -27,7 +27,8 @@ export const Get = (url, token = null, contentType = 'application/json') => {
                 },
                 Authorization: `Bearer ${token}`
             },
-            responseType: 'json'
+            data: body
+            // responseType: 'json'
         })
             .then(result => {
                 resolve(result)

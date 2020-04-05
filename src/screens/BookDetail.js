@@ -11,6 +11,7 @@ import { getBook } from '../redux/actions/book';
 import { withNavigation } from 'react-navigation';
 import formatRupiah from '../helper/formatRupiah';
 import { getMyFavoriteBook, deleteMyFavoriteBook, postMyFavoriteBook } from '../redux/actions/user';
+import { getReviewByIdBook } from '../redux/actions/review'
 
 // component
 import ButtonBack from '../components/BackButton';
@@ -40,23 +41,16 @@ class BookDetailOriginal extends Component {
 
     async componentDidMount() {
 
-        // const jwt = this.props.auth.data.token;
         await this.props.dispatch(getBook(this.props.navigation.state.params.bookId))
         await this.setState({ isLoading: false })
-        // await this.setState({
-        //     itemImage: { uri: this.props.book.itemDetail }
-        // });
+
         this.props.dispatch(getMyFavoriteBook(this.props.auth.token))
         if (this.props.user.data) {
             const data = this.props.user.data.map((v) => {
                 return v.id_book;
             })
-            // const dataBook = this.props.book.data.map((v) => {
-            //     return v.id;
-            // })
-            // console.log(dataBook, 'dataBook')
             for (var i = 0; i < data.length; i++) {
-                // for (var b = 0; b < dataBook.length; b++) {
+
                 if (data[i] == this.props.book.itemDetail.id) {
                     this.setState({ addFavorite: true })
                     break;
@@ -64,9 +58,12 @@ class BookDetailOriginal extends Component {
                     this.setState({ addFavorite: false })
                 }
             }
-            // }
-
         }
+        const data = {
+            idBook: this.props.navigation.state.params.bookId
+        }
+        console.log('datadatadatadatafdatadatarad', data)
+        await this.props.dispatch(getReviewByIdBook(data, this.props.auth.token))
     }
 
     handleDeleteFavorite(id) {
@@ -107,6 +104,7 @@ class BookDetailOriginal extends Component {
     // }
 
     render() {
+        console.log(this.props.review)
         return (
 
             <View style={styles.container}>
@@ -175,7 +173,14 @@ class BookDetailOriginal extends Component {
                                             )
                                         })}
                                     </ScrollView> */}
-                            <Text style={{ fontFamily: 'Nunito-Regular', marginTop: 10 }}>Review</Text>
+                            <View style={{ flex: 1, marginTop: 20, height: 40 }}>
+
+                                <View style={{ flex: 1, backgroundColor: 'grey', width: 140, marginLeft: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 10 }}>
+                                    <TouchableOpacity onPress={() => this.toogleReview()}>
+                                        <Text style={{ color: 'white', alignContent: 'center', textAlign: 'center' }}>Lihat Komentar</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
                             {/* {
                                         this.props.item.itemDetail.reviews.map((v, i) => {
                                             return (
@@ -284,7 +289,8 @@ const mapStateToProps = state => {
     return {
         book: state.book,
         auth: state.auth,
-        user: state.user
+        user: state.user,
+        review: state.review
     }
 }
 

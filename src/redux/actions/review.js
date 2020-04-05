@@ -1,10 +1,14 @@
 import { APP_URL, Get, Post, Patch, Delete } from '../../config/config';
+import review from '../reducers/Review';
 
 
-export const getReviewByIdBook = (idBook, token) => {
+export const getReviewByIdBook = (data, token) => {
+    console.log(data)
+    console.log(token)
+    console.log(APP_URL + '/review')
     return {
         type: 'GET_REVIEWS_BY_ID_BOOK',
-        payload: Get(APP_URL.concat('/review'), token, idBook)
+        payload: Get(APP_URL.concat('/review'), token, data)
     }
 }
 
@@ -22,10 +26,10 @@ export const updateReviewByIdBook = (data, token) => {
     }
 }
 
-export const deleteReviewByIdBook = (idBook, token) => {
+export const deleteReviewByIdBook = (data, token) => {
     return {
         type: 'DELETE_REVIEWS_BY_ID_BOOK',
-        payload: Patch(APP_URL.concat('/review'), token, idBook)
+        payload: Patch(APP_URL.concat('/review'), token, data)
     }
 }
 
