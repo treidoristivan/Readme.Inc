@@ -16,6 +16,7 @@ import ForgotPassword from '../screens/ForgotPassword';
 import ForgotPasswordSuccess from '../screens/ForgotPasswordSuccess';
 import Home from '../screens/Home';
 import SideMenu from '../screens/SideMenu'
+import SliderBar from '../components/SliderBar';
 import Login from '../screens/Login';
 import Verify from '../screens/Verify'
 import Profile from '../components/SideMenu/Profile';
@@ -188,6 +189,12 @@ const HomeNav = createStackNavigator({
         screen: SideMenu,
         navigationOptions:{
             headerShown:false,
+        },
+    },
+    SliderBar: {
+        screen: SliderBar,
+        navigationOptions: {
+            headerShown: false,
         },
     },
     Profile: {

@@ -1,6 +1,7 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert, ActivityIndicator } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -28,8 +29,8 @@ class RegisterOriginal extends Component {
             email,
             password,
         }
-        if (username && email && password && this.state.confirmPassword) {
-            if (password === this.state.confirmPassword) {
+        if (username && email && password ) {
+            if (password) {
                 await this.props.dispatch(register(data))
             } else {
                 Alert.alert('Register Failed', 'Password and Confirm Password Must Match')
@@ -104,10 +105,13 @@ class RegisterOriginal extends Component {
                         </View>
                         <View style={styles.input}>
                             <Input placeholder="Password" secureTextEntry textContentType="password" value={this.state.password} onChange={(e) => this.setState({ password: e.nativeEvent.text })} />
+                            <TouchableOpacity>
+                            <Icon name='eye-outline' color='#3399ff' size={23} style={styles.eye}/>  
+                            </TouchableOpacity>
                         </View>
-                        <View style={styles.input}>
+                        {/* <View style={styles.input}>
                             <Input placeholder="Confirm Password" secureTextEntry textContentType="password" value={this.state.confirmPassword} onChange={(e) => this.setState({ confirmPassword: e.nativeEvent.text })} />
-                        </View>
+                        </View> */}
                         <TouchableOpacity style={styles.registerButton} onPress={() => this.handleSubmit()}>
                             {this.props.auth.isLoading
                                 ? <ActivityIndicator size="small" color="#fff" />
@@ -186,15 +190,16 @@ const styles = StyleSheet.create({
         
     },
     input: {
-        flex: 1,
-        flexDirection: 'column',
+        flex: 0,
+        flexDirection: 'row',
         margin: 5,
-        marginHorizontal:10,
         borderBottomWidth: 1,
-        borderBottomColor: '#3399ff',
-        
-       
+        borderBottomColor:'#3399ff'
     },
+    eye: {
+        marginVertical:10,
+        marginRight:10
+    }
 });
 
 const Register = withNavigation(RegisterOriginal)
