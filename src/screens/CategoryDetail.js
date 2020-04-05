@@ -1,11 +1,12 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
-import { Button} from 'native-base';
+import { Button } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { withNavigationFocus } from 'react-navigation';
 import { connect } from 'react-redux';
 import { getBooksByGenre } from '../redux/actions/book';
+import { getMyFavoriteBook, deleteMyFavoriteBook, postMyFavoriteBook } from '../redux/actions/user';
 import { APP_ICON_URL } from '../config/config';
 
 // create a component
@@ -14,28 +15,36 @@ class CategoryDetailOriginal extends Component {
         super(props)
         this.state = {
             isLoading: true,
+            addFavorite: false,
         }
     }
 
     async componentDidMount() {
+
+
         await this.props.dispatch(getBooksByGenre(this.props.navigation.state.params.categoryId));
         await this.setState({ isLoading: false });
         this.props.navigation.addListener('didFocus', () => this.onFocus(this.props));
+
+
     }
 
     async onFocus(props) {
         props.dispatch(getBooksByGenre(this.props.navigation.state.params.categoryId));
     }
 
+
+
+
     render() {
-        console.log('Category Detail, genre detail', this.props)
-        console.log('Books in this genre', this.props.books.data)
-        console.log('BOOK PARAMS', this.props.navigation.state.params.categoryId)
+        // console.log('Category Detail, genre detail', this.props)
+        // console.log('Books in this genre', this.props.books.data)
+        // console.log('BOOK PARAMS', this.props.navigation.state.params.categoryId)
         return (
             <View style={styles.container}>
                 <ScrollView vertikal showsVertialScrollIndicator={false}>
                     {this.state.isLoading &&
-                        <View style={{flexDirection: 'column'}}>
+                        <View style={{ flexDirection: 'column' }}>
                             <View style={styles.card}>
                                 <View style={styles.cardWrapper}>
                                     <View style={{ backgroundColor: '#eee', width: 50, height: 50 }}></View>
@@ -53,26 +62,39 @@ class CategoryDetailOriginal extends Component {
                             styler.push()
                         }
                         return (
-                            <TouchableOpacity style={styler} key={i} onPress={() => this.props.navigation.navigate('BookDetail', {bookId: v.id})}>
-                              <View style={{flex:1, flexDirection:'row'}}>
-                              <View style={styles.cardImg}>
-                               <Image style={styles.img} source={{ uri: v.book_image }} />
-                               </View>
-                                <View style={styles.cardWrapper}>
-                                    <Text style={styles.title}>{v.book_name}</Text>
-                                    <Text >Reviews : {v.total_reviewers}</Text>
-                                    <Text >Rating :  <Icon name="ios-star" size={15} style={styles.star} />  {v.avg_rating}</Text>
+                            <TouchableOpacity style={styler} key={i} onPress={() => this.props.navigation.navigate('BookDetail', { bookId: v.id })}>
+                                <View style={{ flex: 1, flexDirection: 'row' }}>
+                                    <View style={styles.cardImg}>
+                                        <Image style={styles.img} source={{ uri: v.book_image }} />
+                                    </View>
+                                    <View style={styles.cardWrapper}>
+                                        <Text style={styles.title}>{v.book_name}</Text>
+                                        <Text >Reviews : {v.total_reviewers}</Text>
+                                        <Text >Rating :  <Icon name="ios-star" size={15} style={styles.star} />  {v.avg_rating}</Text>
 
-                                    <Button style={styles.button} onPress={() => this.setState({ modalVisible: true })}>
-                                    <Text style={styles.buttonText}>  <Icon name="md-appstore" size={15}/>  Add to List  </Text>
-                                    </Button>
-                                </View>
+                                        {this.props.addFavorite &&
+                                            <>
+                                                < Button style={styles.button} onPress={() => this.setState({ modalVisible: true })}>
+                                                    <Text style={styles.buttonText}>  <Icon name="md-appstore" size={15} />  Delete to Favorite  </Text>
+                                                </Button>
+                                            </>
+                                        }
+
+                                        {!this.state.addFavorite &&
+                                            <>
+                                                < Button style={styles.button} onPress={() => this.setState({ modalVisible: true })}>
+                                                    <Text style={styles.buttonText}>  <Icon name="md-appstore" size={15} />  Add to Favorite  </Text>
+                                                </Button>
+                                            </>
+                                        }
+
+                                    </View>
                                 </View>
                             </TouchableOpacity>
                         )
                     })}
                 </ScrollView>
-            </View>
+            </View >
         );
     }
 }
@@ -82,28 +104,30 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'stretch',
-        backgroundColor:'#3399ff'
+        backgroundColor: '#3399ff'
     },
-    card: { backgroundColor: '#fff', width: 300, height: 165, borderRadius: 12, margin: 10,marginLeft:25, elevation: 5 },
-    cardImg: { flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start'},
-    cardWrapper: { flex: 1, flexDirection: 'column', justifyContent: 'flex-start',alignItems:'flex-start', alignSelf:'stretch'},
-    img: {width:60, height:80,marginLeft:15},
-    title: { marginTop: 10,paddingBottom:10, fontFamily: 'Nunito-Regular',color:'#3399ff' },
+    card: { backgroundColor: '#fff', width: 300, height: 165, borderRadius: 12, margin: 10, marginLeft: 25, elevation: 5 },
+    cardImg: { flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start' },
+    cardWrapper: { flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', alignSelf: 'stretch' },
+    img: { width: 60, height: 80, marginLeft: 15 },
+    title: { marginTop: 10, paddingBottom: 10, fontFamily: 'Nunito-Regular', color: '#3399ff' },
     star: {
         color: '#e3bd00',
     },
-    button: { marginTop: 6 ,backgroundColor:'#3399ff', height:33,marginLeft:10},
+    button: { marginTop: 6, backgroundColor: '#3399ff', height: 33, marginLeft: 10 },
     buttonText: {
         color: 'white',
-        fontSize:10,
+        fontSize: 10,
         textTransform: 'uppercase',
-        paddingVertical:0
+        paddingVertical: 0
     },
 });
 
 const mapStateToProps = state => {
     return {
         books: state.book,
+        auth: state.auth,
+        user: state.user
     }
 }
 
