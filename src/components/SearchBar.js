@@ -18,7 +18,7 @@ class SearchBarOriginal extends Component {
                 <View style={styles.searchbarWrapper}>
                     <Item style={styles.searchbar} onPress={() => this.props.navigation.navigate('Search')}>
                         <Icon name="ios-search" style={styles.searchIcon} />
-                        <Text style={styles.searchInput}>Request Favorite Books</Text>
+                        <Text style={styles.searchInput}>Search books</Text>
                     </Item>
                 </View>
             </View>

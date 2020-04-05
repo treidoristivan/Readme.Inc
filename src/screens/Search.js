@@ -4,7 +4,7 @@ import { View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, ActivityIn
 import { Input, Container } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
-import { getBook } from '../redux/actions/book';
+import { getBooks } from '../redux/actions/book';
 import { APP_IMAGE_URL } from '../config/config';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import formatRupiah from '../helper/formatRupiah';
@@ -17,7 +17,7 @@ class SearchOriginal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            searchParam: '',
+            // searchParam: '',
             searchValue: '',
             isLoading: true,
             isSuccess: false,
@@ -25,24 +25,25 @@ class SearchOriginal extends Component {
     }
 
     async componentDidMount() {
-        const search = this.props.navigation.getParam('search')
-        const sort = this.props.navigation.getParam('sort')
-        const jwt = this.props.auth.data.token;
-        var arr_params = []
-        var params = ""
-        if (search) {
-            search.map((v, i) => {
-                arr_params.push(`search[${v.name}]=${v.value}`)
-            })
-        }
-        if (sort) {
-            sort.map((v, i) => {
-                arr_params.push(`sort[${v.name}]=${v.value}`)
-            })
-        }
-        params = arr_params.join('&')
-        await this.props.dispatch(getBook(jwt, params))
-        await this.setState({ isLoading: false, searchParam: params })
+        // const search = this.props.navigation.getParam('search')
+        // const sort = this.props.navigation.getParam('sort')
+        // const jwt = this.props.auth.data.token;
+        // var arr_params = []
+        // var params = ""
+        // if (search) {
+        //     search.map((v, i) => {
+        //         arr_params.push(`search[${v.name}]=${v.value}`)
+        //     })
+        // }
+        // if (sort) {
+        //     sort.map((v, i) => {
+        //         arr_params.push(`sort[${v.name}]=${v.value}`)
+        //     })
+        // }
+        // params = arr_params.join('&')
+        await this.setState({ isLoading: true })
+        await this.props.dispatch(getBooks(''))
+        await this.setState({ isLoading: false })
     }
 
     async componentDidUpdate(prevProps, prevState) {
@@ -50,27 +51,35 @@ class SearchOriginal extends Component {
         if (prevState.searchValue !== this.state.searchValue) {
             if (this.state.searchValue.length >= 3) {
                 await this.setState({ isLoading: true })
-                await this.props.dispatch(getBook(jwt, this.state.searchParam + `&search[name]=${this.state.searchValue}`))
+                await this.props.dispatch(getBooks(`?search[book_name]=${this.state.searchValue}`))
                 await this.setState({ isLoading: false })
             } else if (this.state.searchValue.length === 0) {
                 await this.setState({ isLoading: true })
-                await this.props.dispatch(getBook(jwt, this.state.searchParam))
+                await this.props.dispatch(getBooks(''))
                 await this.setState({ isLoading: false })
             }
         }
     }
 
     render() {
+        console.log('SEARCHED BOOKS LENGTH: ', this.props.book.data)
         return (
             <Container style={styles.container}>
                 <View style={styles.headerWrapper}>
                     <BackButton />
                     <View style={styles.searchWrapper}>
                         <IonIcon name="ios-search" style={styles.searchIcon} />
-                        <Input style={styles.searchInput} placeholder="Check Your Favorite Books" value={this.state.searchValue} onChange={(e) => this.setState({ searchValue: e.nativeEvent.text })} />
+                        <Input style={styles.searchInput} placeholder="Search Books" value={this.state.searchValue} onChange={(e) => this.setState({ searchValue: e.nativeEvent.text })} />
                     </View>
                 </View>
-                {
+                <View>
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        { this.props.book.data.map((v, i) => {
+                            return <Text>{v.book_name}</Text>
+                        }) }
+                    </ScrollView>
+                </View>
+                {/* {
                     this.state.isLoading
                     ?   <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                             <ActivityIndicator size="large" color='#3399ff' />
@@ -102,7 +111,7 @@ class SearchOriginal extends Component {
                                 )
                             })}
                         </ScrollView>
-                }
+                } */}
             </Container>
         );
     }
@@ -186,7 +195,7 @@ const Search = withNavigation(SearchOriginal)
 
 const mapStateToProps = state => {
     return {
-        item: state.item,
+        book: state.book,
         auth: state.auth
     }
 }
