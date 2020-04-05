@@ -1,6 +1,8 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { Button} from 'native-base';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { withNavigationFocus } from 'react-navigation';
 import { connect } from 'react-redux';
 import { getBooksByGenre } from '../redux/actions/book';
@@ -59,7 +61,11 @@ class CategoryDetailOriginal extends Component {
                                 <View style={styles.cardWrapper}>
                                     <Text style={styles.title}>{v.book_name}</Text>
                                     <Text >Reviews : {v.total_reviewers}</Text>
-                                    <Text >Rating : {v.avg_rating}</Text>
+                                    <Text >Rating :  <Icon name="ios-star" size={15} style={styles.star} />  {v.avg_rating}</Text>
+
+                                    <Button style={styles.button} onPress={() => this.setState({ modalVisible: true })}>
+                                    <Text style={styles.buttonText}>  <Icon name="md-appstore" size={15}/>  Add to List  </Text>
+                                    </Button>
                                 </View>
                                 </View>
                             </TouchableOpacity>
@@ -83,6 +89,16 @@ const styles = StyleSheet.create({
     cardWrapper: { flex: 1, flexDirection: 'column', justifyContent: 'flex-start',alignItems:'flex-start', alignSelf:'stretch'},
     img: {width:60, height:80,marginLeft:15},
     title: { marginTop: 10,paddingBottom:10, fontFamily: 'Nunito-Regular',color:'#3399ff' },
+    star: {
+        color: '#e3bd00',
+    },
+    button: { marginTop: 6 ,backgroundColor:'#3399ff', height:33,marginLeft:10},
+    buttonText: {
+        color: 'white',
+        fontSize:10,
+        textTransform: 'uppercase',
+        paddingVertical:0
+    },
 });
 
 const mapStateToProps = state => {

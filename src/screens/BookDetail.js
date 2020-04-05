@@ -87,13 +87,12 @@ class BookDetailOriginal extends Component {
                                             <Icon name="ios-star" size={20} style={styles.star} />
                                             <Text style={styles.starCount}>{this.props.book.itemDetail.avg_rating}</Text>
                                             <Text style={styles.description}>{this.props.book.itemDetail.author_name}</Text>
-
                                         </View>
                                       
                                     </View>
                                     <Button rounded dark style={styles.button} onPress={() => this.setState({ modalVisible: true })}>
                                     <Text style={styles.buttonText}>Get Book</Text>
-                                </Button>
+                                    </Button>
                                     
                                     {/* <View style={styles.categoryWrapper}>
                                         {this.props.book.itemDetail.map((v, i) => (
