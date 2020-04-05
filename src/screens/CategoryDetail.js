@@ -47,8 +47,7 @@ class CategoryDetailOriginal extends Component {
                         <View style={{ flexDirection: 'column' }}>
                             <View style={styles.card}>
                                 <View style={styles.cardWrapper}>
-                                    <View style={{ backgroundColor: '#eee', width: 50, height: 50 }}></View>
-                                    <View style={{ backgroundColor: '#eee', height: 10, width: 50, marginTop: 5 }}></View>
+                                    
                                 </View>
                             </View>
                         </View>
@@ -68,7 +67,7 @@ class CategoryDetailOriginal extends Component {
                                         <Image style={styles.img} source={{ uri: v.book_image }} />
                                     </View>
                                     <View style={styles.cardWrapper}>
-                                        <Text style={styles.title}>{v.book_name}</Text>
+                                        <Text numberOfLines={2} style={styles.title}>{v.book_name}</Text>
                                         <Text >Reviews : {v.total_reviewers}</Text>
                                         <Text >Rating :  <Icon name="ios-star" size={15} style={styles.star} />  {v.avg_rating}</Text>
 

@@ -103,7 +103,7 @@ class SearchOriginal extends Component {
                                     <Image style={styles.img} source={{ uri: item.book_image }} />
                                     </View>
                                         <View style={styles.cardWrapper}>
-                                            <Text style={styles.title}>{item.book_name}</Text>
+                                            <Text numberOfLines={2} style={styles.title}>{item.book_name}</Text>
                                             <Text >Reviews : {item.total_reviewers}</Text>
                                             <Text >Rating :  <Icon name="ios-star" size={15} style={styles.star} />  {item.avg_rating}</Text>
 
