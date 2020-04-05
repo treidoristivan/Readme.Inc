@@ -14,6 +14,7 @@ class RegisterOriginal extends Component {
             username: '',
             email: '',
             password: '',
+            confirmPassword: '',
             isLoading: false,
             isSuccess: false,
             message: '',
@@ -27,7 +28,15 @@ class RegisterOriginal extends Component {
             email,
             password,
         }
-        await this.props.dispatch(register(data))
+        if (username && email && password && this.state.confirmPassword) {
+            if (password === this.state.confirmPassword) {
+                await this.props.dispatch(register(data))
+            } else {
+                Alert.alert('Register Failed', 'Password and Confirm Password Must Match')
+            }
+        } else {
+            Alert.alert('Register Failed', 'Please provide the required fields')
+        }
     }
 
     async componentDidUpdate(prevProps) {
@@ -61,10 +70,13 @@ class RegisterOriginal extends Component {
     }
 
     async handleRedirect() {
-        if (this.props.auth.isSuccess) {
-            this.props.navigation.navigate('Verify')
-        } else {
-            Alert.alert('Register Failed', this.state.message)
+        if (this.props.navigation.state.routeName === 'Register') {
+            if (this.state.isSuccess) {
+                this.setState({ isSuccess: false })
+                this.props.navigation.navigate('Verify')
+            } else {
+                Alert.alert('Register Failed', this.state.message)
+            }
         }
     }
 
@@ -92,6 +104,9 @@ class RegisterOriginal extends Component {
                         </View>
                         <View style={styles.input}>
                             <Input placeholder="Password" secureTextEntry textContentType="password" value={this.state.password} onChange={(e) => this.setState({ password: e.nativeEvent.text })} />
+                        </View>
+                        <View style={styles.input}>
+                            <Input placeholder="Confirm Password" secureTextEntry textContentType="password" value={this.state.confirmPassword} onChange={(e) => this.setState({ confirmPassword: e.nativeEvent.text })} />
                         </View>
                         <TouchableOpacity style={styles.registerButton} onPress={() => this.handleSubmit()}>
                             {this.props.auth.isLoading

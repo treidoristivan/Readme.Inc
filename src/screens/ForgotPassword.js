@@ -1,6 +1,6 @@
 // import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -59,10 +59,13 @@ class ForgotPasswordOriginal extends Component {
     }
 
     handleRedirect() {
-        if (this.props.auth.isSuccess) {
-            this.props.navigation.navigate('ForgotPasswordSuccess')
-        } else {
-            Alert.alert('Login Message', this.state.message)
+        if (this.props.navigation.state.routeName === 'ForgotPassword') {
+            if (this.state.isSuccess) {
+                this.setState({ isSuccess: false })
+                this.props.navigation.navigate('ForgotPasswordSuccess')
+            } else {
+                Alert.alert('Login Message', this.state.message)
+            }
         }
     }
 
@@ -86,7 +89,10 @@ class ForgotPasswordOriginal extends Component {
                     </View>
                     <Text style={{ alignSelf: 'flex-end', textAlign: 'left', marginTop: 30, marginRight:10, color: '#3399ff' }} onPress={() => this.props.navigation.navigate('ForgotPasswordSuccess')}>Have a code?</Text>
                     <TouchableOpacity style={styles.loginButton} onPress={() => this.handleSubmit()}>
-                        <Text style={styles.buttonText}>Submit</Text>
+                        {this.props.auth.isLoading
+                            ? <ActivityIndicator size="small" color="#fff" />
+                            : <Text style={styles.buttonText}>Submit</Text>
+                        }
                     </TouchableOpacity>
                 </View>
             </View>

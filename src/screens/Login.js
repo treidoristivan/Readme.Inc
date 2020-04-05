@@ -59,14 +59,18 @@ class LoginOriginal extends Component {
     }
 
     handleRedirect() {
-        if (this.props.auth.isSuccess) {
-            this.props.navigation.navigate('Home')
-        } else {
-            Alert.alert('Login Message', this.state.message)
+        if (this.props.navigation.state.routeName === 'Login') {
+            if (this.state.isSuccess) {
+                this.setState({ isSuccess: false })
+                this.props.navigation.navigate('Home')
+            } else {
+                Alert.alert('Login Message', this.state.message)
+            }
         }
     }
 
     render() {
+        console.log('IN HERE LOGIN', this.props.navigation.state.routeName)
         return (
             <View style={styles.container}>
                 <View style={styles.headerWrapper}>

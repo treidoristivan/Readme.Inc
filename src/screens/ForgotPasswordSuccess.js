@@ -63,10 +63,13 @@ class ForgotPasswordSuccessOriginal extends Component {
     }
 
     handleRedirect() {
-        if (this.props.auth.isSuccess) {
-            this.props.navigation.navigate('Login')
-        } else {
-            Alert.alert('Reset Password Failed', this.state.message)
+        if (this.props.navigation.state.routeName === 'ForgotPasswordSuccess') {
+            if (this.state.isSuccess) {
+                this.setState({ isSuccess: false })
+                this.props.navigation.navigate('Login')
+            } else {
+                Alert.alert('Reset Password Failed', this.state.message)
+            }
         }
     }
 
