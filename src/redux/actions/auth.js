@@ -22,6 +22,20 @@ export const register = (data) => {
     }
 }
 
+export const forgotPasswordRequest = (data) => {
+    return {
+        type: 'FORGOT_PASSWORD_REQUEST',
+        payload: Post(APP_URL.concat('/auth/forgot-password'), null, data)
+    }
+}
+
+export const forgotPasswordSuccess = (data) => {
+    return {
+        type: 'FORGOT_PASSWORD_SUCCESS',
+        payload: Post(APP_URL.concat('/auth/forgot-password/success'), null, data)
+    }
+}
+
 export const logout = (jwt) => {
     return {
         type: 'LOGOUT',
