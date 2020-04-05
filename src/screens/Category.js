@@ -43,7 +43,7 @@ class CategoryOriginal extends Component {
                             styler.push({ marginRight: 20 })
                         }
                             return (
-                                <TouchableOpacity style={styles.categoryCard} key={i} onPress={() => this.props.navigation.navigate('Search', { search: [{ name: "category", value: v.id }] })}>
+                                <TouchableOpacity style={styles.categoryCard} key={i} onPress={() => this.props.navigation.navigate('CategoryDetail', { categoryId: v.id })}>
                                     <Image source={{ uri: image }} style={{ width: 40, height: 40 }} />
                                     <Text style={{ marginTop: 5, fontFamily: 'Nunito-Regular', fontSize: 14, textAlign: 'center' }}>{v.genre_name}</Text>
                                 </TouchableOpacity>
