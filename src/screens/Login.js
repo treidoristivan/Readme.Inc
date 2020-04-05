@@ -1,6 +1,7 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator, Alert } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -16,6 +17,7 @@ class LoginOriginal extends Component {
             isLoading: false,
             isSuccess: false,
             message: '',
+            isPasswordVisible: true
         }
     }
 
@@ -87,7 +89,10 @@ class LoginOriginal extends Component {
                             <Input placeholder="Username" textContentType="username" value={this.state.username} onChange={(e) => this.setState({ username: e.nativeEvent.text })} />
                         </View>
                         <View style={styles.input}>
-                            <Input placeholder="Password" secureTextEntry textContentType="password" value={this.state.password} onChange={(e) => this.setState({ password: e.nativeEvent.text })} />
+                            <Input placeholder="Password" secureTextEntry={this.state.isPasswordVisible} textContentType="password" value={this.state.password} onChange={(e) => this.setState({ password: e.nativeEvent.text })} />
+                            <TouchableOpacity onPress={() => this.setState( prevState => ({isPasswordVisible: !prevState.isPasswordVisible}))}>
+                            <Icon name='eye-outline' color='#3399ff' size={23} style={styles.eye}/>  
+                            </TouchableOpacity>
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                             <Text style={{ flex: 1, textAlign: 'left', marginTop: 30,marginRight:10, color: '#3399ff' }} onPress={() => this.props.navigation.navigate('ForgotPassword')}>Forgot Password?</Text>
@@ -180,6 +185,10 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor:'#3399ff'
     },
+    eye: {
+        marginVertical:10,
+        marginRight:10
+    }
 });
 
 const Login = withNavigation(LoginOriginal)

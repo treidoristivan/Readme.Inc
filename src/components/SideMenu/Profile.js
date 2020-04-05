@@ -10,6 +10,7 @@ import { logout, changePhoto } from '../../redux/actions/auth';
 import { withNavigationFocus } from 'react-navigation';
 import { APP_IMAGE_URL, APP_URL } from '../../config/config';
 
+
 // create a component
 class ProfileOriginal extends Component {
     constructor(props) {
@@ -23,10 +24,11 @@ class ProfileOriginal extends Component {
     }
 
     async handleLogout() {
-        const jwt = await this.props.auth.data.token
-        if (jwt !== null) {
-            await this.props.dispatch(logout(jwt))
-        }
+        // const jwt = await this.props.auth.data.token
+        // if (jwt !== null) {
+        await this.props.dispatch(logout())
+        this.props.navigation.navigate('Login')
+        // }
     }
 
     async componentDidMount() {
@@ -92,8 +94,6 @@ class ProfileOriginal extends Component {
 
     updateProfilePic = async () => {
 
-        const jwt = this.props.auth.data.token;
-
         const options = {
             title: 'Change Photo Profile',
             storageOptions: {
@@ -114,6 +114,7 @@ class ProfileOriginal extends Component {
         if (!cameraPermission) {
             cameraPermission = await this.requestCameraPermission();
         } else {
+            const jwt = this.props.auth.token
             ImagePicker.showImagePicker(options, response => {
                 if (response.didCancel) {
                     ToastAndroid.show('Action Cancelled', ToastAndroid.LONG);
@@ -122,22 +123,35 @@ class ProfileOriginal extends Component {
                 } else if (response.customButton) {
                     console.log('User tapped custom button: ', response.customButton);
                 } else {
-                    ToastAndroid.show('loading...', ToastAndroid.LONG);
+                    const image = {
+                        type: "image/jpeg",
+                        uri: response.uri,
+                        name: response.fileName
+                    }
+                    console.log(image)
+                    //     ToastAndroid.show('loading...', ToastAndroid.LONG);
                     this.setState({
                         photo: { uri: response.uri }
                     });
-                    RNFetchBlob.fetch('PATCH', `${APP_URL}/profile/photo`, {
-                        Authorization: `Bearer ${jwt}`,
-                        'Content-Type': 'multipart/form-data',
-                    }, [
-                        { name: 'image', filename: response.fileName, type: response.type, data: RNFetchBlob.wrap(response.path) },
-                    ]).then(async (resp) => {
-                        const data = JSON.parse(resp.data);
-                        this.props.dispatch(changePhoto(data.data.photo));
-                        ToastAndroid.show('Change Photo Profile Success', ToastAndroid.LONG);
-                    }).catch((err) => {
-                        console.log(err);
-                    })
+
+                    var formData = new FormData()
+                    formData.append('fullname', this.props.auth.data.user_fullname)
+                    formData.append('images', image)
+                    this.props.dispatch(changePhoto(jwt, formData))
+                    //     RNFetchBlob.fetch('PATCH', `${APP_URL}/users`, {
+                    //         Authorization: `Bearer ${jwt}`,
+                    //         'Content-Type': 'multipart/form-data',
+                    //     }, [
+                    //         { name: 'image', filename: response.fileName, type: response.type, data: RNFetchBlob.wrap(response.path) },
+                    //     ]).then(async (resp) => {
+                    //         const data = JSON.parse(resp.data);
+                    //         console.log('datadatadatadatadatadatadatadatadatadata', resp)
+                    //         this.props.dispatch(changePhoto(data.data.photo));
+
+                    //         ToastAndroid.show('Change Photo Profile Success', ToastAndroid.LONG);
+                    //     }).catch((err) => {
+                    //         console.log(err);
+                    //     })
                 }
             });
         }
@@ -145,6 +159,7 @@ class ProfileOriginal extends Component {
 
 
     render() {
+        console.log(APP_URL+this.props.auth.data.user_image)
         return (
             <View style={styles.container}>
                 <View style={styles.headerWrapper}>
@@ -152,16 +167,16 @@ class ProfileOriginal extends Component {
                         <SliderTitle title="Profile"/>
                     </View> */}
                     <TouchableOpacity style={{ backgroundColor: '#3399ff', padding: 10, flexDirection: 'row-reverse', alignItems: 'center' }} onPress={() => this.handleLogout()}>
-                            <Feather name="log-out" size={25} color="red" />
-                            <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 18, marginRight: 10, color: 'red' }}>Log Out</Text>
-                        </TouchableOpacity>
-                    <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-                        <TouchableOpacity onPress={() => this.updateProfilePic()} style={{ borderWidth: 3, borderRadius: 15, padding: 10, borderRadius: 100,borderColor:'#00cc00' }}>
-                            {this.state.photo !== null
-                                ? <Image source={this.state.photo} style={{ width: 100, height: 100, borderRadius: 100 }} />
+                        <Feather name="log-out" size={25} color="red" />
+                        <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 18, marginRight: 10, color: 'red' }}>Log Out</Text>
+                    </TouchableOpacity>
+                    <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                        <TouchableOpacity onPress={() => this.updateProfilePic()} style={{ borderWidth: 3, borderRadius: 15, padding: 10, borderRadius: 100, borderColor: '#00cc00' }}>
+                            {this.props.auth.data.user_image !== null
+                                ? <Image source={{ uri: `${APP_URL}${this.props.auth.data.user_image}` }} style={{ width: 100, height: 100, borderRadius: 100 }} />
                                 : <ActivityIndicator size="large" color="#00cc00" />
                             }
-                            <Feather name="edit" size={25} style={{ position: 'absolute', right: -15, bottom: -10,color:'#00cc00' }} />
+                            <Feather name="edit" size={25} style={{ position: 'absolute', right: -15, bottom: -10, color: '#00cc00' }} />
                         </TouchableOpacity>
                         <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 30, color: '#111', textAlign: 'center', marginTop: 10 }}>{this.props.auth.data.name}</Text>
                     </View>
@@ -172,18 +187,18 @@ class ProfileOriginal extends Component {
                             <View>
                                 <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 15 }}>Email            : {this.props.auth.data.email}</Text>
                                 <Text style={{ fontFamily: 'Nunito-Regular', color: '#333', fontSize: 15 }}>Username    : {this.props.auth.data.username}</Text>
-                                <Text style={{ fontFamily: 'Nunito-Regular', color: '#00cc00', fontSize: 15,paddingTop:20 }} onPress={() => this.props.navigation.navigate('ProfileSetting')}>Edit Profile</Text>
+                                <Text style={{ fontFamily: 'Nunito-Regular', color: '#00cc00', fontSize: 15, paddingTop: 20 }} onPress={() => this.props.navigation.navigate('ProfileSetting')}>Edit Profile</Text>
                             </View>
                         </View>
-                        <TouchableOpacity style={{ backgroundColor: 'white', elevation: 1, marginTop: 20, padding: 10, flexDirection: 'row',justifyContent:'center' }} onPress={() => this.props.navigation.navigate('ReviewHistory')} >
+                        <TouchableOpacity style={{ backgroundColor: 'white', elevation: 1, marginTop: 20, padding: 10, flexDirection: 'row', justifyContent: 'center' }} onPress={() => this.props.navigation.navigate('ReviewHistory')} >
                             <Feather name="file-text" size={25} />
                             <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 18, marginLeft: 10 }}>Review History</Text>
                         </TouchableOpacity>
-                        
-                        {/* <TouchableOpacity style={{ backgroundColor: 'white', elevation: 1, padding: 10, flexDirection: 'row', alignItems: 'center' }} onPress={() => this.handleLogout()}>
+
+                        <TouchableOpacity style={{ backgroundColor: 'white', elevation: 1, padding: 10, flexDirection: 'row', alignItems: 'center' }} onPress={() => this.handleLogout()}>
                             <Feather name="log-out" size={25} color="red" />
                             <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 18, marginLeft: 10, color: 'red' }}>Log Out</Text>
-                        </TouchableOpacity> */}
+                        </TouchableOpacity>
                     </ScrollView>
                 </View>
             </View>

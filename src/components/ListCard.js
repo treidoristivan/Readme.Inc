@@ -24,8 +24,8 @@ class CardListOriginal extends Component {
         this.props.navigation.addListener('didFocus', () => this.onFocus());
     }
 
-    async onFocus(){
-        await this.setState({isLoading: true});
+    async onFocus() {
+        await this.setState({ isLoading: true });
         const jwt = this.props.auth.data.token;
         await this.props.dispatch(getPopularBooks(jwt));
         await this.setState({ isLoading: false });
@@ -40,31 +40,31 @@ class CardListOriginal extends Component {
                 >
                     {
                         this.state.isLoading &&
-                        <View style={{marginHorizontal: 20, flexDirection: 'row'}}>
+                        <View style={{ marginHorizontal: 20, flexDirection: 'row' }}>
                             <View style={styles.menuWrapper}>
-                                <View style={{width: 200, height:120, backgroundColor: '#eee'}}></View>
+                                <View style={{ width: 200, height: 120, backgroundColor: '#eee' }}></View>
                                 <View style={styles.menuInfo}>
-                                    <View style={{width: 60, height: 10, backgroundColor: '#eee'}}></View>
-                                    <View style={{width: 120, height: 10, backgroundColor: '#eee', marginTop: 5}}></View>
+                                    <View style={{ width: 60, height: 10, backgroundColor: '#eee' }}></View>
+                                    <View style={{ width: 120, height: 10, backgroundColor: '#eee', marginTop: 5 }}></View>
                                 </View>
                             </View>
                             <View style={styles.menuWrapper}>
-                                <View style={{width: 200, height:120, backgroundColor: '#eee'}}></View>
+                                <View style={{ width: 200, height: 120, backgroundColor: '#eee' }}></View>
                                 <View style={styles.menuInfo}>
-                                    <View style={{width: 60, height: 10, backgroundColor: '#eee'}}></View>
-                                    <View style={{width: 120, height: 10, backgroundColor: '#eee', marginTop: 5}}></View>
+                                    <View style={{ width: 60, height: 10, backgroundColor: '#eee' }}></View>
+                                    <View style={{ width: 120, height: 10, backgroundColor: '#eee', marginTop: 5 }}></View>
                                 </View>
                             </View>
                             <View style={styles.menuWrapper}>
-                                <View style={{width: 200, height:120, backgroundColor: '#eee'}}></View>
+                                <View style={{ width: 200, height: 120, backgroundColor: '#eee' }}></View>
                                 <View style={styles.menuInfo}>
-                                    <View style={{width: 60, height: 10, backgroundColor: '#eee'}}></View>
-                                    <View style={{width: 120, height: 10, backgroundColor: '#eee', marginTop: 5}}></View>
+                                    <View style={{ width: 60, height: 10, backgroundColor: '#eee' }}></View>
+                                    <View style={{ width: 120, height: 10, backgroundColor: '#eee', marginTop: 5 }}></View>
                                 </View>
                             </View>
                         </View>
                     }
-                    {!this.state.isLoading && this.props.item.data.items || [].map((v, i) => {
+                    {/* {!this.state.isLoading && this.props.item.data.item || [].map((v, i) => {
                         var img = <View style={[styles.image, { backgroundColor: '#bbb' }]}><Text>No Image</Text></View>
                         if (v.images.length !== 0) {
                             if (v.images[0].filename.substr(0, 4) === 'http') {
@@ -98,7 +98,7 @@ class CardListOriginal extends Component {
                                 </View>
                             </TouchableOpacity>
                         )
-                    })}
+                    })} */}
                 </ScrollView>
             </View >
         );
@@ -126,7 +126,6 @@ const ListCard = withNavigation(CardListOriginal)
 
 const mapStateToProps = state => {
     return {
-        item: state.item,
         auth: state.auth
     }
 }

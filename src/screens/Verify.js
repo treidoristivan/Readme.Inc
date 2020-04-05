@@ -74,7 +74,7 @@ class VerifyOriginal extends Component {
             <View style={styles.container}>
                 <View style={styles.headerWrapper}>
                     <Image source={require('../assets/icons/favicon.png')} style={styles.logo} />
-                    <Text style={styles.logoText}>Book&Food</Text>
+                    <Text style={styles.logoText}>Readme</Text>
                 </View>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.illustWrapper}>
@@ -141,8 +141,8 @@ const styles = StyleSheet.create({
     },
     loginButton: {
         backgroundColor: '#3399ff',
-        padding: 15,
-        borderRadius: 12,
+        padding: 10,
+        borderRadius: 25,
         justifyContent: 'center',
         flex: 0,
         flexDirection: 'row',

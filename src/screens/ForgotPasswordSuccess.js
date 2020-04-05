@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { Input } from 'native-base';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import { forgotPasswordSuccess } from '../redux/actions/auth';
@@ -16,7 +17,8 @@ class ForgotPasswordSuccessOriginal extends Component {
             confirmPassword: '',
             isLoading: false,
             isSuccess: false,
-            message: ''
+            message: '',
+            isPasswordVisible: true
         }
     }
 
@@ -91,10 +93,16 @@ class ForgotPasswordSuccessOriginal extends Component {
                             <Input placeholder="Verification Code" value={this.state.verificationCode} onChange={(e) => this.setState({ verificationCode: e.nativeEvent.text })} />
                         </View>
                         <View style={styles.input}>
-                            <Input placeholder="New Password" secureTextEntry textContentType="password" value={this.state.newPassword} onChange={(e) => this.setState({ newPassword: e.nativeEvent.text })} />
+                            <Input placeholder="New Password" secureTextEntry={this.state.isPasswordVisible} textContentType="password" value={this.state.newPassword} onChange={(e) => this.setState({ newPassword: e.nativeEvent.text })} />
+                            <TouchableOpacity onPress={() => this.setState( prevState => ({isPasswordVisible: !prevState.isPasswordVisible}))}>
+                            <Icon name='eye-outline' color='#3399ff' size={23} style={styles.eye}/>  
+                            </TouchableOpacity>
                         </View>
                         <View style={styles.input}>
-                            <Input placeholder="Confirm Password" secureTextEntry textContentType="password" value={this.state.confirmPassword} onChange={(e) => this.setState({ confirmPassword: e.nativeEvent.text })} />
+                            <Input placeholder="Confirm Password" secureTextEntry={this.state.isPasswordVisible} textContentType="password" value={this.state.confirmPassword} onChange={(e) => this.setState({ confirmPassword: e.nativeEvent.text })} />
+                            <TouchableOpacity onPress={() => this.setState( prevState => ({isPasswordVisible: !prevState.isPasswordVisible}))}>
+                            <Icon name='eye-outline' color='#3399ff' size={23} style={styles.eye}/>  
+                            </TouchableOpacity>
                         </View>
                         <TouchableOpacity style={styles.loginButton} onPress={() => this.handleSubmit()}>
                             {this.props.auth.isLoading
@@ -180,6 +188,10 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor:'#3399ff'
     },
+    eye: {
+        marginVertical:10,
+        marginRight:10
+    }
 });
 
 const ForgotPasswordSuccess = withNavigation(ForgotPasswordSuccessOriginal)
