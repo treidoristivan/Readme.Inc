@@ -6,7 +6,7 @@ import RNFetchBlob from 'rn-fetch-blob';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert, PermissionsAndroid, ToastAndroid, ActivityIndicator } from 'react-native';
 // import {Avatar} from 'react-native-element';
 import { connect } from 'react-redux';
-import { logout, changePhoto } from '../../redux/actions/auth';
+import { logout, changePhoto, getProfile } from '../../redux/actions/auth';
 import { withNavigationFocus } from 'react-navigation';
 import { APP_IMAGE_URL, APP_URL } from '../../config/config';
 
@@ -138,6 +138,7 @@ class ProfileOriginal extends Component {
                     formData.append('fullname', this.props.auth.data.user_fullname)
                     formData.append('images', image)
                     this.props.dispatch(changePhoto(jwt, formData))
+                    this.props.dispatch(getProfile(jwt))
                     //     RNFetchBlob.fetch('PATCH', `${APP_URL}/users`, {
                     //         Authorization: `Bearer ${jwt}`,
                     //         'Content-Type': 'multipart/form-data',
@@ -178,7 +179,7 @@ class ProfileOriginal extends Component {
                             }
                             <Feather name="edit" size={25} style={{ position: 'absolute', right: -15, bottom: -10, color: '#00cc00' }} />
                         </TouchableOpacity>
-                        <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 30, color: '#111', textAlign: 'center', marginTop: 10 }}>{this.props.auth.data.name}</Text>
+                        <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 25, color: '#111', textAlign: 'center', marginTop: 30, color: '#fff' }}>{this.props.auth.data.user_fullname === undefined ? null : this.props.auth.data.user_fullname.toUpperCase()}</Text>
                     </View>
                 </View>
                 <View style={{ flex: 1, flexDirection: 'column', width: '100%' }}>
@@ -193,11 +194,6 @@ class ProfileOriginal extends Component {
                         <TouchableOpacity style={{ backgroundColor: 'white', elevation: 1, marginTop: 20, padding: 10, flexDirection: 'row', justifyContent: 'center' }} onPress={() => this.props.navigation.navigate('ReviewHistory')} >
                             <Feather name="file-text" size={25} />
                             <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 18, marginLeft: 10 }}>Review History</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={{ backgroundColor: 'white', elevation: 1, padding: 10, flexDirection: 'row', alignItems: 'center' }} onPress={() => this.handleLogout()}>
-                            <Feather name="log-out" size={25} color="red" />
-                            <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 18, marginLeft: 10, color: 'red' }}>Log Out</Text>
                         </TouchableOpacity>
                     </ScrollView>
                 </View>

@@ -3,9 +3,19 @@ import { Text, View, StyleSheet, Dimensions, Image, ScrollView, TouchableOpacity
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { APP_URL } from '../config/config';
 import { connect } from 'react-redux';
+import { logout } from '../redux/actions/auth'
 
 const { width, height } = Dimensions.get('window')
 class SideMenu extends Component {
+
+    async handleLogout() {
+        // const jwt = await this.props.auth.data.token
+        // if (jwt !== null) {
+        await this.props.dispatch(logout())
+        this.props.navigation.navigate('Login')
+        // }
+    }
+
     render() {
         return (
             <View style={styles.menu}>
@@ -94,8 +104,8 @@ class SideMenu extends Component {
                     </TouchableOpacity>
 
                     <View style={[styles.items, styles.noSelectedItems]}>
-                        <Icon style={styles.iconWithText} name='logout' color='#fff' size={25} />
-                        <Text style={styles.text}>Log Out</Text>
+                        <Icon style={styles.iconWithText} name='logout' color='red' size={25} />
+                        <Text style={[styles.text, { color: 'red'}]} onPress={() => this.handleLogout()}>Log Out</Text>
                     </View>
 
                 </ScrollView>
@@ -125,7 +135,10 @@ const styles = StyleSheet.create({
     avatar: {
         width: 60,
         height: 60,
-        marginRight: 20
+        marginRight: 20,
+        borderRadius: 50,
+        borderWidth: 3,
+        borderColor: '#00cc00'
     },
     avatarImage: {
         flexDirection: 'row',

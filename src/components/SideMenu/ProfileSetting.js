@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
+import { changePhoto } from '../../redux/actions/auth';
 import { patchUser } from '../../redux/actions/auth';
 
 
@@ -28,13 +29,22 @@ class ProfileSettingOriginal extends Component {
 	}
 
 	async handleSubmit() {
-		const jwt = await this.props.auth.data.token;
-		const { fullname } = this.state
-		const data = {
-			fullname
-		}
+		const jwt = this.props.auth.token
+		// const { fullname } = this.state
+		// const data = {
+		// 	fullname
+		// }
+		this.setState({ isLoading: true })
+		console.log('USER FULLNAME', this.props.auth.data.user_fullname)
+		console.log('USER IMAGE', this.props.auth.data.user_image)
+		console.log('IN PROFILE SETTING, JWT TOKEN', console.log(jwt))
 		if (jwt !== null) {
-			await this.props.dispatch(patchUser(jwt, data));
+			var formData = new FormData()
+			formData.append('fullname', this.state.fullname)
+			formData.append('images', this.props.auth.data.user_image)
+			await this.props.dispatch(changePhoto(jwt, formData))
+			this.props.navigation.navigate('Profile')
+			this.setState({ isLoading: false })
 		}
 	}
 
@@ -49,8 +59,8 @@ class ProfileSettingOriginal extends Component {
 
 					<View style={{ flex: 0, flexDirection: 'row', padding: 10, }}>
 						<View style={{ flexDirection: 'column', flex: 1 }}>
-							<Text style={{ fontFamily: 'Nunito-Regular', fontSize: 20 }}>Fullname</Text>
-							<TextInput style={{ borderBottomWidth: 1, width: '100%' }} placeholder="Fullname" value={this.state.fullname} onChange={(e) => this.setState({ name: e.nativeEvent.text })} />
+							<Text style={{ fontFamily: 'Nunito-Regular', fontSize: 20 }}>Full Name</Text>
+							<TextInput style={{ borderBottomWidth: 1, width: '100%' }} placeholder={this.props.auth.data.user_fullname} value={this.state.fullname} onChange={(e) => this.setState({ name: e.nativeEvent.text })} />
 						</View>
 					</View>
 

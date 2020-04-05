@@ -56,7 +56,7 @@ export const changePhoto = (jwt, formData) => {
 export const getProfile = (jwt) => {
     return {
         type: 'GET_PROFILE',
-        payload: Get(APP_URL.concat('/profile'), jwt)
+        payload: Get(APP_URL.concat('/users'), jwt)
     }
 }
 
