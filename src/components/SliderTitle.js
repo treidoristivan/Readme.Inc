@@ -1,9 +1,10 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { withNavigation } from 'react-navigation'
 
 // create a component
-class SliderTitle extends Component {
+class SliderTitleOriginal extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -16,7 +17,7 @@ class SliderTitle extends Component {
             <View style={styles.container}>
                 <Text style={styles.title}>{this.props.title}</Text>
                 {this.props.viewAll &&
-                    <Text style={styles.viewAll} onPress={() => this.props.onViewAllPressed()}>See More</Text>
+                    <Text style={styles.viewAll} onPress={() => this.props.navigation.navigate('Author')}>See More</Text>
                 }
             </View>
         );
@@ -38,6 +39,8 @@ const styles = StyleSheet.create({
     title: { fontFamily: 'Nunito-Regular', fontSize: 20, },
     viewAll: { fontFamily: 'Nunito-Regular', fontSize: 16, color: '#0DAAFF', },
 });
+
+const SliderTitle = withNavigation(SliderTitleOriginal)
 
 //make this component available to the app
 export default SliderTitle;

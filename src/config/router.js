@@ -8,6 +8,7 @@ import { Root, Tab } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //Components Screens
+import Author from '../screens/Author';
 import AuthorDetail from '../screens/AuthorDetail';
 import BookDetail from '../screens/BookDetail';
 import Category from '../screens/Category';
@@ -27,6 +28,7 @@ import ReviewHistory from '../screens/ReviewHistory';
 import Splash from '../screens/Splash';
 import UserAuthentication from '../screens/UserAuthentication';
 import { Header } from 'react-native/Libraries/NewAppScreen';
+
 
 //Component Side Menu
 import BestBooks from '../components/SideMenu/BestBooks';
@@ -251,12 +253,13 @@ HomeNav.navigationOptions = ({ navigation }) => {
 }
 
 const AuthorNav = createStackNavigator ({
-    Search: {
-        screen: Search,
+   Author:{
+    screen: Author,
         navigationOptions: {
-            headerShown: false,
-        },
-    }, AuthorDetail: {
+            headerShown:false
+        }
+   },
+    AuthorDetail: {
         screen: AuthorDetail,
         navigationOptions: {
             headerShown:false
