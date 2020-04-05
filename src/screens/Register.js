@@ -19,6 +19,7 @@ class RegisterOriginal extends Component {
             isLoading: false,
             isSuccess: false,
             message: '',
+            isPasswordVisible: true
         }
     }
 
@@ -104,14 +105,17 @@ class RegisterOriginal extends Component {
                             <Input placeholder="Email" textContentType="emailAddress" keyboardType="email-address" value={this.state.email} onChange={(e) => this.setState({ email: e.nativeEvent.text })} />
                         </View>
                         <View style={styles.input}>
-                            <Input placeholder="Password" secureTextEntry textContentType="password" value={this.state.password} onChange={(e) => this.setState({ password: e.nativeEvent.text })} />
-                            <TouchableOpacity>
+                            <Input placeholder="Password" secureTextEntry={this.state.isPasswordVisible} textContentType="password" value={this.state.password} onChange={(e) => this.setState({ password: e.nativeEvent.text })} />
+                            <TouchableOpacity onPress={() => this.setState( prevState => ({isPasswordVisible: !prevState.isPasswordVisible}))}>
                             <Icon name='eye-outline' color='#3399ff' size={23} style={styles.eye}/>  
                             </TouchableOpacity>
                         </View>
-                        {/* <View style={styles.input}>
-                            <Input placeholder="Confirm Password" secureTextEntry textContentType="password" value={this.state.confirmPassword} onChange={(e) => this.setState({ confirmPassword: e.nativeEvent.text })} />
-                        </View> */}
+                        <View style={styles.input}>
+                            <Input placeholder="Confirm Password" secureTextEntry={this.state.isPasswordVisible} textContentType="password" value={this.state.confirmPassword} onChange={(e) => this.setState({ confirmPassword: e.nativeEvent.text })} />
+                            <TouchableOpacity onPress={() => this.setState( prevState => ({isPasswordVisible: !prevState.isPasswordVisible}))}>
+                            <Icon name='eye-outline' color='#3399ff' size={23} style={styles.eye}/>  
+                            </TouchableOpacity>
+                        </View>
                         <TouchableOpacity style={styles.registerButton} onPress={() => this.handleSubmit()}>
                             {this.props.auth.isLoading
                                 ? <ActivityIndicator size="small" color="#fff" />
