@@ -64,7 +64,7 @@ class SideMenu extends Component {
 
                     <TouchableOpacity style={styles.imageWrapper} onPress={() => this.props.navigation.navigate('Setting')}>
                     <View style={[styles.items, styles.noSelectedItems]}>
-                    <Icon style={styles.iconWithText} name='settings-outline' color='#fff' size={25} />
+                        <Icon style={styles.iconWithText} name='settings-outline' color='#fff' size={25} />
                         <Text style={styles.text}>Help & Support</Text>
                     </View>
                     </TouchableOpacity>
