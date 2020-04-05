@@ -1,8 +1,10 @@
 const initialState = {
     data: [],
+    token: null,
     isLoading: false,
     isError: false,
     isSuccess: true,
+    isLoggedIn: false
 }
 
 const auth = (state = initialState, action) => {
@@ -23,6 +25,32 @@ const auth = (state = initialState, action) => {
                 isSuccess: false
             }
         case 'LOGIN_FULFILLED':
+            return {
+                ...state,
+                data: action.payload.data.data,
+                isLoggedIn: true,
+                token: action.payload.data.token,
+                isLoading: false,
+                isError: false,
+                isSuccess: action.payload.data.success,
+            }
+
+        case 'VERIFY_PENDING':
+            return {
+                ...state,
+                isLoading: true,
+                isError: false,
+                isSuccess: false
+            }
+        case 'VERIFY_REJECTED':
+            return {
+                ...state,
+                data: [],
+                isLoading: false,
+                isError: true,
+                isSuccess: false
+            }
+        case 'VERIFY_FULFILLED':
             return {
                 ...state,
                 data: action.payload.data.data,
@@ -55,35 +83,79 @@ const auth = (state = initialState, action) => {
                 isSuccess: action.payload.data.success,
             }
 
-        case 'LOGOUT_PENDING':
+        case 'FORGOT_PASSWORD_REQUEST_PENDING':
             return {
                 ...state,
                 isLoading: true,
                 isError: false,
-                isSuccess: false,
+                isSuccess: false
             }
-        case 'LOGOUT_REJECTED':
-            return {
-                ...state,
-                isLoading: false,
-                isError: true,
-                isSuccess: false,
-            }
-        case 'LOGOUT_FULFILLED':
+        case 'FORGOT_PASSWORD_REQUEST_REJECTED':
             return {
                 ...state,
                 data: [],
                 isLoading: false,
+                isError: true,
+                isSuccess: false
+            }
+        case 'FORGOT_PASSWORD_REQUEST_FULFILLED':
+            return {
+                ...state,
+                data: action.payload.data.data,
+                isLoading: false,
                 isError: false,
-                isSuccess: true,
+                isSuccess: action.payload.data.success,
             }
 
-        case 'CHANGE_PHOTO': 
+        case 'FORGOT_PASSWORD_SUCCESS_PENDING':
+            return {
+                ...state,
+                isLoading: true,
+                isError: false,
+                isSuccess: false
+            }
+        case 'FORGOT_PASSWORD_SUCCESS_REJECTED':
+            return {
+                ...state,
+                data: [],
+                isLoading: false,
+                isError: true,
+                isSuccess: false
+            }
+        case 'FORGOT_PASSWORD_SUCCESS_FULFILLED':
+            return {
+                ...state,
+                data: action.payload.data.data,
+                isLoading: false,
+                isError: false,
+                isSuccess: action.payload.data.success,
+            }
+
+        // case 'LOGOUT_PENDING':
+        //     return {
+        //         ...state,
+        //         isLoading: true,
+        //         isError: false,
+        //         isSuccess: false,
+        //     }
+        // case 'LOGOUT_REJECTED':
+        //     return {
+        //         ...state,
+        //         isLoading: false,
+        //         isError: true,
+        //         isSuccess: false,
+        //     }
+        case 'LOGOUT':
+            return {
+                ...initialState
+            }
+
+        case 'CHANGE_PHOTO':
             const result = {
                 ...state
             };
-            result.data.photo = action.photo;
-            return result
+        // result.data.photo = action.photo;
+        // return result
 
         case 'GET_PROFILE_PENDING':
             return {
@@ -132,6 +204,8 @@ const auth = (state = initialState, action) => {
             res.data.email = action.payload.data.data.email;
             res.data.token = action.payload.data.data.token;
             return res
+
+
         default:
             return state
     }

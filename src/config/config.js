@@ -9,9 +9,9 @@ import axios from 'axios'
 
 //This is usage For Localhost Running with your IP Address
 
-export const APP_URL = "http://10.10.10.4:1000"
-export const APP_ICON_URL = "http://10.10.10.4:1000/icons/"
-export const APP_IMAGE_URL = "http://10.10.10.4:1000/images/"
+export const APP_URL = "http://3.88.30.184:4444"
+export const APP_ICON_URL = "http://3.88.30.184:4444/icons/"
+export const APP_IMAGE_URL = "http://3.88.30.184:4444/images/"
 
 export const Get = (url, token = null, contentType = 'application/json') => {
     return new Promise((resolve, reject) => {
@@ -55,10 +55,12 @@ export const Post = (url, token = null, body, contentType = 'application/json') 
             data: body
         })
             .then(result => {
+                console.log('This is the result from Post')
                 console.log(result)
                 resolve(result)
             })
             .catch(error => {
+                console.log('This is an error on Post')
                 console.log(error)
                 reject(error)
             })

@@ -1,16 +1,19 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, StyleSheet, ImageBackground, ScrollView, TouchableOpacity, Image, Modal, TextInput, ActivityIndicator, Alert } from 'react-native';
+import { View, StyleSheet, ImageBackground, ScrollView, TouchableOpacity, Image, Modal, TextInput, ActivityIndicator, Alert, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Counter from 'react-native-counters';
 import Feather from 'react-native-vector-icons/Feather';
 import { Button, Text } from 'native-base';
 import { connect } from 'react-redux';
-import { APP_URL, APP_IMAGE_URL } from '../config/config';
-import { getItem } from '../redux/actions/book';
-import { postCart } from '../redux/actions/cart';
+import { APP_IMAGE_URL, APP_URL } from '../config/config';
+import { getBook } from '../redux/actions/book';
 import { withNavigation } from 'react-navigation';
 import formatRupiah from '../helper/formatRupiah';
+import { getMyFavoriteBook, deleteMyFavoriteBook, postMyFavoriteBook } from '../redux/actions/user';
+import { getRatingByIdBook, updateRatingByIdBook, postRatingByIdBook } from '../redux/actions/rating';
+
+import { getReviewByIdBook, postReviewByIdBook } from '../redux/actions/review'
 
 // component
 import ButtonBack from '../components/BackButton';
@@ -33,113 +36,226 @@ class BookDetailOriginal extends Component {
             modalVisible: false,
             quantity: 1,
             description: '',
+            addFavorite: false,
+            statsBook: true,
+            modalReview: false,
+            review: '',
+            colorStar: 0,
+            propsRating : null
         }
+   
+    }
+
+    toogleReview() {
+        this.setState({ modalReview: !this.state.modalReview })
     }
 
     async componentDidMount() {
-        const jwt = this.props.auth.data.token;
-        await this.props.dispatch(getItem(jwt, this.props.navigation.getParam('itemId')))
+
+        await this.props.dispatch(getBook(this.props.navigation.state.params.bookId))
         await this.setState({ isLoading: false })
-        await this.setState({
-            itemImage: { uri: APP_IMAGE_URL.concat(this.props.item.itemDetail.images[0].filename) }
-        });
-    }
 
-    async handleAddToCart() {
-        await this.setState({ isLoading: true })
-        const { quantity, description } = this.state
-        const jwt = await this.props.auth.data.token
-        const data = {
-            item_id: this.props.item.itemDetail.id,
-            quantity,
-            description,
+        this.props.dispatch(getMyFavoriteBook(this.props.auth.token))
+        if (this.props.user.data) {
+            const data = this.props.user.data.map((v) => {
+                return v.id_book;
+            })
+            for (var i = 0; i < data.length; i++) {
+
+                if (data[i] == this.props.book.itemDetail.id) {
+                    this.setState({ addFavorite: true })
+                    break;
+                } else {
+                    this.setState({ addFavorite: false })
+                }
+            }
         }
-        await this.props.dispatch(postCart(jwt, data))
-        await this.setState({ isLoading: false, modalVisible: false })
-        Alert.alert("Order Message", "Order Success.")
+        const data = {
+            idBook: this.props.navigation.state.params.bookId
+        }
+        await this.props.dispatch(getReviewByIdBook(data, this.props.auth.token))
+        await this.props.dispatch(getRatingByIdBook(data, this.props.auth.token))
+        if (this.props.rating.data == []) {
+            this.setState({ colorStar: 0 })
+            console.log('thisthisthisthisthisthisthisthisthis',this.props.rating.data.length)
+        } else {
+            console.log('thisthisthisthisthisthisthisthisthis',this.props.rating.data.length)
+            this.setState({ colorStar: this.props.rating.data[0].rating })
+        }
+     
+    }
+    
+
+    handleDeleteFavorite() {
+        const data = {
+            idBook: this.props.navigation.state.params.bookId
+        }
+        this.props.dispatch(deleteMyFavoriteBook(data, this.props.auth.token))
+        this.props.dispatch(getMyFavoriteBook(this.props.auth.token))
+        this.setState({ addFavorite: !this.state.addFavorite })
     }
 
-    onChange(number) {
-        this.setState({ quantity: number })
+    handleAddFavorite() {
+        const data = {
+            idBook: this.props.navigation.state.params.bookId
+        }
+
+        this.props.dispatch(postMyFavoriteBook(data, this.props.auth.token))
+        this.props.dispatch(getMyFavoriteBook(this.props.auth.token))
+        this.setState({ addFavorite: !this.state.addFavorite }) 
+        this.setState({ addFavorite: this.props.rating.data.length }) 
     }
+
+
+    async handleAddRating(countStar) {
+        console.log('countcountcountcountcountcountcount',countStar)
+        console.log('countcountcountcountcountcountcount',countStar)
+        console.log('countcountcountcountcountcountcount',countStar)
+        console.log('countcountcountcountcountcountcount',countStar)
+        console.log('countcountcountcountcountcountcount',countStar)
+   
+        this.setState({colorStar:countStar})
+        if (!this.props.rating.data[0] ) {
+            console.log('woi',this.props.navigation.state.params.bookId)
+            const data = {
+                idBook: this.props.navigation.state.params.bookId,
+                rating: countStar
+            }
+            this.setState({colorStar:countStar})
+            console.log('datadatadatadata',data)
+            await this.props.dispatch(postRatingByIdBook(data, this.props.auth.token))
+            await this.props.dispatch(getRatingByIdBook(data, this.props.auth.token))
+        } else {
+            console.log('woi this',this.props.navigation.state.params.bookId)
+            const data = {
+                idBook: this.props.navigation.state.params.bookId,
+                rating: countStar
+            }
+            this.setState({colorStar:countStar})
+            console.log('datadatadata',data)
+            await this.props.dispatch(updateRatingByIdBook(data, this.props.auth.token))
+            await this.props.dispatch(getRatingByIdBook(data, this.props.auth.token))
+        }
+    }
+
+
+    async handleAddReview() {
+        const dataReview = {
+            idBook: this.props.navigation.state.params.bookId,
+            review: this.state.review,
+        }
+
+        const data = {
+            idBook: this.props.navigation.state.params.bookId
+        }
+
+        await this.props.dispatch(postReviewByIdBook(dataReview, this.props.auth.token))
+        await this.props.dispatch(getReviewByIdBook(data, this.props.auth.token))
+
+    }
+
+    // async handleAddToCart() {
+    //     await this.setState({ isLoading: true })
+    //     const { quantity, description } = this.state
+    //     const jwt = await this.props.auth.data.token
+    //     const data = {
+    //         item_id: this.props.item.itemDetail.id,
+    //         quantity,
+    //         description,
+    //     }
+    //     await this.props.dispatch(postCart(jwt, data))
+    //     await this.setState({ isLoading: false, modalVisible: false })
+    //     Alert.alert("Order Message", "Order Success.")
+    // }
+
+    // onChange(number) {
+    //     this.setState({ quantity: number })
+    // }
 
     render() {
+        console.log('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwkkkw', this.props.rating.data)
         return (
             <View style={styles.container}>
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.modalVisible}
-                >
-                    <View style={{ marginTop: 22, flex: 1, flexDirection: 'column' }}>
-                        <TouchableOpacity style={{ flex: 0, flexDirection: 'row', justifyContent: 'flex-end', margin: 20 }} onPress={() => this.setState({modalVisible: false})}>
-                            <Icon name="ios-close-circle" size={30} />
-                        </TouchableOpacity>
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ fontSize: 30, fontFamily: 'Nunito-Regular' }}>It's FREE !!</Text>
-                            <Text style={{ fontSize: 20, fontFamily: 'Nunito-Regular' }}>You can Take Everythings</Text>
+            
+                <Text style={styles.description}>{this.props.book.itemDetail.description}</Text>
+                <>
+                    {this.state.itemImage !== null ?
+                        <ImageBackground source={this.props.book.itemDetail.book_image} style={styles.imageBackground} resizeMethod="auto" resizeMode="cover">
+                        </ImageBackground>
+                        :
+                        <View style={styles.imageBackground}>
+                        </View>
+                    }
+                    <View style={styles.infoCard}>
+                        <ScrollView showsVerticalScrollIndicator={false}>
 
-                        </View>
-                        <View style={{ flex: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
-                                <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 20 }}>Quantity :</Text>
-                            </View>
-                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
-                                <Counter start={this.state.quantity} minusIcon={minusIcon} plusIcon={plusIcon} onChange={this.onChange.bind(this)} />
-                            </View>
-                        </View>
-                        <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff', margin: 20, padding: 20, elevation: 5, borderRadius: 30 }}>
-                            <TextInput multiline={true} style={{ justifyContent: 'flex-start' }} placeholder="Type a description for your order" value={this.state.description} onChange={(e) => this.setState({ description: e.nativeEvent.text })} />
-                        </View>
-                        <View style={{ flex: 0, flexDirection: 'row',paddingBottom:50 }}>
-                            <TouchableOpacity style={{ backgroundColor: '#008080', borderRadius: 30, flex: 1, margin: 20, padding: 10 }}
-                                onPress={() => {
-                                    this.handleAddToCart();
-                                }}>
-                                {
-                                    this.state.isLoading
-                                        ? <ActivityIndicator size="small" color="#fff" />
-                                        : <Text style={{ color: 'white', fontFamily: 'Nunito-Regular', fontSize: 20, textAlign: 'center', textTransform: 'uppercase' }}>confirm</Text>
-                                }
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
-                {this.state.isLoading 
-                    ?   <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}><ActivityIndicator size="large" color="black" /></View>
-                    :   <>
-                            {this.state.itemImage !== null ?
-                                <ImageBackground source={this.state.itemImage} style={styles.imageBackground} resizeMethod="auto" resizeMode="cover">
-                                    <ButtonBack />
-                                </ImageBackground>
-                                :
-                                <View style={styles.imageBackground}>
-                                    <ButtonBack />
+                            <Text style={styles.name}>{this.props.book.itemDetail.book_name}</Text>
+                            <View style={styles.infoWrapper}>
+                                <View style={styles.ratingWrapper}>
+                                    <Icon name="ios-star" size={20} style={styles.star} />
+                                    <Text style={styles.starCount}>{this.props.book.itemDetail.avg_rating}</Text>
+                                    <Text style={styles.description}>{this.props.book.itemDetail.author_name}</Text>
                                 </View>
-                            }
-                            <View style={styles.infoCard}>
-                                <Text style={styles.name}>{this.props.item.itemDetail.name}</Text>
-                                <ScrollView showsVerticalScrollIndicator={false}>
-                                    <View style={styles.infoWrapper}>
-                                        <View style={styles.ratingWrapper}>
-                                            <Icon name="ios-star" size={30} style={styles.star} />
-                                            <Text style={styles.starCount}>{this.props.item.itemDetail.rating}</Text>
-                                        </View>
-                                        {
-                                            this.props.item.itemDetail.price !== null &&
-                                            <Text style={styles.price}>{formatRupiah(this.props.item.itemDetail.price, 'Rp.')}</Text>
-                                        }
-                                    </View>
-                                    <Text style={styles.description}>{this.props.item.itemDetail.description}</Text>
-                                    <View style={styles.categoryWrapper}>
-                                        {this.props.item.itemDetail.categories.map((v, i) => (
+
+                            </View>
+
+                            <View style={styles.infoWrapper}>
+                                <View style={styles.ratingWrapper}>
+                                    <TouchableOpacity onPress={() =>
+                                        this.handleAddRating(1)
+
+                                    }>
+
+                                        <Icon name="ios-star" size={30} style={{ backgorundColor: '#000', color: `${this.state.colorStar >= 1 ? '#e3bd00' : '#aba'}`, marginRight: 2 }} />
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity onPress={() => this.handleAddRating(2)}>
+                                        <Icon name="ios-star" size={30} style={{ backgorundColor: '#000', color: `${this.state.colorStar >= 2 ? '#e3bd00' : '#aba'}`, marginRight: 2 }} />
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity onPress={() => this.handleAddRating(3)}>
+                                        <Icon name="ios-star" size={30} style={{ backgorundColor: '#000', color: `${this.state.colorStar >= 3 ? '#e3bd00' : '#aba'}`, marginRight: 2 }} />
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity onPress={() => this.handleAddRating(4)}>
+                                        <Icon name="ios-star" size={30} style={{ backgorundColor: '#000', color: `${this.state.colorStar >= 4 ? '#e3bd00' : '#aba'}`, marginRight: 2 }} />
+                                    </TouchableOpacity>
+
+
+                                    <TouchableOpacity onPress={() => this.handleAddRating(5)}>
+                                        <Icon name="ios-star" size={30} style={{ backgorundColor: '#000', color: `${this.state.colorStar >= 5 ? '#e3bd00' : '#aba'}`, marginRight: 2 }} />
+                                    </TouchableOpacity>
+
+                                </View>
+
+                            </View>
+                            <View style={styles.buttonWrapper}>
+
+                                {this.state.addFavorite == true &&
+                                    <Button rounded dark style={styles.buttonDel} onPress={() => this.handleDeleteFavorite(this.props.book.itemDetail.id)}>
+                                        <Text style={styles.buttonText}>Delete To Favorite</Text>
+                                    </Button>
+                                }
+
+                                {this.state.addFavorite == false &&
+                                    <Button rounded dark style={styles.button} onPress={() => this.handleAddFavorite(this.props.book.itemDetail.id)}>
+                                        <Text style={styles.buttonText}>Add To Favorite</Text>
+                                    </Button>
+                                }
+
+
+                                <Button rounded dark style={styles.button2} onPress={() => this.setState({ modalVisible: true })}>
+                                    <Text style={styles.buttonText}>Get Book</Text>
+                                </Button>
+                            </View>
+                            {/* <View style={styles.categoryWrapper}>
+                                        {this.props.book.itemDetail.map((v, i) => (
                                             <TouchableOpacity style={styles.categories} key={i} onPress={() => this.props.navigation.navigate('Search', { search: [{ name: "category", value: v.id }] })}>
                                                 <Text style={styles.categoryText}>{v.name}</Text>
                                             </TouchableOpacity>
                                         ))}
-                                    </View>
-                                    <Text style={{ fontFamily: 'Nunito-Regular', marginTop: 10 }}>Suggested Menu</Text>
-                                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                                    </View> */}
+                            {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                                         {this.props.item.itemDetail.suggests.map((v, i) => {
                                             console.log(v);
                                             return (
@@ -155,9 +271,70 @@ class BookDetailOriginal extends Component {
                                                 </TouchableOpacity>
                                             )
                                         })}
-                                    </ScrollView>
-                                    <Text style={{ fontFamily: 'Nunito-Regular', marginTop: 10 }}>Review</Text>
-                                    {
+                                    </ScrollView> */}
+                            <View style={{ marginTop: 20, height: 40, alignSelf: 'center' }}>
+
+                                <View style={{ flex: 1, backgroundColor: 'grey', width: 140, alignItems: 'center', justifyContent: 'center', borderRadius: 10 }}>
+                                    <TouchableOpacity onPress={() => this.toogleReview()}>
+                                        <Text style={{ color: 'white', alignContent: 'center', textAlign: 'center' }}>See Reviews</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+
+                            {this.state.modalReview == true &&
+                                <ScrollView contentContainerStyle={{ marginVertical: 10 }}>
+                                    <FlatList
+                                        data={this.props.review.data}
+                                        renderItem={({ item, index }) =>
+
+                                            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                                                <View style={{ flex: 1, marginLeft: 10 }}>
+
+                                                    {item.user_image == '' &&
+                                                        <Image source={require('../assets/images/default.png')}
+                                                            style={{ height: 50, width: 50, borderRadius: 50 }}>
+                                                        </Image>
+                                                    }
+
+                                                    {item.user_image !== '' &&
+                                                        <Image source={{ uri: `${APP_URL}${item.user_image}` }}
+                                                            style={{ height: 50, width: 50, borderRadius: 50 }}>
+                                                        </Image>
+                                                    }
+
+                                                </View>
+
+                                                <View style={{ flex: 4, marginTop: 6, marginRight: 10, borderRadius: 15, backgroundColor: '#F0EAE8' }}>
+                                                    <View style={{ marginLeft: 14, marginTop: 5, marginBottom: 10 }}>
+                                                        <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>{item.user_fullname}</Text>
+
+                                                        <Text>{item.review}</Text>
+                                                    </View>
+                                                </View>
+
+
+
+                                            </View>
+
+                                        } />
+                                    <View style={{ position: 'relative', flex: 1, marginTop: 10 }}>
+                                        <View style={{ flex: 1 }}>
+                                            <TextInput on placeholder='Review ' style={{ borderBottomColor: '#8A8F9E', borderBottomWidth: 1, height: 50, fontSize: 15, color: '#161F3D', borderWidth: 1, borderRadius: 10, paddingLeft: 20 }
+                                            }
+                                                underlineColorAndroid="transparent" onChangeText={review => this.setState({ review })}
+                                            />
+                                        </View>
+                                        <View style={{ flex: 1, backgroundColor: 'grey', width: 140, height: 35, justifyContent: 'center', alignItems: 'center', marginTop: 10, alignSelf: 'center', borderRadius: 10 }}>
+                                            <TouchableOpacity onPress={() => this.handleAddReview()}>
+                                                <Text style={{ color: 'white', alignContent: 'center', textAlign: 'center' }}>Send</Text>
+                                            </TouchableOpacity>
+                                        </View>
+
+                                    </View>
+
+                                </ScrollView>
+
+                            /* {
                                         this.props.item.itemDetail.reviews.map((v, i) => {
                                             return (
                                                 <View style={{ backgroundColor: 'white', padding: 10, margin: 10, elevation: 3, borderRadius: 12 }} key={i}>
@@ -174,15 +351,12 @@ class BookDetailOriginal extends Component {
                                                 </View>
                                             )
                                         })
-                                    }
-                                </ScrollView>
-                                <Button rounded dark style={styles.button} onPress={() => this.setState({ modalVisible: true })}>
-                                    <Text style={styles.buttonText}>Add to cart</Text>
-                                </Button>
-                            </View>
-                        </>
-                }
-            </View>
+                                    } */}
+                        </ScrollView>
+
+                    </View>
+                </>
+            </View >
         );
     }
 }
@@ -201,10 +375,16 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         flex: 1,
         flexDirection: 'column',
-        marginTop: -200,
+        marginTop: -300,
         borderTopRightRadius: 50,
         borderTopLeftRadius: 50,
-        padding: 30
+        paddingHorizontal: 30,
+        paddingTop: 15
+    },
+    buttonWrapper: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     infoWrapper: {
         flex: 1,
@@ -216,12 +396,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
+
+
+
     star: {
         color: '#e3bd00',
     },
+
     starCount: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 25,
+        fontSize: 18,
     },
     price: {
         fontFamily: 'Nunito-Regular',
@@ -238,8 +422,41 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#666',
         marginTop: 5,
+        padding: 15
     },
-    button: { justifyContent: 'center', marginTop: 10, backgroundColor:'#008080' },
+    button: {
+        backgroundColor: '#3399ff',
+        padding: 8,
+        borderBottomLeftRadius: 20,
+        borderTopLeftRadius: 20,
+        justifyContent: 'center',
+        flex: 1,
+        flexDirection: 'row',
+        marginTop: 10,
+        marginRight: 5
+    },
+    buttonDel: {
+        backgroundColor: 'red',
+        padding: 10,
+        borderBottomLeftRadius: 20,
+        borderTopLeftRadius: 20,
+        justifyContent: 'center',
+        flex: 1,
+        flexDirection: 'row',
+        marginTop: 10,
+        marginRight: 5
+    },
+    button2: {
+        backgroundColor: '#00cc00',
+        padding: 10,
+        borderBottomRightRadius: 20,
+        borderTopRightRadius: 20,
+        justifyContent: 'center',
+        flex: 1,
+        flexDirection: 'row',
+        marginTop: 10,
+        marginLeft: 5
+    },
     buttonText: {
         color: 'white',
         textTransform: 'uppercase',
@@ -264,8 +481,11 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        item: state.item,
+        book: state.book,
         auth: state.auth,
+        user: state.user,
+        review: state.review,
+        rating: state.rating
     }
 }
 

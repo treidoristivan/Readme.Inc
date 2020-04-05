@@ -13,13 +13,13 @@ class SplashOriginal extends Component {
             } else {
                 this.props.navigation.navigate('Home')
             }
-        }, 4000)
+        }, 3000)
     }
     render() {
         return (
             <View style={styles.container}>
                 <Image source={require('../assets/icons/favicon.png')} style={styles.logo} />
-                <Text style={styles.title}>Readme</Text>
+                <Text style={styles.title}>Readme Inc ©</Text>
             </View>
         );
     }
@@ -31,17 +31,20 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#00cc00',
+        backgroundColor: 'white',
     },
     logo: {
-        width: 130,
-        height: 300,
+        width: 90,
+        height: 140,
+
         
     },
     title: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 40,
-        color: '#008080',
+        fontSize: 33,
+        color: '#00cc00',
+        marginBottom:50
+
     }
 });
 

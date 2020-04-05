@@ -2,9 +2,16 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
 
 // create a component
 class UserAuthenticationOriginal extends Component {
+    componentDidMount() {
+        if (this.props.auth.isLoggedIn) {
+            this.props.navigation.navigate('Home')
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -19,10 +26,10 @@ class UserAuthenticationOriginal extends Component {
                     </View>
                     <View style={styles.buttonWrapper}>
                         <TouchableOpacity style={styles.loginButton} onPress={() => this.props.navigation.navigate('Login')}>
-                            <Text style={styles.buttonText}>Login</Text>
+                            <Text style={styles.buttonText}>Sign In</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.registerButton} onPress={() => this.props.navigation.navigate('Register')}>
-                            <Text style={styles.buttonText}>Register</Text>
+                            <Text style={styles.buttonText}>Sign Up</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.epilogWrapper}>
@@ -92,7 +99,8 @@ const styles = StyleSheet.create({
     loginButton: {
         backgroundColor: '#3399ff',
         padding: 10,
-        borderRadius: 12,
+        borderBottomLeftRadius:20,
+        borderTopLeftRadius:20,
         justifyContent: 'center',
         flex: 1,
         flexDirection: 'row',
@@ -107,7 +115,8 @@ const styles = StyleSheet.create({
     registerButton: {
         backgroundColor: '#00cc00',
         padding: 10,
-        borderRadius: 12,
+        borderBottomRightRadius:20,
+        borderTopRightRadius:20,
         justifyContent: 'center',
         flex: 1,
         flexDirection: 'row',
@@ -124,5 +133,11 @@ const styles = StyleSheet.create({
 
 const UserAuthentication = withNavigation(UserAuthenticationOriginal)
 
+const mapStateToProps = state => {
+    return {
+        auth: state.auth
+    }
+}
+
 //make this component available to the app
-export default UserAuthentication;
+export default connect(mapStateToProps)(UserAuthentication);

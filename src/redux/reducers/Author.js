@@ -27,7 +27,7 @@ const author = (state = initialState, action) => {
         case 'GET_AUTHOR_FULFILLED':
             return {
                 ...state,
-                count: action.payload.data.data.restaurants.length,
+                count: action.payload.data.data.length,
                 data: action.payload.data.data,
                 isLoading: false,
                 isError: false,

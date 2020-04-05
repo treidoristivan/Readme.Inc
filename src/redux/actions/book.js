@@ -1,23 +1,39 @@
 import { APP_URL, Get, Post } from '../../config/config';
 
-export const getPopularBooks = (jwt) => {
+export const getPopularBooks = () => {
     return {
         type: 'GET_POPULAR_BOOKS',
-        payload: Get(APP_URL.concat('/item?sort[created_at]=desc'), jwt)
+        payload: Get(APP_URL.concat('/books/popular'), null)
     }
 }
 
-export const getBooks = (jwt, params) => {
+export const getBooks = (pageNumber, params) => {
     return {
         type: 'GET_BOOKS',
-        payload: Get(APP_URL.concat('/item?' + params), jwt)
+        payload: Get(APP_URL.concat(`/books/all?page=${pageNumber}` + params))
     }
 }
 
-export const getBook = (jwt, id) => {
+export const getBook = (id) => {
+    console.log('getBook')
     return {
         type: 'GET_BOOK',
-        payload: Get(APP_URL.concat('/item/' + id), jwt)
+        payload: Get(APP_URL.concat('/books/book/' + id))
+    }
+}
+
+export const getBooksByGenre = (genreId) => {
+    console.log('getBooksByGenre')
+    return {
+        type: 'GET_BOOKS_BY_GENRE',
+        payload: Get(APP_URL.concat('/books/genre/' + genreId))
+    }
+}
+
+export const getBooksByAuthor = (authorId) => {
+    return {
+        type: 'GET_BOOKS_BY_AUTHOR',
+        payload: Get(APP_URL.concat('/books/author/' + authorId))
     }
 }
 

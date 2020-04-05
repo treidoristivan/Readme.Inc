@@ -7,11 +7,11 @@ import { withNavigation } from 'react-navigation';
 
 // Components
 import Header from '../components/Header';
-import SearchBar from '../components/SearchBar';
-import Category from '../components/Category';
 import SliderTitle from '../components/SliderTitle';
-import CardList from '../components/CardList';
-import RestaurantList from '../components/AuthorList';
+import SliderBar from '../components/SliderBar';
+import ListCategory from '../components/ListCategory';
+import ListCard from '../components/ListCard';
+import ListAuthor from '../components/ListAuthor';
 
 // create a component
 class HomeOriginal extends Component {
@@ -22,7 +22,7 @@ class HomeOriginal extends Component {
                 Toast.show({
                     text: 'No Internet Connection',
                     buttonText: 'Okay',
-                    duration: 10000,
+                    duration: 7000,
                     position: 'bottom',
                 })
             }
@@ -32,16 +32,14 @@ class HomeOriginal extends Component {
         return (
             <Container>
                 <Header />
-                <SearchBar />
-                <ScrollView
-                    showsVerticalScrollIndicator={false}
-                >
+                <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.content}>
-                    <SliderTitle title="List On Top" viewAll onViewAllPressed={() => this.props.navigation.navigate('Search', { sort: [{ name: "rating", value: "desc" }] })} />
-                        <CardList />
-                        <Category />
-                        <SliderTitle title="All Genre" viewAll />
-                        <RestaurantList />
+                    <SliderBar />
+                    <SliderTitle title="List On Top" to="Category" viewAll onViewAllPressed={() => this.props.navigation.navigate('Search')} />
+                        <ListCard />
+                        <ListCategory />  
+                    <SliderTitle title="Book's Author" to="Author" viewAll />
+                        <ListAuthor />
                     </View>
                 </ScrollView>
             </Container>
