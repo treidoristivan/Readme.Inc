@@ -48,11 +48,20 @@ class AuthorOriginal extends Component {
     render() {
         console.log('AUTHOR DATA', this.props.author.data)
         return (
-            <View style={styles.container}>
-              <View style={styles.headerWrapper}>
+            <View style={{ flex: 1 }}>
+                <View style={styles.headerWrapper}>
                     <SliderTitle title="Author" />
                 </View>
-                <List style={{ paddingBottom: 60 }}>
+                <View style={{
+                    flex: 1,
+                    position: 'absolute',
+                    left: '40%',
+                    top: '45%',
+                    zIndex: 99
+                }}>
+                    <ActivityIndicator animating={this.state.isLoading} size={75} color='#aaa' />
+                </View>
+                <List style={{ paddingBottom: 50 }}>
                     <FlatList
                         data={this.state.data}
                         keyExtractor={(item) => item.id}
@@ -96,13 +105,7 @@ class AuthorOriginal extends Component {
                         {/* {!this.state.isLoading && this.props.author.data.map((v, i) => {
                             
                         })} */}
-                    <ActivityIndicator 
-                        animating={this.state.isLoading} 
-                        color="blue"
-                        size="large"
-                    />
                 </List>
-                
             </View>
         );
     }
