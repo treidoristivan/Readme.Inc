@@ -78,14 +78,8 @@ class SearchOriginal extends Component {
                         <Input style={styles.searchInput} placeholder="Search Books" value={this.state.searchValue} onChange={(e) => this.setState({ searchValue: e.nativeEvent.text })} />
                     </View>
                 </View>
-                <View style={{
-                    flex: 1,
-                    position: 'absolute',
-                    left: '40%',
-                    top: '45%',
-                    zIndex: 99
-                }}>
-                    <ActivityIndicator animating={this.state.isLoading} size={75} color='#aaa' />
+                <View style={{flex: 1, position: 'absolute', left: '50%', top: '45%', zIndex: 99 }}>
+                    <ActivityIndicator animating={this.state.isLoading} size={55} color='#3399ff' />
                 </View>
                 <View>
                     <List style={{ paddingBottom: 50 }}>
@@ -104,7 +98,7 @@ class SearchOriginal extends Component {
                                 }
                                 return (
                                     <TouchableOpacity key={item.id} onPress={() => this.props.navigation.navigate('BookDetail', {bookId: item.id})}>
-                                    <View style={{flex:1, flexDirection:'row'}}>
+                                    <View style={{flex:1, flexDirection:'row',borderBottomWidth:1,borderBottomColor:'#3399ff', paddingVertical:5}}>
                                     <View style={styles.cardImg}>
                                     <Image style={styles.img} source={{ uri: item.book_image }} />
                                     </View>
@@ -113,64 +107,15 @@ class SearchOriginal extends Component {
                                             <Text >Reviews : {item.total_reviewers}</Text>
                                             <Text >Rating :  <Icon name="ios-star" size={15} style={styles.star} />  {item.avg_rating}</Text>
 
-                                            <Button style={styles.button} onPress={() => this.setState({ modalVisible: true })}>
-                                            <Text style={styles.buttonText}>  <Icon name="md-appstore" size={15}/>  Add to List  </Text>
-                                            </Button>
                                         </View>
                                         </View>
                                     </TouchableOpacity>
                                 )
                             }}
                         />
-                            {/* {this.state.isLoading &&
-                                <>
-                                    <View style={[styles.card, { marginHorizontal: 30 }]}>
-                                        <View style={styles.cardWrapper}>
-                                            <View style={{ backgroundColor: '#eee', width: 250, height: 50 }}></View>
-                                            <View style={{ backgroundColor: '#eee', height: 10, width: 250, marginTop: 5 }}></View>
-                                        </View>
-                                    </View>
-                                    
-                                </>
-                            } */}
-                            {/* {!this.state.isLoading && this.props.author.data.map((v, i) => {
-                                
-                            })} */}
+
                     </List>
                 </View>
-                {/* {
-                    this.state.isLoading
-                    ?   <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                            <ActivityIndicator size="large" color='#3399ff' />
-                        </View>
-                    :   <ScrollView showsVerticalScrollIndicator={false}>
-                            {!this.state.isLoading && this.props.item.data.items.map((v, i) => {
-                                var img = <View style={[styles.image, { backgroundColor: '#bbb' }]}><Text>No Image</Text></View>
-                                if (v.images.length !== 0) {
-                                    if (v.images[0].filename.substr(0, 4) === 'http') {
-                                        img = <Image source={{ uri: v.images.filename }} style={styles.image} resizeMode="cover" />
-                                    } else {
-                                        img = <Image source={{ uri: APP_IMAGE_URL.concat(v.images[0].filename) }} style={styles.image} resizeMode="cover" />
-                                    }
-                                }
-                                return (
-                                    <TouchableOpacity style={styles.itemWrapper} key={i} onPress={() => this.props.navigation.navigate('ItemDetail', { itemId: v.id })}>
-                                        <View>
-                                            {img}
-                                        </View>
-                                        <View style={styles.itemInfo}>
-                                            <Text style={styles.itemName}>{v.name}</Text>
-                                            <Text style={styles.itemRestaurant}>{v.restaurant}</Text>
-                                            <View style={styles.info}>
-                                                <Text style={styles.startCount}><IonIcon name="ios-star" style={styles.star} size={18} /> {v.rating}</Text>
-                                                <Text style={styles.price}>{formatRupiah(v.price, 'Rp.')}</Text>
-                                            </View>
-                                        </View>
-                                    </TouchableOpacity>
-                                )
-                            })}
-                        </ScrollView>
-                } */}
             </Container>
         );
     }
@@ -181,26 +126,21 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'stretch',
-        backgroundColor:'#3399ff'
+        backgroundColor:'#fff',
+        paddingHorizontal:20
     },
     card: { backgroundColor: '#fff', width: 300, height: 165, borderRadius: 12, margin: 10,marginLeft:25, elevation: 5 },
     cardImg: { flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start'},
     cardWrapper: { flex: 1, flexDirection: 'column', justifyContent: 'flex-start',alignItems:'flex-start', alignSelf:'stretch'},
-    img: {width:60, height:80,marginLeft:15},
+    img: {width:60, height:80,marginLeft:45},
     title: { marginTop: 10,paddingBottom:10, fontFamily: 'Nunito-Regular',color:'#3399ff' },
     star: {
         color: '#e3bd00',
     },
-    button: { marginTop: 6 ,backgroundColor:'#3399ff', height:33,marginLeft:10},
-    buttonText: {
-        color: 'white',
-        fontSize:10,
-        textTransform: 'uppercase',
-        paddingVertical:0
-    },
 headerWrapper: {
     flexDirection: 'row',
     margin: 10,
+    marginTop:100
 },
 searchWrapper: {
     flex: 1,
