@@ -13,7 +13,7 @@ class SplashOriginal extends Component {
             } else {
                 this.props.navigation.navigate('Home')
             }
-        }, 4000)
+        }, 3000)
     }
     render() {
         return (

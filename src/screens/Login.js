@@ -17,6 +17,7 @@ class LoginOriginal extends Component {
             isLoading: false,
             isSuccess: false,
             message: '',
+            isPasswordVisible: true
         }
     }
 
@@ -88,8 +89,8 @@ class LoginOriginal extends Component {
                             <Input placeholder="Username" textContentType="username" value={this.state.username} onChange={(e) => this.setState({ username: e.nativeEvent.text })} />
                         </View>
                         <View style={styles.input}>
-                            <Input placeholder="Password" secureTextEntry textContentType="password" value={this.state.password} onChange={(e) => this.setState({ password: e.nativeEvent.text })} />
-                            <TouchableOpacity>
+                            <Input placeholder="Password" secureTextEntry={this.state.isPasswordVisible} textContentType="password" value={this.state.password} onChange={(e) => this.setState({ password: e.nativeEvent.text })} />
+                            <TouchableOpacity onPress={() => this.setState( prevState => ({isPasswordVisible: !prevState.isPasswordVisible}))}>
                             <Icon name='eye-outline' color='#3399ff' size={23} style={styles.eye}/>  
                             </TouchableOpacity>
                         </View>

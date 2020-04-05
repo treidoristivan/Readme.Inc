@@ -40,7 +40,7 @@ class HomeOriginal extends Component {
                     <SliderTitle title="List On Top" viewAll onViewAllPressed={() => this.props.navigation.navigate('Search', { sort: [{ name: "rating", value: "desc" }] })} />
                         <ListCard />
                         <ListCategory />  
-                    <SliderTitle title="All Genre" viewAll />
+                    <SliderTitle title="Book's Author" viewAll />
                         <ListAuthor />
                     </View>
                 </ScrollView>

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-  Text,
   View,
   Image,
   Dimensions,
@@ -9,7 +8,6 @@ import {
 import Swiper from 'react-native-swiper';
 
 const {width} = Dimensions.get('window')
-
 const Slider = props => (
   <View style={styles.container}>
     <Image style={styles.image} source={props.uri} />

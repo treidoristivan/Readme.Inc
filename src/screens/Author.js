@@ -1,6 +1,7 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import SliderTitle from '../components/SliderTitle';
 import { connect } from 'react-redux';
 import { getAuthor } from '../redux/actions/author';
 import { withNavigation } from 'react-navigation';
@@ -26,9 +27,12 @@ class AuthorOriginal extends Component {
     render() {
         return (
             <View style={styles.container}>
+              <View style={styles.headerWrapper}>
+                    <SliderTitle title="Author" />
+                </View>
                 <ScrollView
                     vertikal
-                    showsVerticalScrollIndicator={false}
+                    showsVerticalScrollIndicator={true}
                 >
                     {this.state.isLoading &&
                         <>
@@ -70,15 +74,22 @@ class AuthorOriginal extends Component {
 
 // define your styles
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-    },
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    padding: 20,
+    backgroundColor: 'white',
+},
     card: { backgroundColor: '#3399ff', width: 250, height: 150, marginHorizontal: 35,marginVertical:10, elevation: 5, },
     cardWrapper: { flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' },
     title: {textAlign: 'center', fontFamily: 'Nunito-Regular',color:'white', fontSize:17 },
     titles: {textAlign: 'center', fontFamily: 'Nunito-Regular',color:'white', fontSize:10 },
+    headerWrapper: {
+      flex: 0,
+      flexDirection: 'row',
+  },
 
 });
 
@@ -88,7 +99,7 @@ const mapStateToProps = state => {
     }
 }
 
-const ListAuthor = withNavigation(AuthorOriginal)
+const Author = withNavigation(AuthorOriginal)
 
 //make this component available to the app
-export default connect(mapStateToProps)(ListAuthor);
+export default connect(mapStateToProps)(Author);
