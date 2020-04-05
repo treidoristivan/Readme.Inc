@@ -13,10 +13,12 @@ import BookDetail from '../screens/BookDetail';
 import Category from '../screens/Category';
 import CategoryDetail from '../screens/CategoryDetail';
 import ForgotPassword from '../screens/ForgotPassword';
+import ForgotPasswordSuccess from '../screens/ForgotPasswordSuccess';
 import Home from '../screens/Home';
 import SideMenu from '../screens/SideMenu'
 import SliderBar from '../components/SliderBar';
 import Login from '../screens/Login';
+import Verify from '../screens/Verify'
 import Profile from '../components/SideMenu/Profile';
 import ProfileSetting from '../components/SideMenu/ProfileSetting';
 import Register from '../screens/Register';
@@ -59,6 +61,12 @@ const AuthNav = createStackNavigator({
             headerShown: false,
         },
     },
+    Verify: {
+        screen: Verify,
+        navigationOptions: {
+            headerShown: false,
+        },
+    },
     Register: {
         screen: Register,
         navigationOptions: {
@@ -71,6 +79,12 @@ const AuthNav = createStackNavigator({
             headerShown: false,
         }
     },
+    ForgotPasswordSuccess: {
+        screen: ForgotPasswordSuccess,
+        navigationOptions: {
+            headerShown: false
+        }
+    }
 }, {
     //  initialRouteName: 'UserAuthentication',
 })

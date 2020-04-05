@@ -4,28 +4,32 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIn
 import { Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
-import { login } from '../redux/actions/auth';
+import { forgotPasswordSuccess } from '../redux/actions/auth';
 
 // create a component
-class LoginOriginal extends Component {
+class ForgotPasswordSuccessOriginal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: '',
-            password: '',
+            verificationCode: '',
+            newPassword: '',
+            confirmPassword: '',
             isLoading: false,
             isSuccess: false,
-            message: '',
+            message: ''
         }
     }
 
     async handleSubmit() {
-        const { username, password } = this.state
+        const { verificationCode, newPassword, confirmPassword } = this.state
         const data = {
-            username,
-            password
+            verificationCode, newPassword, confirmPassword
         }
-        await this.props.dispatch(login(data))
+        if (newPassword === confirmPassword) {
+            await this.props.dispatch(forgotPasswordSuccess(data))
+        } else {
+            Alert.alert('Reset Password Failed', 'New Password and Confirm Password Must Match')
+        }
     }
 
     async componentDidUpdate(prevProps) {
@@ -38,19 +42,19 @@ class LoginOriginal extends Component {
             } else {
                 console.log('sudah fulfill')
                 if (this.props.auth.isSuccess) {
-                    console.log('berhasil login')
+                    console.log('berhasil reset password')
                     await this.setState({
                         isLoading: false,
                         isSuccess: true,
-                        message: "Login Success.",
+                        message: "Reset Password Success.",
                     })
                     this.handleRedirect()
                 } else {
-                    console.log('gagal login')
+                    console.log('gagal reset password')
                     await this.setState({
                         isLoading: false,
                         isSuccess: false,
-                        message: "Login Failed. Try Again.",
+                        message: "Reset Password Failed. Try Again.",
                     })
                     this.handleRedirect()
                 }
@@ -59,18 +63,17 @@ class LoginOriginal extends Component {
     }
 
     handleRedirect() {
-        if (this.props.navigation.state.routeName === 'Login') {
+        if (this.props.navigation.state.routeName === 'ForgotPasswordSuccess') {
             if (this.state.isSuccess) {
                 this.setState({ isSuccess: false })
-                this.props.navigation.navigate('Home')
+                this.props.navigation.navigate('Login')
             } else {
-                Alert.alert('Login Message', this.state.message)
+                Alert.alert('Reset Password Failed', this.state.message)
             }
         }
     }
 
     render() {
-        console.log('IN HERE LOGIN', this.props.navigation.state.routeName)
         return (
             <View style={styles.container}>
                 <View style={styles.headerWrapper}>
@@ -79,28 +82,25 @@ class LoginOriginal extends Component {
                 </View>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.illustWrapper}>
-                        <Image source={require('../assets/images/login.png')} style={styles.illust} />
+                        <Image source={require('../assets/images/forgot_password.png')} style={styles.illust} />
+                        <Text style={styles.title}>Reset Password</Text>
                     </View>
                     
                     <View style={styles.formWrapper}>
                         <View style={styles.input}>
-                            <Input placeholder="Username" textContentType="username" value={this.state.username} onChange={(e) => this.setState({ username: e.nativeEvent.text })} />
+                            <Input placeholder="Verification Code" value={this.state.verificationCode} onChange={(e) => this.setState({ verificationCode: e.nativeEvent.text })} />
                         </View>
                         <View style={styles.input}>
-                            <Input placeholder="Password" secureTextEntry textContentType="password" value={this.state.password} onChange={(e) => this.setState({ password: e.nativeEvent.text })} />
+                            <Input placeholder="New Password" secureTextEntry textContentType="password" value={this.state.newPassword} onChange={(e) => this.setState({ newPassword: e.nativeEvent.text })} />
                         </View>
-                        <View style={{ flex: 1, flexDirection: 'row' }}>
-                            <Text style={{ flex: 1, textAlign: 'left', marginTop: 30,marginRight:10, color: '#3399ff' }} onPress={() => this.props.navigation.navigate('ForgotPassword')}>Forgot Password?</Text>
-                            <Text style={{ flex: 1, textAlign: 'right', marginTop: 30,marginRight:10, color: '#3399ff' }} onPress={() => this.props.navigation.navigate('Verify')}>Verify Account</Text>
+                        <View style={styles.input}>
+                            <Input placeholder="Confirm Password" secureTextEntry textContentType="password" value={this.state.confirmPassword} onChange={(e) => this.setState({ confirmPassword: e.nativeEvent.text })} />
                         </View>
                         <TouchableOpacity style={styles.loginButton} onPress={() => this.handleSubmit()}>
                             {this.props.auth.isLoading
                                 ? <ActivityIndicator size="small" color="#fff" />
-                                : <Text style={styles.buttonText}>Sign In</Text>
+                                : <Text style={styles.buttonText}>Submit</Text>
                             }
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.registerButton} onPress={() => this.props.navigation.navigate('Register')}>
-                            <Text style={styles.buttonText}>Sign Up</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
@@ -137,13 +137,13 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     illust: {
-        width: 250,
-        height: 150
+        width: 180,
+        height: 130,
     },
     
     title: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 30
+        fontSize: 20
     },
     formWrapper: {
         flex: 0,
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const Login = withNavigation(LoginOriginal)
+const ForgotPasswordSuccess = withNavigation(ForgotPasswordSuccessOriginal)
 
 const mapStateToProps = state => {
     return {
@@ -191,4 +191,4 @@ const mapStateToProps = state => {
 }
 
 //make this component available to the app
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(ForgotPasswordSuccess);

@@ -1,31 +1,31 @@
-//import liraries
+//import libraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { Input } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
-import { login } from '../redux/actions/auth';
+import { verify } from '../redux/actions/auth';
 
 // create a component
-class LoginOriginal extends Component {
+class VerifyOriginal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: '',
-            password: '',
             isLoading: false,
             isSuccess: false,
             message: '',
+            verificationCode: ''
         }
     }
 
     async handleSubmit() {
-        const { username, password } = this.state
-        const data = {
-            username,
-            password
+        const { verificationCode } = this.state
+        const data = { verificationCode: verificationCode.toLowerCase() }
+        if (verificationCode) {
+            await this.props.dispatch(verify(data))
+        } else {
+            Alert.alert('Verification Failed', 'Please provide the verification code')
         }
-        await this.props.dispatch(login(data))
     }
 
     async componentDidUpdate(prevProps) {
@@ -42,7 +42,7 @@ class LoginOriginal extends Component {
                     await this.setState({
                         isLoading: false,
                         isSuccess: true,
-                        message: "Login Success.",
+                        message: "Happy reading",
                     })
                     this.handleRedirect()
                 } else {
@@ -50,7 +50,7 @@ class LoginOriginal extends Component {
                     await this.setState({
                         isLoading: false,
                         isSuccess: false,
-                        message: "Login Failed. Try Again.",
+                        message: "Wrong verification code. Please ensure your verification code",
                     })
                     this.handleRedirect()
                 }
@@ -59,48 +59,37 @@ class LoginOriginal extends Component {
     }
 
     handleRedirect() {
-        if (this.props.navigation.state.routeName === 'Login') {
+        if (this.props.navigation.state.routeName === 'Verify') {
             if (this.state.isSuccess) {
                 this.setState({ isSuccess: false })
-                this.props.navigation.navigate('Home')
+                this.props.navigation.navigate('Login')
             } else {
-                Alert.alert('Login Message', this.state.message)
+                Alert.alert('Verification Failed', this.state.message)
             }
         }
     }
 
     render() {
-        console.log('IN HERE LOGIN', this.props.navigation.state.routeName)
         return (
             <View style={styles.container}>
                 <View style={styles.headerWrapper}>
                     <Image source={require('../assets/icons/favicon.png')} style={styles.logo} />
-                    <Text style={styles.logoText}>Readme</Text>
+                    <Text style={styles.logoText}>Book&Food</Text>
                 </View>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.illustWrapper}>
-                        <Image source={require('../assets/images/login.png')} style={styles.illust} />
+                        <Image source={require('../assets/images/verify.png')} style={styles.illust} />
                     </View>
                     
                     <View style={styles.formWrapper}>
                         <View style={styles.input}>
-                            <Input placeholder="Username" textContentType="username" value={this.state.username} onChange={(e) => this.setState({ username: e.nativeEvent.text })} />
-                        </View>
-                        <View style={styles.input}>
-                            <Input placeholder="Password" secureTextEntry textContentType="password" value={this.state.password} onChange={(e) => this.setState({ password: e.nativeEvent.text })} />
-                        </View>
-                        <View style={{ flex: 1, flexDirection: 'row' }}>
-                            <Text style={{ flex: 1, textAlign: 'left', marginTop: 30,marginRight:10, color: '#3399ff' }} onPress={() => this.props.navigation.navigate('ForgotPassword')}>Forgot Password?</Text>
-                            <Text style={{ flex: 1, textAlign: 'right', marginTop: 30,marginRight:10, color: '#3399ff' }} onPress={() => this.props.navigation.navigate('Verify')}>Verify Account</Text>
+                            <Input placeholder="Verification Code" value={this.state.verificationCode} onChange={(e) => this.setState({ verificationCode: e.nativeEvent.text })} />
                         </View>
                         <TouchableOpacity style={styles.loginButton} onPress={() => this.handleSubmit()}>
                             {this.props.auth.isLoading
                                 ? <ActivityIndicator size="small" color="#fff" />
-                                : <Text style={styles.buttonText}>Sign In</Text>
+                                : <Text style={styles.buttonText}>Verify</Text>
                             }
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.registerButton} onPress={() => this.props.navigation.navigate('Register')}>
-                            <Text style={styles.buttonText}>Sign Up</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
@@ -137,8 +126,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     illust: {
-        width: 250,
-        height: 150
+        width: 200,
+        height: 200
     },
     
     title: {
@@ -152,12 +141,13 @@ const styles = StyleSheet.create({
     },
     loginButton: {
         backgroundColor: '#3399ff',
-        padding: 10,
-        borderRadius: 20,
+        padding: 15,
+        borderRadius: 12,
         justifyContent: 'center',
         flex: 0,
         flexDirection: 'row',
         marginTop: 15,
+        marginRight: 5
     },
     buttonText: {
         fontFamily: 'Nunito-Regular',
@@ -165,24 +155,24 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase'
     },
     registerButton: {
-        backgroundColor: '#00cc00',
+        backgroundColor: '#eee',
         padding: 10,
-        borderRadius: 20,
+        borderRadius: 12,
         justifyContent: 'center',
         flex: 0,
         flexDirection: 'row',
         marginTop: 10,
+        marginLeft: 5
     },
     input: {
         flex: 0,
         flexDirection: 'row',
         margin: 5,
-        borderBottomWidth: 1,
-        borderBottomColor:'#3399ff'
+        borderBottomWidth: 2
     },
 });
 
-const Login = withNavigation(LoginOriginal)
+const Verify = withNavigation(VerifyOriginal)
 
 const mapStateToProps = state => {
     return {
@@ -191,4 +181,4 @@ const mapStateToProps = state => {
 }
 
 //make this component available to the app
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(Verify);

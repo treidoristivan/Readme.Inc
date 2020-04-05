@@ -55,10 +55,12 @@ export const Post = (url, token = null, body, contentType = 'application/json') 
             data: body
         })
             .then(result => {
+                console.log('This is the result from Post')
                 console.log(result)
                 resolve(result)
             })
             .catch(error => {
+                console.log('This is an error on Post')
                 console.log(error)
                 reject(error)
             })

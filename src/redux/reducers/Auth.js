@@ -31,6 +31,30 @@ const auth = (state = initialState, action) => {
                 isSuccess: action.payload.data.success,
             }
 
+        case 'VERIFY_PENDING':
+            return {
+                ...state,
+                isLoading: true,
+                isError: false,
+                isSuccess: false
+            }
+        case 'VERIFY_REJECTED':
+            return {
+                ...state,
+                data: [],
+                isLoading: false,
+                isError: true,
+                isSuccess: false
+            }
+        case 'VERIFY_FULFILLED':
+            return {
+                ...state,
+                data: action.payload.data.data,
+                isLoading: false,
+                isError: false,
+                isSuccess: action.payload.data.success,
+                }
+
         case 'REGISTER_PENDING':
             return {
                 ...state,
@@ -47,6 +71,54 @@ const auth = (state = initialState, action) => {
                 isSuccess: false
             }
         case 'REGISTER_FULFILLED':
+            return {
+                ...state,
+                data: action.payload.data.data,
+                isLoading: false,
+                isError: false,
+                isSuccess: action.payload.data.success,
+            }
+
+        case 'FORGOT_PASSWORD_REQUEST_PENDING':
+            return {
+                ...state,
+                isLoading: true,
+                isError: false,
+                isSuccess: false
+            }
+        case 'FORGOT_PASSWORD_REQUEST_REJECTED':
+            return {
+                ...state,
+                data: [],
+                isLoading: false,
+                isError: true,
+                isSuccess: false
+            }
+        case 'FORGOT_PASSWORD_REQUEST_FULFILLED':
+            return {
+                ...state,
+                data: action.payload.data.data,
+                isLoading: false,
+                isError: false,
+                isSuccess: action.payload.data.success,
+            }
+
+        case 'FORGOT_PASSWORD_SUCCESS_PENDING':
+            return {
+                ...state,
+                isLoading: true,
+                isError: false,
+                isSuccess: false
+            }
+        case 'FORGOT_PASSWORD_SUCCESS_REJECTED':
+            return {
+                ...state,
+                data: [],
+                isLoading: false,
+                isError: true,
+                isSuccess: false
+            }
+        case 'FORGOT_PASSWORD_SUCCESS_FULFILLED':
             return {
                 ...state,
                 data: action.payload.data.data,
@@ -132,6 +204,8 @@ const auth = (state = initialState, action) => {
             res.data.email = action.payload.data.data.email;
             res.data.token = action.payload.data.data.token;
             return res
+
+
         default:
             return state
     }

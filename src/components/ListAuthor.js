@@ -52,27 +52,20 @@ class AuthorOriginal extends Component {
                             </View>
                         </>
                     }
-                    {!this.state.isLoading && this.props.restaurant.data.restaurants.map((v, i) => {
-                        var img = <View style={{ width: 250, height: 50, borderRadius: 50, backgroundColor: '#222' }}><Text>No Image</Text></View>
-                        if (v.logo !== '') {
-                            if (v.logo.substr(0, 4) === 'http') {
-                                img = <Image source={{ uri: v.logo }} style={{ width: 250, height: 50, borderRadius: 50, }} resizeMode="cover" />
-                            } else {
-                                img = <Image source={{ uri: APP_IMAGE_URL.concat(v.logo) }} style={{ width: 250, height: 50, borderRadius: 50, }} resizeMode="cover" />
-                            }
-                        }
+                    {!this.state.isLoading && this.props.author.data.map((v, i) => {
+                        var img = <Image source={{ uri: v.author_image }} style={{ width: 250, height: 50, borderRadius: 50, }} resizeMode="cover" />
                         var styled = [styles.card]
                         if (i === 0) {
                             styled.push({ marginHorizontal: 30 })
                         }
-                        if (i === this.props.restaurant.data.restaurants.length - 1) {
-                            styled.push({ merginRight: 20 })
+                        if (i === this.props.author.data.length - 1) {
+                            styled.push({ marginRight: 20 })
                         }
                         return (
-                            <TouchableOpacity style={styled} key={i} onPress={() => this.props.navigation.navigate('RestaurantDetail', {name:v.name, logo:v.logo})}>
+                            <TouchableOpacity style={styled} key={i} onPress={() => this.props.navigation.navigate('AuthorDetail', { authorId: v.id })}>
                                 <View style={styles.cardWrapper}>
                                     {img}
-                                    <Text style={styles.title}>{v.name.length > 12 ? v.name.slice(0, 11) + "…" : v.name}</Text>
+                                    <Text style={styles.title}>{v.author_name}</Text>
                                 </View>
                             </TouchableOpacity>
                         )
@@ -97,7 +90,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        restaurant: state.restaurant
+        author: state.author
     }
 }
 

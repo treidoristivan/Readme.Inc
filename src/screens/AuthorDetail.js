@@ -1,17 +1,13 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, StyleSheet, ImageBackground, ScrollView } from 'react-native';
-import { Button, Text, Badge } from 'native-base';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { withNavigationFocus } from 'react-navigation';
 import { connect } from 'react-redux';
-import { getBook } from '../redux/actions/book';
-import { APP_IMAGE_URL } from '../config/config';
-
-
-// component
-import ButtonBack from '../components/BackButton';
+import { getBooksByAuthor } from '../redux/actions/book';
+import { APP_ICON_URL } from '../config/config';
 
 // create a component
-class AuthorDetail extends Component {
+class AuthorDetailOriginal extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -20,51 +16,50 @@ class AuthorDetail extends Component {
     }
 
     async componentDidMount() {
-        await this.props.dispatch(getBook())
-        await this.setState({ isLoading: false })
+        await this.props.dispatch(getBooksByAuthor(this.props.navigation.state.params.authorId));
+        await this.setState({ isLoading: false });
+        this.props.navigation.addListener('didFocus', () => this.onFocus(this.props));
     }
 
-    rupiah(angka) {
-        if (!angka){
-            return angka}
-        var rupiah = '';
-        var angkarev = angka.toString().split('').reverse().join('');
-        for (var i = 0; i < angkarev.length; i++) if (i % 3 === 0) rupiah += angkarev.substr(i, 3) + '.';
-        return 'Rp.' + rupiah.split('', rupiah.length - 1).reverse().join('');
+    async onFocus(props) {
+        props.dispatch(getBooksByAuthor(this.props.navigation.state.params.authorId));
     }
 
     render() {
+        console.log('Books in this author', this.props.books.data)
         return (
             <View style={styles.container}>
-                {!this.state.isLoading &&                     <>
-                        <ImageBackground source={{ uri: APP_IMAGE_URL.concat(this.props.navigation.state.params.logo) }} style={styles.imageBackground} resizeMethod="auto" resizeMode="cover">
-                            <ButtonBack />
-                        </ImageBackground>
-                        <View style={styles.infoCard}>
-                            <Text style={styles.name}>{this.props.navigation.state.params.name}</Text>
-                            <ScrollView showsVerticalScrollIndicator={false}>
-                                {/* <View style={styles.infoWrapper}>
-                                    <View style={styles.ratingWrapper}>
-                                        <Icon name="ios-star" size={30} style={styles.star} />
-                                        <Text style={styles.starCount}>{this.props.item.data.rating}</Text>
-                                    </View>
-                                    <Text style={styles.price}>{this.rupiah(this.props.item.data.price)}</Text>
-                                </View> */}
-                                {/* <Text style={styles.description}>{this.props.item.data.description}</Text> */}
-                                {/* <View style={styles.categoryWrapper}>
-                                    {this.props.item.data.items && this.props.item.data.items.map((v, i) => (
-                                        <Badge style={styles.categories} key={i}>
-                                            <Text style={styles.categoryText}>{v.name}</Text>
-                                        </Badge>
-                                    ))}
-                                </View> */}
-                            </ScrollView>
-                            <Button rounded style={styles.button}>
-                                <Text style={styles.buttonText}>Give Review</Text>
-                            </Button>
+                <ScrollView vertikal showsVertialScrollIndicator={false}>
+                    {this.state.isLoading &&
+                        <View style={{flexDirection: 'column'}}>
+                            <View style={[styles.card, { marginLeft: 20 }]}>
+                                <View style={styles.cardWrapper}>
+                                    <View style={{ backgroundColor: '#eee', width: 50, height: 50 }}></View>
+                                    <View style={{ backgroundColor: '#eee', height: 10, width: 50, marginTop: 5 }}></View>
+                                </View>
+                            </View>
                         </View>
-                    </>
-                }
+                    }
+                    {!this.state.isLoading && this.props.books.data.map((v, i) => {
+                        var styler = [styles.card]
+                        if (i === 0) {
+                            styler.push({ marginLeft: 20 })
+                        }
+                        if (i === this.props.books.data.length - 1) {
+                            styler.push({ marginRight: 20 })
+                        }
+                        return (
+                            <TouchableOpacity style={styler} key={i} onPress={() => this.props.navigation.navigate('BookDetail', {bookId: v.id})}>
+                                <View style={styles.cardWrapper}>
+                                    <Image style={{ width: 50, height: 50 }} source={{ uri: v.book_image }} />
+                                    <Text style={styles.title}>{v.book_name}</Text>
+                                    <Text style={styles.title}>{v.total_reviewers}</Text>
+                                    <Text style={styles.title}>{v.avg_rating}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        )
+                    })}
+                </ScrollView>
             </View>
         );
     }
@@ -74,81 +69,21 @@ class AuthorDetail extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
     },
-    imageBackground: {
-        flex: 1,
-        padding: 20,
-    },
-    infoCard: {
-        backgroundColor: 'white',
-        flex: 1,
-        flexDirection: 'column',
-        marginTop: -120,
-        borderTopRightRadius: 50,
-        borderTopLeftRadius: 50,
-        padding: 30
-    },
-    infoWrapper: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    ratingWrapper: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    star: {
-        color: '#e3bd00',
-    },
-    starCount: {
-        fontFamily: 'Nunito-Regular',
-        fontSize: 25,
-    },
-    price: {
-        fontFamily: 'Nunito-Regular',
-        fontSize: 25,
-        color: 'green',
-    },
-    name: {
-        fontFamily: 'Nunito-Regular',
-        fontSize: 25,
-        marginTop: 85,
-        marginLeft:50
-    },
-    description: {
-        fontFamily: 'Nunito-Regular',
-        fontSize: 14,
-        color: '#666',
-        marginTop: 5,
-    },
-    button: { justifyContent: 'center', marginTop: 10,marginBottom:90, backgroundColor:'#008080' },
-    buttonText: {
-        color: 'white',
-        textTransform: 'uppercase',
-    },
-    categoryWrapper: {
-        flexDirection: 'row',
-        marginTop: 5,
-        flexWrap: 'wrap',
-    },
-    categories: {
-        backgroundColor: '#ddd',
-        marginRight: 5,
-        marginBottom: 5,
-    },
-    categoryText: {
-        color: '#111',
-        fontFamily: 'Nunito-Regular',
-    },
+    card: { backgroundColor: '#fff', width: 150, height: 120, borderRadius: 12, margin: 10, elevation: 5 },
+    cardWrapper: { flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' },
+    title: { marginTop: 10, textAlign: 'center', fontFamily: 'Nunito-Regular' },
 });
 
 const mapStateToProps = state => {
     return {
-        item: state.item
+        books: state.book,
     }
 }
+
+const AuthorDetail = withNavigationFocus(AuthorDetailOriginal)
 
 //make this component available to the app
 export default connect(mapStateToProps)(AuthorDetail);
