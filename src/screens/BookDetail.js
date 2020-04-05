@@ -1,16 +1,18 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, StyleSheet, ImageBackground, ScrollView, TouchableOpacity, Image, Modal, TextInput, ActivityIndicator, Alert } from 'react-native';
+import { View, StyleSheet, ImageBackground, ScrollView, TouchableOpacity, Image, Modal, TextInput, ActivityIndicator, Alert, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Counter from 'react-native-counters';
 import Feather from 'react-native-vector-icons/Feather';
 import { Button, Text } from 'native-base';
 import { connect } from 'react-redux';
-import { APP_IMAGE_URL } from '../config/config';
+import { APP_IMAGE_URL, APP_URL } from '../config/config';
 import { getBook } from '../redux/actions/book';
 import { withNavigation } from 'react-navigation';
 import formatRupiah from '../helper/formatRupiah';
 import { getMyFavoriteBook, deleteMyFavoriteBook, postMyFavoriteBook } from '../redux/actions/user';
+
+import { getReviewByIdBook, postReviewByIdBook } from '../redux/actions/review'
 
 // component
 import ButtonBack from '../components/BackButton';
@@ -34,29 +36,28 @@ class BookDetailOriginal extends Component {
             quantity: 1,
             description: '',
             addFavorite: false,
-            statsBook: true
+            statsBook: true,
+            modalReview: false,
+            review: ''
         }
+    }
+
+    toogleReview() {
+        this.setState({ modalReview: !this.state.modalReview })
     }
 
     async componentDidMount() {
 
-        // const jwt = this.props.auth.data.token;
         await this.props.dispatch(getBook(this.props.navigation.state.params.bookId))
         await this.setState({ isLoading: false })
-        // await this.setState({
-        //     itemImage: { uri: this.props.book.itemDetail }
-        // });
+
         this.props.dispatch(getMyFavoriteBook(this.props.auth.token))
         if (this.props.user.data) {
             const data = this.props.user.data.map((v) => {
                 return v.id_book;
             })
-            // const dataBook = this.props.book.data.map((v) => {
-            //     return v.id;
-            // })
-            // console.log(dataBook, 'dataBook')
             for (var i = 0; i < data.length; i++) {
-                // for (var b = 0; b < dataBook.length; b++) {
+
                 if (data[i] == this.props.book.itemDetail.id) {
                     this.setState({ addFavorite: true })
                     break;
@@ -64,9 +65,12 @@ class BookDetailOriginal extends Component {
                     this.setState({ addFavorite: false })
                 }
             }
-            // }
-
         }
+        const data = {
+            idBook: this.props.navigation.state.params.bookId
+        }
+        console.log('datadatadatadatafdatadatarad', data)
+        await this.props.dispatch(getReviewByIdBook(data, this.props.auth.token))
     }
 
     handleDeleteFavorite(id) {
@@ -88,6 +92,21 @@ class BookDetailOriginal extends Component {
         this.setState({ addFavorite: !this.state.addFavorite })
     }
 
+    async handleAddReview() {
+        const dataReview = {
+            idBook: this.props.navigation.state.params.bookId,
+            review: this.state.review,
+        }
+
+        const data = {
+            idBook: this.props.navigation.state.params.bookId
+        }
+
+        await this.props.dispatch(postReviewByIdBook(dataReview, this.props.auth.token))
+        await this.props.dispatch(getReviewByIdBook(data, this.props.auth.token))
+
+    }
+
     // async handleAddToCart() {
     //     await this.setState({ isLoading: true })
     //     const { quantity, description } = this.state
@@ -107,6 +126,8 @@ class BookDetailOriginal extends Component {
     // }
 
     render() {
+        console.log(this.props.review.data)
+        console.log(this.state.modalReview)
         return (
 
             <View style={styles.container}>
@@ -158,7 +179,6 @@ class BookDetailOriginal extends Component {
                                             </TouchableOpacity>
                                         ))}
                                     </View> */}
-                            <Text style={{ fontFamily: 'Nunito-Regular', marginTop: 10,paddingTop:80 }}>We Found Related Books for You</Text>
                             {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                                         {this.props.item.itemDetail.suggests.map((v, i) => {
                                             console.log(v);
@@ -176,8 +196,69 @@ class BookDetailOriginal extends Component {
                                             )
                                         })}
                                     </ScrollView> */}
-                            <Text style={{ fontFamily: 'Nunito-Regular', marginTop: 10,paddingTop:30 }}>Review</Text>
-                            {/* {
+                            <View style={{ marginTop: 20, height: 40, alignSelf: 'center' }}>
+
+                                <View style={{ flex: 1, backgroundColor: 'grey', width: 140, alignItems: 'center', justifyContent: 'center', borderRadius: 10 }}>
+                                    <TouchableOpacity onPress={() => this.toogleReview()}>
+                                        <Text style={{ color: 'white', alignContent: 'center', textAlign: 'center' }}>See Reviews</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+
+                            {this.state.modalReview == true &&
+                                <ScrollView contentContainerStyle={{marginVertical: 10}}>
+                                    <FlatList
+                                        data={this.props.review.data}
+                                        renderItem={({ item, index }) =>
+
+                                            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                                                <View style={{ flex: 1, marginLeft: 10 }}>
+
+                                                    {item.user_image == '' &&
+                                                        <Image source={require('../assets/images/default.png')}
+                                                            style={{ height: 50, width: 50, borderRadius: 50 }}>
+                                                        </Image>
+                                                    }
+
+                                                    {item.user_image !== '' &&
+                                                        <Image source={{ uri: `${APP_URL}${item.user_image}` }}
+                                                            style={{ height: 50, width: 50, borderRadius: 50 }}>
+                                                        </Image>
+                                                    }
+
+                                                </View>
+
+                                                <View style={{ flex: 4, marginTop: 6, marginRight: 10, borderRadius: 15, backgroundColor: '#F0EAE8' }}>
+                                                    <View style={{ marginLeft: 14, marginTop: 5, marginBottom: 10 }}>
+                                                        <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>{item.user_fullname}</Text>
+
+                                                        <Text>{item.review}</Text>
+                                                    </View>
+                                                </View>
+
+
+
+                                            </View>
+
+                                        } />
+                                    <View style={{ position: 'relative', flex: 1, marginTop: 10 }}>
+                                        <View style={{ flex: 1 }}>
+                                            <TextInput on placeholder='Review ' style={{ borderBottomColor: '#8A8F9E', borderBottomWidth: 1, height: 50, fontSize: 15, color: '#161F3D', borderWidth: 1, borderRadius: 10, paddingLeft: 20 }
+                                            }
+                                                underlineColorAndroid="transparent" onChangeText={review => this.setState({ review })}
+                                            />
+                                        </View>
+                                        <View style={{ flex: 1, backgroundColor: 'grey', width: 140, height: 35, justifyContent: 'center', alignItems: 'center',marginTop: 10, alignSelf: 'center', borderRadius: 10 }}>
+                                            <TouchableOpacity onPress={() => this.handleAddReview()}>
+                                                <Text style={{ color: 'white', alignContent: 'center', textAlign: 'center' }}>Send</Text>
+                                            </TouchableOpacity>
+                                        </View>
+
+                                    </View>
+
+                                </ScrollView>
+
+                            /* {
                                         this.props.item.itemDetail.reviews.map((v, i) => {
                                             return (
                                                 <View style={{ backgroundColor: 'white', padding: 10, margin: 10, elevation: 3, borderRadius: 12 }} key={i}>
@@ -221,7 +302,8 @@ const styles = StyleSheet.create({
         marginTop: -200,
         borderTopRightRadius: 50,
         borderTopLeftRadius: 50,
-        padding: 30
+        paddingHorizontal: 30,
+        paddingTop: 15
     },
     buttonWrapper: {
         flex: 1,
@@ -321,7 +403,8 @@ const mapStateToProps = state => {
     return {
         book: state.book,
         auth: state.auth,
-        user: state.user
+        user: state.user,
+        review: state.review
     }
 }
 
