@@ -3,6 +3,8 @@ const initialState = {
     isLoading: false,
     isError: false,
     isSuccess: true,
+    isLoggedIn: false,
+    loginToken: ''
 }
 
 const auth = (state = initialState, action) => {
@@ -26,6 +28,8 @@ const auth = (state = initialState, action) => {
             return {
                 ...state,
                 data: action.payload.data.data,
+                isLoggedIn: true,
+                loginToken: action.payload.data.data.token,
                 isLoading: false,
                 isError: false,
                 isSuccess: action.payload.data.success,
