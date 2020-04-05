@@ -32,10 +32,10 @@ const styles = StyleSheet.create({
         height: 60,
         paddingBottom: 10,
     },
-    searchbarWrapper: { paddingLeft: 20, paddingRight: 20, },
-    searchbar: { backgroundColor: '#3399ff', borderRadius: 25, paddingLeft: 15, opacity:0.7, height: 50 },
-    searchIcon: { fontSize: 25, color: 'white' },
-    searchInput: { fontFamily: 'Nunito-Regular', fontSize: 18, color: 'white' }
+    searchbarWrapper: { paddingHorizontal:20,paddingBottom:20},
+    searchbar: { backgroundColor: '#3399ff', borderRadius: 25, paddingLeft: 15, opacity:0.7, height: 40,width:180 },
+    searchIcon: { fontSize: 20, color: 'white' },
+    searchInput: { fontFamily: 'Nunito-Regular', fontSize: 16, color: 'white' }
 });
 
 const SearchBar = withNavigation(SearchBarOriginal);

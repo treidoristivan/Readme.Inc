@@ -7,7 +7,6 @@ import { withNavigation } from 'react-navigation';
 
 // Components
 import Header from '../components/Header';
-import SearchBar from '../components/SearchBar';
 import SliderTitle from '../components/SliderTitle';
 import SliderBar from '../components/SliderBar';
 import ListCategory from '../components/ListCategory';
@@ -33,7 +32,6 @@ class HomeOriginal extends Component {
         return (
             <Container>
                 <Header />
-                <SearchBar />
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.content}>
                     <SliderBar />
