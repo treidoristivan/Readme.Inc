@@ -7,10 +7,10 @@ export const getPopularBooks = () => {
     }
 }
 
-export const getBooks = (params) => {
+export const getBooks = (pageNumber, params) => {
     return {
         type: 'GET_BOOKS',
-        payload: Get(APP_URL.concat('/books/all' + params))
+        payload: Get(APP_URL.concat(`/books/all?page=${pageNumber}` + params))
     }
 }
 
