@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { getBooksByGenre } from '../redux/actions/book';
 import { getMyFavoriteBook, deleteMyFavoriteBook, postMyFavoriteBook } from '../redux/actions/user';
 import { APP_ICON_URL } from '../config/config';
+import formatRupiah from '../helper/formatRupiah'
 
 // create a component
 class CategoryDetailOriginal extends Component {
@@ -68,7 +69,7 @@ class CategoryDetailOriginal extends Component {
                                     </View>
                                     <View style={styles.cardWrapper}>
                                         <Text numberOfLines={2} style={styles.title}>{v.book_name}</Text>
-                                        <Text >Reviews : {v.total_reviewers}</Text>
+                                        <Text >Reviews : {formatRupiah(v.total_reviewers, '') }</Text>
                                         <Text >Rating :  <Icon name="ios-star" size={15} style={styles.star} />  {v.avg_rating}</Text>
 
                                         {this.props.addFavorite &&

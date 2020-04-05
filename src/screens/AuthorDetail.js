@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import { getBooksByAuthor } from '../redux/actions/book';
 import { APP_ICON_URL } from '../config/config';
+import formatRupiah from '../helper/formatRupiah'
 
 // create a component
 class AuthorDetailOriginal extends Component {
@@ -56,7 +57,7 @@ class AuthorDetailOriginal extends Component {
                                     </View>
                                     <Text numberOfLines={2} style={styles.title}>{v.book_name}</Text>
                                     <View style={{flex:1, flexDirection:'row'}}>
-                                    <Text style={styles.title}>Review : <Icon name="md-text" size={15} style={styles.star}> </Icon>{v.total_reviewers}</Text>
+                                    <Text style={styles.title}>Review : <Icon name="md-text" size={15} style={styles.star}> </Icon>{formatRupiah(v.total_reviewers, '')}</Text>
                                     <Text style={styles.title}>       Rating : <Icon name="ios-star" size={15} style={styles.star}> </Icon>{v.avg_rating}</Text>
                                     </View>
                                 </View>

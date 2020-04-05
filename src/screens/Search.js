@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { APP_IMAGE_URL } from '../config/config';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import BackButton from '../components/BackButton';
+import formatRupiah from '../helper/formatRupiah'
 
 // create a component
 class SearchOriginal extends Component {
@@ -82,7 +83,7 @@ class SearchOriginal extends Component {
                     <ActivityIndicator animating={this.state.isLoading} size={55} color='#3399ff' />
                 </View>
                 <View>
-                    <List style={{ paddingBottom: 50 }}>
+                    <List style={{ marginBottom: 100 }}>
                         <FlatList
                             data={this.state.data}
                             keyExtractor={(item) => item.id}
@@ -104,7 +105,7 @@ class SearchOriginal extends Component {
                                     </View>
                                         <View style={styles.cardWrapper}>
                                             <Text numberOfLines={2} style={styles.title}>{item.book_name}</Text>
-                                            <Text >Reviews : {item.total_reviewers}</Text>
+                                            <Text >Reviews : {formatRupiah(item.total_reviewers, '')}</Text>
                                             <Text >Rating :  <Icon name="ios-star" size={15} style={styles.star} />  {item.avg_rating}</Text>
 
                                         </View>
