@@ -65,45 +65,44 @@ class BookDetailOriginal extends Component {
     render() {
         console.log('BookDetail', this.props.book.itemDetail)
         return (
+            
             <View style={styles.container}>
-                <Text>Book Detail</Text>
                 <Image style={{ width: 50, height: 50 }} source={{ uri: this.props.book.itemDetail.book_image }} />
-                <Text>{this.props.book.itemDetail.book_image}</Text>
-                <Text>{this.props.book.itemDetail.book_name}</Text>
-                <Text>{this.props.book.itemDetail.author_name}</Text>
-               {/* <>
+                <Text style={styles.description}>{this.props.book.itemDetail.description}</Text>
+               <>
                             {this.state.itemImage !== null ?
-                                <ImageBackground source={this.state.itemImage} style={styles.imageBackground} resizeMethod="auto" resizeMode="cover">
-                                    <ButtonBack />
+                                <ImageBackground source={this.props.book.itemDetail.book_image} style={styles.imageBackground} resizeMethod="auto" resizeMode="cover">
                                 </ImageBackground>
                                 :
                                 <View style={styles.imageBackground}>
-                                    <ButtonBack />
                                 </View>
                             }
                             <View style={styles.infoCard}>
-                                <Text style={styles.name}>{this.props.item.itemDetail.name}</Text>
-                                <ScrollView showsVerticalScrollIndicator={false}>
-                                    <View style={styles.infoWrapper}>
+                            <ScrollView showsVerticalScrollIndicator={false}>
+
+                                <Text style={styles.name}>{this.props.book.itemDetail.book_name}</Text>
+                                
+                                <View style={styles.infoWrapper}>
                                         <View style={styles.ratingWrapper}>
-                                            <Icon name="ios-star" size={30} style={styles.star} />
-                                            <Text style={styles.starCount}>{this.props.item.itemDetail.rating}</Text>
+                                            <Icon name="ios-star" size={20} style={styles.star} />
+                                            <Text style={styles.starCount}>{this.props.book.itemDetail.avg_rating}</Text>
+                                            <Text style={styles.description}>{this.props.book.itemDetail.author_name}</Text>
                                         </View>
-                                        {
-                                            this.props.item.itemDetail.price !== null &&
-                                            <Text style={styles.price}>{formatRupiah(this.props.item.itemDetail.price, 'Rp.')}</Text>
-                                        }
+                                      
                                     </View>
-                                    <Text style={styles.description}>{this.props.item.itemDetail.description}</Text>
-                                    <View style={styles.categoryWrapper}>
-                                        {this.props.item.itemDetail.categories.map((v, i) => (
+                                    <Button rounded dark style={styles.button} onPress={() => this.setState({ modalVisible: true })}>
+                                    <Text style={styles.buttonText}>Get Book</Text>
+                                    </Button>
+                                    
+                                    {/* <View style={styles.categoryWrapper}>
+                                        {this.props.book.itemDetail.map((v, i) => (
                                             <TouchableOpacity style={styles.categories} key={i} onPress={() => this.props.navigation.navigate('Search', { search: [{ name: "category", value: v.id }] })}>
                                                 <Text style={styles.categoryText}>{v.name}</Text>
                                             </TouchableOpacity>
                                         ))}
-                                    </View>
+                                    </View> */}
                                     <Text style={{ fontFamily: 'Nunito-Regular', marginTop: 10 }}>We Found Related Books for You</Text>
-                                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                                    {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                                         {this.props.item.itemDetail.suggests.map((v, i) => {
                                             console.log(v);
                                             return (
@@ -119,9 +118,9 @@ class BookDetailOriginal extends Component {
                                                 </TouchableOpacity>
                                             )
                                         })}
-                                    </ScrollView>
+                                    </ScrollView> */}
                                     <Text style={{ fontFamily: 'Nunito-Regular', marginTop: 10 }}>Review</Text>
-                                    {
+                                    {/* {
                                         this.props.item.itemDetail.reviews.map((v, i) => {
                                             return (
                                                 <View style={{ backgroundColor: 'white', padding: 10, margin: 10, elevation: 3, borderRadius: 12 }} key={i}>
@@ -138,13 +137,11 @@ class BookDetailOriginal extends Component {
                                                 </View>
                                             )
                                         })
-                                    }
+                                    } */}
                                 </ScrollView>
-                                <Button rounded dark style={styles.button} onPress={() => this.setState({ modalVisible: true })}>
-                                    <Text style={styles.buttonText}>Get Book</Text>
-                                </Button>
+                               
                             </View>
-                        </> */}
+                        </>
             </View>
         );
     }
@@ -184,7 +181,7 @@ const styles = StyleSheet.create({
     },
     starCount: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 25,
+        fontSize: 18,
     },
     price: {
         fontFamily: 'Nunito-Regular',
@@ -201,6 +198,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#666',
         marginTop: 5,
+        padding:15
     },
     button: { justifyContent: 'center', marginTop: 10, backgroundColor:'#008080' },
     buttonText: {

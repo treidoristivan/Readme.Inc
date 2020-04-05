@@ -26,7 +26,7 @@ class HeaderOriginal extends Component {
                         </TouchableWithoutFeedback>
 
                         <TouchableOpacity style={styles.imageWrapper} onPress={() => this.props.navigation.navigate('Profile')}>
-                            <Text style={styles.name}> {this.props.auth.data.user_fullname}</Text>
+                            {/* <Text style={styles.name}> {this.props.auth.data.user_fullname}</Text> */}
 
                             {this.props.auth.data.user_image !== null &&
                                 <Image source={{ uri: APP_URL.concat(this.props.auth.data.user_image) }} style={styles.image} />
