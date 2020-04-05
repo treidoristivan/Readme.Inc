@@ -13,7 +13,7 @@ class BackButtonOriginal extends Component {
     render() {
         return (
             
-            <TouchableOpacity style={styles.container} onPress={() => this.props.navigation.goBack()}>
+            <TouchableOpacity style={styles.container} onPress={() => this.props.navigation.navigate('Home')}>
                 <Icon name="ios-arrow-back" style={styles.icon} />
             </TouchableOpacity>
         );

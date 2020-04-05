@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { getMyFavoriteBook } from '../redux/actions/user';
 import { withNavigation } from 'react-navigation';
 import { APP_ICON_URL } from '../config/config';
+import { handleAndroidBackButton, removeAndroidBackButtonHandler } from '../components/AndroidBackButton'
 
 // create a component
 class MyFavoriteBooks extends Component {
@@ -17,9 +18,14 @@ class MyFavoriteBooks extends Component {
     }
 
     async componentDidMount() {
+        handleAndroidBackButton(navigateBack)
         await this.props.dispatch(getMyFavoriteBook());
         await this.setState({ isLoading: false });
         this.props.navigation.addListener('didFocus', () => this.onFocus(this.props));
+    }
+
+    componentWillUnmount() {
+        removeAndroidBackButtonHandler()
     }
 
     async onFocus(props) {

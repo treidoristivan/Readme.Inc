@@ -5,6 +5,7 @@ import { withNavigationFocus } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import { getPopularBooks } from '../../redux/actions/book';
+import { handleAndroidBackButton, removeAndroidBackButtonHandler } from '../AndroidBackButton'
 
 
 // create a component
@@ -17,9 +18,14 @@ class BestBooksOriginal extends Component {
 	}
 
 	async componentDidMount() {
+		handleAndroidBackButton(() => this.props.navigation.navigate('Home'))
 		await this.props.dispatch(getPopularBooks());
 		await this.setState({ isLoading: false });
 		this.props.navigation.addListener('didFocus', () => this.onFocus(this.props));
+	}
+
+	componentWillUnmount() {
+		removeAndroidBackButtonHandler()
 	}
 
 	async onFocus(props) {
