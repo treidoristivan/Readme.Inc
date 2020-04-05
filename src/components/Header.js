@@ -33,7 +33,7 @@ class HeaderOriginal extends Component {
                             }
 
                             {this.props.auth.data.user_image === null &&
-                                <Image style={styles.avatar} source={require('../assets/images/default.png')} />
+                                <Image style={styles.image} source={require('../assets/images/default.png')} />
                             }
 
                         </TouchableOpacity>

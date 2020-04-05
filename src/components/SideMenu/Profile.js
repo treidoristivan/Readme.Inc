@@ -158,7 +158,7 @@ class ProfileOriginal extends Component {
 
 
     render() {
-        console.log(APP_URL+this.props.auth.data.user_image)
+        console.log(APP_URL + this.props.auth.data.user_image)
         return (
             <View style={styles.container}>
                 <View style={styles.headerWrapper}>
