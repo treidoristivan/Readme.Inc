@@ -7,16 +7,16 @@ const initialState = {
     isSuccess: true
 }
 
-const book = (state = initialState, action) => {
+const review = (state = initialState, action) => {
     switch (action.type) {
-        case 'GET_POPULAR_BOOKS_PENDING':
+        case 'GET_REVIEWS_BY_ID_BOOK_PENDING':
             return {
                 ...state,
                 isLoading: true,
                 isError: false,
                 isSuccess: false,
             }
-        case 'GET_POPULAR_BOOKS_REJECTED':
+        case 'GET_REVIEWS_BY_ID_BOOK_REJECTED':
             return {
                 ...state,
                 data: [],
@@ -24,7 +24,7 @@ const book = (state = initialState, action) => {
                 isError: true,
                 isSuccess: false,
             }
-        case 'GET_POPULAR_BOOKS_FULFILLED':
+        case 'GET_REVIEWS_BY_ID_BOOK_FULFILLED':
             return {
                 ...state,
                 count: action.payload.data.data.count,
@@ -34,14 +34,14 @@ const book = (state = initialState, action) => {
                 isSuccess: action.payload.data.success,
             }
 
-        case 'GET_BOOKS_PENDING':
+        case 'POST_REVIEWS_BY_ID_BOOK_PENDING':
             return {
                 ...state,
                 isLoading: true,
                 isError: false,
                 isSuccess: false,
             }
-        case 'GET_BOOKS_REJECTED':
+        case 'POST_REVIEWS_BY_ID_BOOK_REJECTED':
             return {
                 ...state,
                 data: [],
@@ -49,24 +49,23 @@ const book = (state = initialState, action) => {
                 isError: true,
                 isSuccess: false,
             }
-        case 'GET_BOOKS_FULFILLED':
+        case 'POST_REVIEWS_BY_ID_BOOK_FULFILLED':
             return {
                 ...state,
-                count: action.payload.data.data.count,
                 data: action.payload.data.data,
                 isLoading: false,
                 isError: false,
                 isSuccess: action.payload.data.success,
             }
 
-        case 'GET_BOOK_PENDING':
+        case 'UPDATE_REVIEWS_BY_ID_BOOK_PENDING':
             return {
                 ...state,
                 isLoading: true,
                 isError: false,
                 isSuccess: false,
             }
-        case 'GET_BOOK_REJECTED':
+        case 'UPDATE_REVIEWS_BY_ID_BOOK_REJECTED':
             return {
                 ...state,
                 data: [],
@@ -75,33 +74,7 @@ const book = (state = initialState, action) => {
                 isError: true,
                 isSuccess: false,
             }
-        case 'GET_BOOK_FULFILLED':
-            console.log('GET_BOOK_FULFILLED', action.payload)
-            return {
-                ...state,
-                itemDetail: action.payload.data.data,
-                isLoading: false,
-                isError: false,
-                isSuccess: action.payload.data.success,
-            }
-
-        case 'GET_BOOKS_BY_GENRE_PENDING':
-            return {
-                ...state,
-                isLoading: true,
-                isError: false,
-                isSuccess: false,
-            }
-        case 'GET_BOOKS_BY_GENRE_REJECTED':
-            return {
-                ...state,
-                data: [],
-                isLoading: false,
-                isError: true,
-                isSuccess: false,
-            }
-        case 'GET_BOOKS_BY_GENRE_FULFILLED':
-            console.log('GET_BOOKS_BY_GENRE', action.payload)
+        case 'UPDATE_REVIEWS_BY_ID_BOOK_FULFILLED':
             return {
                 ...state,
                 data: action.payload.data.data,
@@ -110,14 +83,14 @@ const book = (state = initialState, action) => {
                 isSuccess: action.payload.data.success,
             }
 
-        case 'GET_BOOKS_BY_AUTHOR_PENDING':
+        case 'DELETE_REVIEWS_BY_ID_BOOK_PENDING':
             return {
                 ...state,
                 isLoading: true,
                 isError: false,
                 isSuccess: false,
             }
-        case 'GET_BOOKS_BY_AUTHOR_REJECTED':
+        case 'DELETE_REVIEWS_BY_ID_BOOK_REJECTED':
             return {
                 ...state,
                 data: [],
@@ -125,32 +98,10 @@ const book = (state = initialState, action) => {
                 isError: true,
                 isSuccess: false,
             }
-        case 'GET_BOOKS_BY_AUTHOR_FULFILLED':
+        case 'DELETE_REVIEWS_BY_ID_BOOK_FULFILLED':
             return {
                 ...state,
                 data: action.payload.data.data,
-                isLoading: false,
-                isError: false,
-                isSuccess: action.payload.data.success,
-            }
-
-        case 'POST_REVIEW_PENDING':
-            return {
-                ...state,
-                isLoading: true,
-                isError: false,
-                isSuccess: false,
-            }
-        case 'POST_REVIEW_REJECTED':
-            return {
-                ...state,
-                isLoading: false,
-                isError: true,
-                isSuccess: false,
-            }
-        case 'POST_REVIEW_FULFILLED':
-            return {
-                ...state,
                 isLoading: false,
                 isError: false,
                 isSuccess: action.payload.data.success,
@@ -161,4 +112,4 @@ const book = (state = initialState, action) => {
     }
 }
 
-export default book
+export default review
