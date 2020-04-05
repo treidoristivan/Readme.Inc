@@ -1,17 +1,18 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, StyleSheet, ImageBackground, ScrollView, TouchableOpacity, Image, Modal, TextInput, ActivityIndicator, Alert } from 'react-native';
+import { View, StyleSheet, ImageBackground, ScrollView, TouchableOpacity, Image, Modal, TextInput, ActivityIndicator, Alert, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Counter from 'react-native-counters';
 import Feather from 'react-native-vector-icons/Feather';
 import { Button, Text } from 'native-base';
 import { connect } from 'react-redux';
-import { APP_IMAGE_URL } from '../config/config';
+import { APP_IMAGE_URL, APP_URL } from '../config/config';
 import { getBook } from '../redux/actions/book';
 import { withNavigation } from 'react-navigation';
 import formatRupiah from '../helper/formatRupiah';
 import { getMyFavoriteBook, deleteMyFavoriteBook, postMyFavoriteBook } from '../redux/actions/user';
-import { getReviewByIdBook } from '../redux/actions/review'
+
+import { getReviewByIdBook, postReviewByIdBook } from '../redux/actions/review'
 
 // component
 import ButtonBack from '../components/BackButton';
@@ -35,8 +36,14 @@ class BookDetailOriginal extends Component {
             quantity: 1,
             description: '',
             addFavorite: false,
-            statsBook: true
+            statsBook: true,
+            modalReview: false,
+            review: ''
         }
+    }
+
+    toogleReview() {
+        this.setState({ modalReview: !this.state.modalReview })
     }
 
     async componentDidMount() {
@@ -85,6 +92,21 @@ class BookDetailOriginal extends Component {
         this.setState({ addFavorite: !this.state.addFavorite })
     }
 
+    async handleAddReview() {
+        const dataReview = {
+            idBook: this.props.navigation.state.params.bookId,
+            review: this.state.review,
+        }
+
+        const data = {
+            idBook: this.props.navigation.state.params.bookId
+        }
+
+        await this.props.dispatch(postReviewByIdBook(dataReview, this.props.auth.token))
+        await this.props.dispatch(getReviewByIdBook(data, this.props.auth.token))
+
+    }
+
     // async handleAddToCart() {
     //     await this.setState({ isLoading: true })
     //     const { quantity, description } = this.state
@@ -104,7 +126,8 @@ class BookDetailOriginal extends Component {
     // }
 
     render() {
-        console.log(this.props.review)
+        console.log(this.props.review.data)
+        console.log(this.state.modalReview)
         return (
 
             <View style={styles.container}>
@@ -181,7 +204,61 @@ class BookDetailOriginal extends Component {
                                     </TouchableOpacity>
                                 </View>
                             </View>
-                            {/* {
+
+                            {this.state.modalReview == true &&
+                                <ScrollView >
+                                    <FlatList
+                                        data={this.props.review.data}
+                                        renderItem={({ item, index }) =>
+
+                                            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                                                <View style={{ flex: 1, marginLeft: 10, marginVertical: 10, }}>
+
+                                                    {item.image == '' &&
+                                                        <Image source={require('../assets/images/default.png')}
+                                                            style={{ height: 50, width: 50, borderRadius: 50 }}>
+                                                        </Image>
+                                                    }
+
+                                                    {item.image !== '' &&
+                                                        <Image source={{ uri: `${APP_URL}${item.user_image}` }}
+                                                            style={{ height: 50, width: 50, borderRadius: 50 }}>
+                                                        </Image>
+                                                    }
+
+                                                </View>
+
+                                                <View style={{ flex: 4, marginTop: 6, marginRight: 10, borderRadius: 15, backgroundColor: '#F0EAE8' }}>
+                                                    <View style={{ marginLeft: 14, marginTop: 5, marginBottom: 10 }}>
+                                                        <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>{item.user_fullname}</Text>
+
+                                                        <Text>{item.review}</Text>
+                                                    </View>
+                                                </View>
+
+
+
+                                            </View>
+
+                                        } />
+                                    <View style={{ position: 'relative', flex: 1, flexDirection: 'row' }}>
+                                        <View style={{ flex: 1 }}>
+                                            <TextInput on placeholder='Comment ' style={{ borderBottomColor: '#8A8F9E', borderBottomWidth: 1, height: 50, fontSize: 15, color: '#161F3D', borderWidth: 1, borderRadius: 10, paddingLeft: 45 }
+                                            }
+                                                underlineColorAndroid="transparent" onChangeText={review => this.setState({ review })}
+                                            />
+                                        </View>
+                                        <View style={{ flex: 1, backgroundColor: 'grey', width: 140, marginLeft: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 10 }}>
+                                            <TouchableOpacity onPress={() => this.handleAddReview()}>
+                                                <Text style={{ color: 'white', alignContent: 'center', textAlign: 'center' }}>Kirim</Text>
+                                            </TouchableOpacity>
+                                        </View>
+
+                                    </View>
+
+                                </ScrollView>
+
+                            /* {
                                         this.props.item.itemDetail.reviews.map((v, i) => {
                                             return (
                                                 <View style={{ backgroundColor: 'white', padding: 10, margin: 10, elevation: 3, borderRadius: 12 }} key={i}>

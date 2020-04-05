@@ -8,14 +8,14 @@ export const getReviewByIdBook = (data, token) => {
     console.log(APP_URL + '/review')
     return {
         type: 'GET_REVIEWS_BY_ID_BOOK',
-        payload: Get(APP_URL.concat('/review'), token, data)
+        payload: Post(APP_URL.concat('/review'), token, data)
     }
 }
 
 export const postReviewByIdBook = (data, token) => {
     return {
         type: 'POST_REVIEWS_BY_ID_BOOK',
-        payload: Post(APP_URL.concat('/review'), token, data)
+        payload: Post(APP_URL.concat('/review/add'), token, data)
     }
 }
 
