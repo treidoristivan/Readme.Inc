@@ -35,10 +35,10 @@ class HomeOriginal extends Component {
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.content}>
                     <SliderBar />
-                    <SliderTitle title="List On Top" viewAll onViewAllPressed={() => this.props.navigation.navigate('Search', { sort: [{ name: "rating", value: "desc" }] })} />
+                    <SliderTitle title="List On Top" to="Category" viewAll onViewAllPressed={() => this.props.navigation.navigate('Search')} />
                         <ListCard />
                         <ListCategory />  
-                    <SliderTitle title="Book's Author" viewAll />
+                    <SliderTitle title="Book's Author" to="Author" viewAll />
                         <ListAuthor />
                     </View>
                 </ScrollView>

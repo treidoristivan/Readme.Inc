@@ -42,10 +42,12 @@ class CategoryOriginal extends Component {
                         if (i === this.props.category.data.length - 1) {
                             styler.push({ marginRight: 20 })
                         }
+                        const arrayOfColors = ['#567ce3', '#3c7eb5', '#5f61cf', '#2f3ec4', '#484bdb']
+                        const color = arrayOfColors[Math.floor(Math.random() * arrayOfColors.length)]
+                        console.log('color', color)
                             return (
-                                <TouchableOpacity style={styles.categoryCard} key={i} onPress={() => this.props.navigation.navigate('CategoryDetail', { categoryId: v.id })}>
-                                    <Image source={{ uri: image }} style={{ width: 40, height: 40 }} />
-                                    <Text style={{ marginTop: 5, fontFamily: 'Nunito-Regular', fontSize: 14, textAlign: 'center' }}>{v.genre_name}</Text>
+                                <TouchableOpacity style={[styles.categoryCard, { backgroundColor: color }]} key={i} onPress={() => this.props.navigation.navigate('CategoryDetail', { categoryId: v.id })}>
+                                    <Text style={{ marginTop: 5, fontFamily: 'Nunito-Regular', fontSize: 14, textAlign: 'center', color: '#fff', fontSize: 14 }}>{v.genre_name}</Text>
                                 </TouchableOpacity>
                             )
                         })}
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        padding: 20,
+        paddingHorizontal: 10,
         backgroundColor: 'white',
     },
     headerWrapper: {
@@ -77,7 +79,8 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     categoryCard: {
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
+        color: '#fff',
         margin: 5,
         elevation: 5,
         flexDirection: 'column',

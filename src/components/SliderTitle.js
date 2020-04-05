@@ -17,7 +17,7 @@ class SliderTitleOriginal extends Component {
             <View style={styles.container}>
                 <Text style={styles.title}>{this.props.title}</Text>
                 {this.props.viewAll &&
-                    <Text style={styles.viewAll} onPress={() => this.props.navigation.navigate('Author')}>See More</Text>
+                    <Text style={styles.viewAll} onPress={() => this.props.navigation.navigate(this.props.to)}>See More</Text>
                 }
             </View>
         );

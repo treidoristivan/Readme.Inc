@@ -64,11 +64,13 @@ class CategoryOriginal extends Component {
                         if (i === this.props.category.data.length - 1) {
                             styler.push({ marginRight: 20 })
                         }
+                        const arrayOfColors = ['#567ce3', '#3c7eb5', '#5f61cf', '#2f3ec4', '#484bdb']
+                        const color = arrayOfColors[Math.floor(Math.random() * arrayOfColors.length)]
+                        console.log('color', color)
                         return (
-                            <TouchableOpacity style={styler} key={i} onPress={() => this.props.navigation.navigate('CategoryDetail', { categoryId: v.id })}>
+                            <TouchableOpacity style={[styler, {backgroundColor: color}]} key={i} onPress={() => this.props.navigation.navigate('CategoryDetail', { categoryId: v.id })}>
                                 <View style={styles.cardWrapper}>
-                                    <Image style={{ width: 50, height: 50 }} source={{ uri: APP_ICON_URL.concat(v.icon) }} />
-                                    <Text style={styles.title}>{v.genre_name}</Text>
+                                    <Text style={[styles.title, {color: '#fff'}]}>{v.genre_name}</Text>
                                 </View>
                             </TouchableOpacity>
                         )
