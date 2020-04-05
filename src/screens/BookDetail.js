@@ -11,6 +11,7 @@ import { getBook } from '../redux/actions/book';
 import { withNavigation } from 'react-navigation';
 import formatRupiah from '../helper/formatRupiah';
 import { getMyFavoriteBook, deleteMyFavoriteBook, postMyFavoriteBook } from '../redux/actions/user';
+import { getRatingByIdBook, postRatingByIdBoot, updateRatingByIdBook, postRatingByIdBook } from '../redux/actions/rating';
 
 import { getReviewByIdBook, postReviewByIdBook } from '../redux/actions/review'
 
@@ -38,7 +39,8 @@ class BookDetailOriginal extends Component {
             addFavorite: false,
             statsBook: true,
             modalReview: false,
-            review: ''
+            review: '',
+            colorStar: 0
         }
     }
 
@@ -69,8 +71,13 @@ class BookDetailOriginal extends Component {
         const data = {
             idBook: this.props.navigation.state.params.bookId
         }
-        console.log('datadatadatadatafdatadatarad', data)
         await this.props.dispatch(getReviewByIdBook(data, this.props.auth.token))
+        await this.props.dispatch(getRatingByIdBook(data, this.props.auth.token))
+        if (this.props.rating.data == []) {
+            this.setState({ colorStar: 0 })
+        } else {
+            this.setState({ colorStar: this.props.rating.data[0].rating })
+        }
     }
 
     handleDeleteFavorite(id) {
@@ -91,6 +98,26 @@ class BookDetailOriginal extends Component {
         this.props.dispatch(getMyFavoriteBook(this.props.auth.token))
         this.setState({ addFavorite: !this.state.addFavorite })
     }
+
+
+    async handleAddRating() {
+        if (this.props.rating == []) {
+            const data = {
+                idBook: id,
+                rating: this.state.colorStar
+            }
+            await this.props.dispatch(postRatingByIdBook(data, this.props.auth.token))
+            await this.props.dispatch(getRatingByIdBook(data, this.props.auth.token))
+        } else {
+            const data = {
+                idBook: id,
+                rating: this.state.colorStar
+            }
+            await this.props.dispatch(updateRatingByIdBook(data, this.props.auth.token))
+            await this.props.dispatch(getRatingByIdBook(data, this.props.auth.token))
+        }
+    }
+
 
     async handleAddReview() {
         const dataReview = {
@@ -126,8 +153,7 @@ class BookDetailOriginal extends Component {
     // }
 
     render() {
-        console.log(this.props.review.data)
-        console.log(this.state.modalReview)
+        console.log('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', this.props.rating.data)
         return (
 
             <View style={styles.container}>
@@ -144,7 +170,6 @@ class BookDetailOriginal extends Component {
                         <ScrollView showsVerticalScrollIndicator={false}>
 
                             <Text style={styles.name}>{this.props.book.itemDetail.book_name}</Text>
-
                             <View style={styles.infoWrapper}>
                                 <View style={styles.ratingWrapper}>
                                     <Icon name="ios-star" size={20} style={styles.star} />
@@ -153,24 +178,55 @@ class BookDetailOriginal extends Component {
                                 </View>
 
                             </View>
+
+                            <View style={styles.infoWrapper}>
+                                <View style={styles.ratingWrapper}>
+                                    <TouchableOpacity onPress={() =>
+                                        this.setState({ colorStar: 1 })
+
+                                    }>
+
+                                        <Icon name="ios-star" size={30} style={{ backgorundColor: '#000', color: `${this.state.colorStar >= 1 ? '#e3bd00' : '#aba'}`, marginRight: 2 }} />
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity onPress={() => this.setState({ colorStar: 2 })}>
+                                        <Icon name="ios-star" size={30} style={{ backgorundColor: '#000', color: `${this.state.colorStar >= 2 ? '#e3bd00' : '#aba'}`, marginRight: 2 }} />
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity onPress={() => this.setState({ colorStar: 3 })}>
+                                        <Icon name="ios-star" size={30} style={{ backgorundColor: '#000', color: `${this.state.colorStar >= 3 ? '#e3bd00' : '#aba'}`, marginRight: 2 }} />
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity onPress={() => this.setState({ colorStar: 4 })}>
+                                        <Icon name="ios-star" size={30} style={{ backgorundColor: '#000', color: `${this.state.colorStar >= 4 ? '#e3bd00' : '#aba'}`, marginRight: 2 }} />
+                                    </TouchableOpacity>
+
+
+                                    <TouchableOpacity onPress={() => this.setState({ colorStar: 5 })}>
+                                        <Icon name="ios-star" size={30} style={{ backgorundColor: '#000', color: `${this.state.colorStar >= 5 ? '#e3bd00' : '#aba'}`, marginRight: 2 }} />
+                                    </TouchableOpacity>
+
+                                </View>
+
+                            </View>
                             <View style={styles.buttonWrapper}>
 
-                            {this.state.addFavorite == true &&
-                                <Button rounded dark style={styles.buttonDel} onPress={() => this.handleDeleteFavorite(this.props.book.itemDetail.id)}>
-                                    <Text style={styles.buttonText}>Delete To Favorite</Text>
+                                {this.state.addFavorite == true &&
+                                    <Button rounded dark style={styles.buttonDel} onPress={() => this.handleDeleteFavorite(this.props.book.itemDetail.id)}>
+                                        <Text style={styles.buttonText}>Delete To Favorite</Text>
+                                    </Button>
+                                }
+
+                                {this.state.addFavorite == false &&
+                                    <Button rounded dark style={styles.button} onPress={() => this.handleAddFavorite(this.props.book.itemDetail.id)}>
+                                        <Text style={styles.buttonText}>Add To Favorite</Text>
+                                    </Button>
+                                }
+
+
+                                <Button rounded dark style={styles.button2} onPress={() => this.setState({ modalVisible: true })}>
+                                    <Text style={styles.buttonText}>Get Book</Text>
                                 </Button>
-                            }
-
-                            {this.state.addFavorite == false &&
-                                <Button rounded dark style={styles.button} onPress={() => this.handleAddFavorite(this.props.book.itemDetail.id)}>
-                                    <Text style={styles.buttonText}>Add To Favorite</Text>
-                                </Button>
-                            }
-
-
-                            <Button rounded dark style={styles.button2} onPress={() => this.setState({ modalVisible: true })}>
-                                <Text style={styles.buttonText}>Get Book</Text>
-                            </Button>
                             </View>
                             {/* <View style={styles.categoryWrapper}>
                                         {this.props.book.itemDetail.map((v, i) => (
@@ -206,7 +262,7 @@ class BookDetailOriginal extends Component {
                             </View>
 
                             {this.state.modalReview == true &&
-                                <ScrollView contentContainerStyle={{marginVertical: 10}}>
+                                <ScrollView contentContainerStyle={{ marginVertical: 10 }}>
                                     <FlatList
                                         data={this.props.review.data}
                                         renderItem={({ item, index }) =>
@@ -248,7 +304,7 @@ class BookDetailOriginal extends Component {
                                                 underlineColorAndroid="transparent" onChangeText={review => this.setState({ review })}
                                             />
                                         </View>
-                                        <View style={{ flex: 1, backgroundColor: 'grey', width: 140, height: 35, justifyContent: 'center', alignItems: 'center',marginTop: 10, alignSelf: 'center', borderRadius: 10 }}>
+                                        <View style={{ flex: 1, backgroundColor: 'grey', width: 140, height: 35, justifyContent: 'center', alignItems: 'center', marginTop: 10, alignSelf: 'center', borderRadius: 10 }}>
                                             <TouchableOpacity onPress={() => this.handleAddReview()}>
                                                 <Text style={{ color: 'white', alignContent: 'center', textAlign: 'center' }}>Send</Text>
                                             </TouchableOpacity>
@@ -320,9 +376,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
+
+
+
     star: {
         color: '#e3bd00',
     },
+
     starCount: {
         fontFamily: 'Nunito-Regular',
         fontSize: 18,
@@ -347,19 +407,19 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: '#3399ff',
         padding: 8,
-        borderBottomLeftRadius:20,
-        borderTopLeftRadius:20,
+        borderBottomLeftRadius: 20,
+        borderTopLeftRadius: 20,
         justifyContent: 'center',
         flex: 1,
         flexDirection: 'row',
         marginTop: 10,
         marginRight: 5
-    },   
+    },
     buttonDel: {
         backgroundColor: 'red',
         padding: 10,
-        borderBottomLeftRadius:20,
-        borderTopLeftRadius:20,
+        borderBottomLeftRadius: 20,
+        borderTopLeftRadius: 20,
         justifyContent: 'center',
         flex: 1,
         flexDirection: 'row',
@@ -369,8 +429,8 @@ const styles = StyleSheet.create({
     button2: {
         backgroundColor: '#00cc00',
         padding: 10,
-        borderBottomRightRadius:20,
-        borderTopRightRadius:20,
+        borderBottomRightRadius: 20,
+        borderTopRightRadius: 20,
         justifyContent: 'center',
         flex: 1,
         flexDirection: 'row',
@@ -404,7 +464,8 @@ const mapStateToProps = state => {
         book: state.book,
         auth: state.auth,
         user: state.user,
-        review: state.review
+        review: state.review,
+        rating: state.rating
     }
 }
 

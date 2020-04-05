@@ -1,10 +1,11 @@
 import { APP_URL, Get, Post, Patch, Delete } from '../../config/config';
 
 
-export const getRatingByIdBook = (idBook, token) => {
+export const getRatingByIdBook = (data, token) => {
+    console.log(data, token)
     return {
         type: 'GET_MY_RATING_BY_ID_BOOK',
-        payload: Post(APP_URL.concat('/rating'), token, idBook)
+        payload: Post(APP_URL.concat('/rating'), token, data)
     }
 }
 
