@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
-import {createBottomTabNavigator } from 'react-navigation-tabs';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Root, Tab } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -32,7 +32,7 @@ import { Header } from 'react-native/Libraries/NewAppScreen';
 
 //Component Side Menu
 import BestBooks from '../components/SideMenu/BestBooks';
-import MyBooks from '../components/SideMenu/MyBooks';
+import MyFavoriteBooks from '../components/SideMenu/MyBooks';
 import ReadingChallenge from '../components/SideMenu/ReadingChallenge';
 import Recommendations from '../components/SideMenu/Recommendations';
 import Setting from '../components/SideMenu/Setting';
@@ -99,7 +99,7 @@ const CategoryNav = createStackNavigator({
             headerShown: false,
         },
     },
-    CategoryDetail:{
+    CategoryDetail: {
         screen: CategoryDetail,
         navigationOptions: {
             headerShown: false,
@@ -132,39 +132,39 @@ CategoryNav.navigationOptions = ({ navigation }) => {
     }
 }
 
-const MenuNav = createStackNavigator ({
+const MenuNav = createStackNavigator({
     BestBooks: {
-        screen:BestBooks,
-        navigationOptions:{
-            headerShown:false,
+        screen: BestBooks,
+        navigationOptions: {
+            headerShown: false,
         }
     },
-    MyBooks: {
-        screen:MyBooks,
-        navigationOptions:{
-            headerShown:false,
+    MyFavoriteBooks: {
+        screen: MyFavoriteBooks,
+        navigationOptions: {
+            headerShown: false,
         }
     },
     ReadingChallenge: {
-        screen:ReadingChallenge,
-        navigationOptions:{
-            headerShown:false,
+        screen: ReadingChallenge,
+        navigationOptions: {
+            headerShown: false,
         }
     },
     Recommendations: {
-        screen:Recommendations,
-        navigationOptions:{
-            headerShown:false,
+        screen: Recommendations,
+        navigationOptions: {
+            headerShown: false,
         }
     },
     Setting: {
-        screen:Setting,
-        navigationOptions:{
-            headerShown:false,
+        screen: Setting,
+        navigationOptions: {
+            headerShown: false,
         }
     },
 
-},{
+}, {
     // initialRouteName: 'Author',
 })
 
@@ -187,10 +187,10 @@ const HomeNav = createStackNavigator({
             headerShown: false,
         },
     },
-    SideMenu:{
+    SideMenu: {
         screen: SideMenu,
-        navigationOptions:{
-            headerShown:false,
+        navigationOptions: {
+            headerShown: false,
         },
     },
     SliderBar: {
@@ -209,12 +209,12 @@ const HomeNav = createStackNavigator({
         screen: ProfileSetting,
         navigationOptions: {
             headerShown: false,
-        },  
+        },
     },
-    ReviewHistory:{
-        screen:ReviewHistory,
-        navigationOptions:{
-            headerShown:false,
+    ReviewHistory: {
+        screen: ReviewHistory,
+        navigationOptions: {
+            headerShown: false,
         }
     },
     Search: {
@@ -252,23 +252,23 @@ HomeNav.navigationOptions = ({ navigation }) => {
     }
 }
 
-const AuthorNav = createStackNavigator ({
-   Author:{
-    screen: Author,
+const AuthorNav = createStackNavigator({
+    Author: {
+        screen: Author,
         navigationOptions: {
-            headerShown:false
+            headerShown: false
         }
-   },
+    },
     AuthorDetail: {
         screen: AuthorDetail,
         navigationOptions: {
-            headerShown:false
+            headerShown: false
         }
     },
-    AuthorBook:{
+    AuthorBook: {
         screen: BookDetail,
         navigationOptions: {
-            headerShown:false
+            headerShown: false
         }
     }
 }, {
@@ -297,9 +297,9 @@ const ProfileNav = createStackNavigator({
         screen: ProfileSetting,
         navigationOptions: {
             headerShown: false,
-        },  
+        },
     },
-    
+
 }, {
     //  initialRouteName: 'Profile',
 })
@@ -316,7 +316,7 @@ ProfileNav.navigationOptions = ({ navigation }) => {
 }
 
 const BottomNav = createBottomTabNavigator({
-    
+
     Category: {
         screen: CategoryNav,
         navigationOptions: {
@@ -341,7 +341,7 @@ const BottomNav = createBottomTabNavigator({
             },
         },
     },
-    
+
 }, {
     // initialRouteName: 'Menu',
     tabBarOptions: {
@@ -350,11 +350,11 @@ const BottomNav = createBottomTabNavigator({
         inactiveTintColor: '#3399ff',
         style: {
             backgroundColor: 'white',
-            borderTopWidth:1,
+            borderTopWidth: 1,
             borderTopColor: '#3399ff',
-            paddingBottom:3,
-            height:60,
-            shadowColor:  '#00cc00',
+            paddingBottom: 3,
+            height: 60,
+            shadowColor: '#00cc00',
             shadowOpacity: 0.8,
             shadowRadius: 20,
             shadowOffset: { width: 0, height: 0 }
@@ -369,7 +369,7 @@ const BottomNav = createBottomTabNavigator({
 //     MyProfile:{
 //         screen:ProfileNav
 //     },
-    
+
 // })
 
 const SwitchNav = createSwitchNavigator({
@@ -378,7 +378,7 @@ const SwitchNav = createSwitchNavigator({
     BottomNav,
     MenuNav
 
-   
+
 }, {
     //  initialRouteName: 'SplashNav',
 })

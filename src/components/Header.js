@@ -14,6 +14,7 @@ class HeaderOriginal extends Component {
     //     this.props.navigationProps.toggleDrawer();
     //   };
     render() {
+
         return (
             <Head androidStatusBarColor="#222" style={styles.head}>
                 {this.props.auth.data &&
