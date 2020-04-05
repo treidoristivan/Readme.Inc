@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     name: { fontFamily: 'Nunito-Regular', fontSize: 18 },
     title: { fontFamily: 'Nunito-Regular', color: '#008080' },
     imageWrapper: { flex: 1, justifyContent: 'center', alignItems: 'flex-end',marginBottom:8},
-    image: { width: 40, height: 40, borderRadius: 100 },
+    image: { width: 37, height: 37, borderRadius: 100 },
 });
 
 const mapStateToProps = state => {
