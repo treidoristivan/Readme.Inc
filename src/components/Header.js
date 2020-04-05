@@ -10,6 +10,7 @@ import SearchBar from '../components/SearchBar'
 
 class HeaderOriginal extends Component {
     render() {
+
         return (
             <Head androidStatusBarColor="#3399ff" style={styles.head}>
                 {this.props.auth.data &&

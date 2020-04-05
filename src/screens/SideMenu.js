@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, Dimensions, Image, ScrollView,TouchableOpacity,TouchableWithoutFeedback,Linking } from 'react-native'
+import { Text, View, StyleSheet, Dimensions, Image, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Linking } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { APP_URL } from '../config/config';
 import { connect } from 'react-redux';
@@ -39,10 +39,12 @@ class SideMenu extends Component {
 
 
                 <View style={styles.textWithIcon}>
-                    <View style={styles.withIcon}>
-                        <Icon style={styles.iconWithText} name='file-cabinet' color='#fff' size={25} />
-                        <Text style={styles.text}>My Books</Text>
-                    </View>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('MyFavoriteBooks')}>
+                        <View style={styles.withIcon}>
+                            <Icon style={styles.iconWithText} name='file-cabinet' color='#fff' size={25} />
+                            <Text style={styles.text}>My Books</Text>
+                        </View>
+                    </TouchableOpacity>
                     <Icon style={styles.rightIcon} name='menu-right' color='#fff' size={25} />
                 </View>
 
@@ -75,20 +77,20 @@ class SideMenu extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.imageWrapper} onPress={ ()=> Linking.openURL('https://play.google.com/store/apps/details?id=com.goodreads') }>
-                    <View style={[styles.items, styles.noSelectedItems]}>
-                        <Icon style={styles.iconWithText} name='link' color='#fff' size={25} />
-                        <Text style={styles.text}>Goodreads Original</Text>
-                    </View>
+                    <TouchableOpacity style={styles.imageWrapper} onPress={() => Linking.openURL('https://play.google.com/store/apps/details?id=com.goodreads')}>
+                        <View style={[styles.items, styles.noSelectedItems]}>
+                            <Icon style={styles.iconWithText} name='link' color='#fff' size={25} />
+                            <Text style={styles.text}>Goodreads Original</Text>
+                        </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.imageWrapper} onPress={() => this.props.navigation.navigate('Setting')}>
-                    <View style={[styles.items, styles.noSelectedItems]}>
-                        <Icon style={styles.iconWithText} name='settings-outline' color='#fff' size={25} />
-                        <Text style={styles.text}>Help & Support</Text>
-                    </View>
+                        <View style={[styles.items, styles.noSelectedItems]}>
+                            <Icon style={styles.iconWithText} name='settings-outline' color='#fff' size={25} />
+                            <Text style={styles.text}>Help & Support</Text>
+                        </View>
                     </TouchableOpacity>
-                    
+
                     <View style={[styles.items, styles.noSelectedItems]}>
                         <Icon style={styles.iconWithText} name='logout' color='#fff' size={25} />
                         <Text style={styles.text}>Log Out</Text>
