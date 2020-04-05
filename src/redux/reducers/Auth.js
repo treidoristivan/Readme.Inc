@@ -1,5 +1,6 @@
 const initialState = {
     data: [],
+    token: null,
     isLoading: false,
     isError: false,
     isSuccess: true,
@@ -26,6 +27,7 @@ const auth = (state = initialState, action) => {
             return {
                 ...state,
                 data: action.payload.data.data,
+                token: action.payload.data.token,
                 isLoading: false,
                 isError: false,
                 isSuccess: action.payload.data.success,
@@ -53,7 +55,7 @@ const auth = (state = initialState, action) => {
                 isLoading: false,
                 isError: false,
                 isSuccess: action.payload.data.success,
-                }
+            }
 
         case 'REGISTER_PENDING':
             return {
@@ -127,35 +129,31 @@ const auth = (state = initialState, action) => {
                 isSuccess: action.payload.data.success,
             }
 
-        case 'LOGOUT_PENDING':
+        // case 'LOGOUT_PENDING':
+        //     return {
+        //         ...state,
+        //         isLoading: true,
+        //         isError: false,
+        //         isSuccess: false,
+        //     }
+        // case 'LOGOUT_REJECTED':
+        //     return {
+        //         ...state,
+        //         isLoading: false,
+        //         isError: true,
+        //         isSuccess: false,
+        //     }
+        case 'LOGOUT':
             return {
-                ...state,
-                isLoading: true,
-                isError: false,
-                isSuccess: false,
-            }
-        case 'LOGOUT_REJECTED':
-            return {
-                ...state,
-                isLoading: false,
-                isError: true,
-                isSuccess: false,
-            }
-        case 'LOGOUT_FULFILLED':
-            return {
-                ...state,
-                data: [],
-                isLoading: false,
-                isError: false,
-                isSuccess: true,
+                ...initialState
             }
 
-        case 'CHANGE_PHOTO': 
+        case 'CHANGE_PHOTO':
             const result = {
                 ...state
             };
-            result.data.photo = action.photo;
-            return result
+        // result.data.photo = action.photo;
+        // return result
 
         case 'GET_PROFILE_PENDING':
             return {

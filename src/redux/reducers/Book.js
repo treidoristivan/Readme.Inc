@@ -8,6 +8,7 @@ const initialState = {
 }
 
 const book = (state = initialState, action) => {
+    console.log('POPULAR BOOKS POPULAR BOOKS POPULAR BOOKS POPULAR BOOKS POPULAR BOOKS POPULAR BOOKS', action.payload)
     switch (action.type) {
         case 'GET_POPULAR_BOOKS_PENDING':
             return {
