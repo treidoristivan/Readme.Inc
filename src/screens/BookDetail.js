@@ -10,6 +10,7 @@ import { APP_IMAGE_URL } from '../config/config';
 import { getBook } from '../redux/actions/book';
 import { withNavigation } from 'react-navigation';
 import formatRupiah from '../helper/formatRupiah';
+import { getMyFavoriteBook, deleteMyFavoriteBook, postMyFavoriteBook } from '../redux/actions/user';
 
 // component
 import ButtonBack from '../components/BackButton';
@@ -32,16 +33,59 @@ class BookDetailOriginal extends Component {
             modalVisible: false,
             quantity: 1,
             description: '',
+            addFavorite: false,
+            statsBook: true
         }
     }
 
     async componentDidMount() {
+
         // const jwt = this.props.auth.data.token;
         await this.props.dispatch(getBook(this.props.navigation.state.params.bookId))
         await this.setState({ isLoading: false })
         // await this.setState({
         //     itemImage: { uri: this.props.book.itemDetail }
         // });
+        this.props.dispatch(getMyFavoriteBook(this.props.auth.token))
+        if (this.props.user.data) {
+            const data = this.props.user.data.map((v) => {
+                return v.id_book;
+            })
+            // const dataBook = this.props.book.data.map((v) => {
+            //     return v.id;
+            // })
+            // console.log(dataBook, 'dataBook')
+            for (var i = 0; i < data.length; i++) {
+                // for (var b = 0; b < dataBook.length; b++) {
+                if (data[i] == this.props.book.itemDetail.id) {
+                    this.setState({ addFavorite: true })
+                    break;
+                } else {
+                    this.setState({ addFavorite: false })
+                }
+            }
+            // }
+
+        }
+    }
+
+    handleDeleteFavorite(id) {
+        const data = {
+            idBook: id
+        }
+        this.props.dispatch(deleteMyFavoriteBook(data, this.props.auth.token))
+        this.props.dispatch(getMyFavoriteBook(this.props.auth.token))
+        this.setState({ addFavorite: !this.state.addFavorite })
+    }
+
+    handleAddFavorite(id) {
+        const data = {
+            idBook: id
+        }
+
+        this.props.dispatch(postMyFavoriteBook(data, this.props.auth.token))
+        this.props.dispatch(getMyFavoriteBook(this.props.auth.token))
+        this.setState({ addFavorite: !this.state.addFavorite })
     }
 
     // async handleAddToCart() {
@@ -63,46 +107,58 @@ class BookDetailOriginal extends Component {
     // }
 
     render() {
-        console.log('BookDetail', this.props.book.itemDetail)
         return (
-            
+
             <View style={styles.container}>
                 <Image style={{ width: 50, height: 50 }} source={{ uri: this.props.book.itemDetail.book_image }} />
                 <Text style={styles.description}>{this.props.book.itemDetail.description}</Text>
-               <>
-                            {this.state.itemImage !== null ?
-                                <ImageBackground source={this.props.book.itemDetail.book_image} style={styles.imageBackground} resizeMethod="auto" resizeMode="cover">
-                                </ImageBackground>
-                                :
-                                <View style={styles.imageBackground}>
-                                </View>
-                            }
-                            <View style={styles.infoCard}>
-                            <ScrollView showsVerticalScrollIndicator={false}>
+                <>
+                    {this.state.itemImage !== null ?
+                        <ImageBackground source={this.props.book.itemDetail.book_image} style={styles.imageBackground} resizeMethod="auto" resizeMode="cover">
+                        </ImageBackground>
+                        :
+                        <View style={styles.imageBackground}>
+                        </View>
+                    }
+                    <View style={styles.infoCard}>
+                        <ScrollView showsVerticalScrollIndicator={false}>
 
-                                <Text style={styles.name}>{this.props.book.itemDetail.book_name}</Text>
-                                
-                                <View style={styles.infoWrapper}>
-                                        <View style={styles.ratingWrapper}>
-                                            <Icon name="ios-star" size={20} style={styles.star} />
-                                            <Text style={styles.starCount}>{this.props.book.itemDetail.avg_rating}</Text>
-                                            <Text style={styles.description}>{this.props.book.itemDetail.author_name}</Text>
-                                        </View>
-                                      
-                                    </View>
-                                    <Button rounded dark style={styles.button} onPress={() => this.setState({ modalVisible: true })}>
-                                    <Text style={styles.buttonText}>Get Book</Text>
-                                    </Button>
-                                    
-                                    {/* <View style={styles.categoryWrapper}>
+                            <Text style={styles.name}>{this.props.book.itemDetail.book_name}</Text>
+
+                            <View style={styles.infoWrapper}>
+                                <View style={styles.ratingWrapper}>
+                                    <Icon name="ios-star" size={20} style={styles.star} />
+                                    <Text style={styles.starCount}>{this.props.book.itemDetail.avg_rating}</Text>
+                                    <Text style={styles.description}>{this.props.book.itemDetail.author_name}</Text>
+                                </View>
+
+                            </View>
+                            {this.state.addFavorite == true &&
+                                <Button rounded dark style={styles.buttonDelete} onPress={() => this.handleDeleteFavorite(this.props.book.itemDetail.id)}>
+                                    <Text style={styles.buttonText}>Delete To Favorite</Text>
+                                </Button>
+                            }
+
+                            {this.state.addFavorite == false &&
+                                <Button rounded dark style={styles.button} onPress={() => this.handleAddFavorite(this.props.book.itemDetail.id)}>
+                                    <Text style={styles.buttonText}>Add To Favorite</Text>
+                                </Button>
+                            }
+
+
+                            <Button rounded dark style={styles.button} onPress={() => this.setState({ modalVisible: true })}>
+                                <Text style={styles.buttonText}>Get Book</Text>
+                            </Button>
+
+                            {/* <View style={styles.categoryWrapper}>
                                         {this.props.book.itemDetail.map((v, i) => (
                                             <TouchableOpacity style={styles.categories} key={i} onPress={() => this.props.navigation.navigate('Search', { search: [{ name: "category", value: v.id }] })}>
                                                 <Text style={styles.categoryText}>{v.name}</Text>
                                             </TouchableOpacity>
                                         ))}
                                     </View> */}
-                                    <Text style={{ fontFamily: 'Nunito-Regular', marginTop: 10 }}>We Found Related Books for You</Text>
-                                    {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                            <Text style={{ fontFamily: 'Nunito-Regular', marginTop: 10 }}>We Found Related Books for You</Text>
+                            {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                                         {this.props.item.itemDetail.suggests.map((v, i) => {
                                             console.log(v);
                                             return (
@@ -119,8 +175,8 @@ class BookDetailOriginal extends Component {
                                             )
                                         })}
                                     </ScrollView> */}
-                                    <Text style={{ fontFamily: 'Nunito-Regular', marginTop: 10 }}>Review</Text>
-                                    {/* {
+                            <Text style={{ fontFamily: 'Nunito-Regular', marginTop: 10 }}>Review</Text>
+                            {/* {
                                         this.props.item.itemDetail.reviews.map((v, i) => {
                                             return (
                                                 <View style={{ backgroundColor: 'white', padding: 10, margin: 10, elevation: 3, borderRadius: 12 }} key={i}>
@@ -138,11 +194,11 @@ class BookDetailOriginal extends Component {
                                             )
                                         })
                                     } */}
-                                </ScrollView>
-                               
-                            </View>
-                        </>
-            </View>
+                        </ScrollView>
+
+                    </View>
+                </>
+            </View >
         );
     }
 }
@@ -198,9 +254,10 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#666',
         marginTop: 5,
-        padding:15
+        padding: 15
     },
-    button: { justifyContent: 'center', marginTop: 10, backgroundColor:'#008080' },
+    button: { justifyContent: 'center', marginTop: 10, backgroundColor: '#008080' },
+    buttonDelete: { justifyContent: 'center', marginTop: 10, backgroundColor: 'red' },
     buttonText: {
         color: 'white',
         textTransform: 'uppercase',
@@ -225,7 +282,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        book: state.book
+        book: state.book,
+        auth: state.auth,
+        user: state.user
     }
 }
 

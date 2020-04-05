@@ -6,6 +6,7 @@ import author from './Author';
 import auth from './Auth';
 import review from './Review';
 import rating from './Rating';
+import user from './Users';
 
 const appReducer = combineReducers({
     book,
@@ -14,6 +15,7 @@ const appReducer = combineReducers({
     auth,
     review,
     rating,
+    user,
 })
 
 export default appReducer
