@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { withNavigationFocus } from 'react-navigation';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import { getBooksByAuthor } from '../redux/actions/book';
 import { APP_ICON_URL } from '../config/config';
@@ -26,13 +27,12 @@ class AuthorDetailOriginal extends Component {
     }
 
     render() {
-        console.log('Books in this author', this.props.books.data)
         return (
             <View style={styles.container}>
                 <ScrollView vertikal showsVertialScrollIndicator={false}>
                     {this.state.isLoading &&
                         <View style={{flexDirection: 'column'}}>
-                            <View style={[styles.card, { marginLeft: 20 }]}>
+                            <View style={styles.card}>
                                 <View style={styles.cardWrapper}>
                                     <View style={{ backgroundColor: '#eee', width: 50, height: 50 }}></View>
                                     <View style={{ backgroundColor: '#eee', height: 10, width: 50, marginTop: 5 }}></View>
@@ -43,18 +43,22 @@ class AuthorDetailOriginal extends Component {
                     {!this.state.isLoading && this.props.books.data.map((v, i) => {
                         var styler = [styles.card]
                         if (i === 0) {
-                            styler.push({ marginLeft: 20 })
+                            styler.push()
                         }
                         if (i === this.props.books.data.length - 1) {
-                            styler.push({ marginRight: 20 })
+                            styler.push()
                         }
                         return (
                             <TouchableOpacity style={styler} key={i} onPress={() => this.props.navigation.navigate('BookDetail', {bookId: v.id})}>
                                 <View style={styles.cardWrapper}>
-                                    <Image style={{ width: 50, height: 50 }} source={{ uri: v.book_image }} />
+                                    <View style={styles.card2}>
+                                    <Image style={{ width: 60, height: 80,marginTop:25 }} source={{ uri: v.book_image }} />
+                                    </View>
                                     <Text style={styles.title}>{v.book_name}</Text>
-                                    <Text style={styles.title}>{v.total_reviewers}</Text>
-                                    <Text style={styles.title}>{v.avg_rating}</Text>
+                                    <View style={{flex:1, flexDirection:'row'}}>
+                                    <Text style={styles.title}>Review : <Icon name="md-text" size={15} style={styles.star}> </Icon>{v.total_reviewers}</Text>
+                                    <Text style={styles.title}>       Rating : <Icon name="ios-star" size={15} style={styles.star}> </Icon>{v.avg_rating}</Text>
+                                    </View>
                                 </View>
                             </TouchableOpacity>
                         )
@@ -67,14 +71,14 @@ class AuthorDetailOriginal extends Component {
 
 // define your styles
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-    },
-    card: { backgroundColor: '#fff', width: 150, height: 120, borderRadius: 12, margin: 10, elevation: 5 },
+    container: { flex: 1, justifyContent: 'center', alignItems: 'flex-start',marginLeft:10 },
+    card: { backgroundColor: '#3399ff', width: 320, height: 180,borderRadius:20, margin: 10,marginTop:50, elevation: 5 },
+    card2: {backgroundColor:'#3399ff', width:120, height:120,borderRadius:60,marginTop:-40,alignItems:'center'},
     cardWrapper: { flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' },
-    title: { marginTop: 10, textAlign: 'center', fontFamily: 'Nunito-Regular' },
+    title: { marginTop: 10, textAlign: 'center', fontFamily: 'Nunito-Regular',color:'white' },
+    star: {
+        color: '#e3bd00',
+    },
 });
 
 const mapStateToProps = state => {

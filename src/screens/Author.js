@@ -52,14 +52,8 @@ class AuthorOriginal extends Component {
                 <View style={styles.headerWrapper}>
                     <SliderTitle title="Author" />
                 </View>
-                <View style={{
-                    flex: 1,
-                    position: 'absolute',
-                    left: '40%',
-                    top: '45%',
-                    zIndex: 99
-                }}>
-                    <ActivityIndicator animating={this.state.isLoading} size={75} color='#aaa' />
+                <View style={{ flex: 1, position: 'absolute', left: '45%', top: '45%', zIndex: 99}}>
+                    <ActivityIndicator animating={this.state.isLoading} size={55} color='#aaa' />
                 </View>
                 <List style={{ paddingBottom: 50 }}>
                     <FlatList
@@ -91,20 +85,7 @@ class AuthorOriginal extends Component {
                             )
                         }}
                     />
-                        {/* {this.state.isLoading &&
-                            <>
-                                <View style={[styles.card, { marginHorizontal: 30 }]}>
-                                    <View style={styles.cardWrapper}>
-                                        <View style={{ backgroundColor: '#eee', width: 250, height: 50 }}></View>
-                                        <View style={{ backgroundColor: '#eee', height: 10, width: 250, marginTop: 5 }}></View>
-                                    </View>
-                                </View>
-                                
-                            </>
-                        } */}
-                        {/* {!this.state.isLoading && this.props.author.data.map((v, i) => {
-                            
-                        })} */}
+                   
                 </List>
             </View>
         );

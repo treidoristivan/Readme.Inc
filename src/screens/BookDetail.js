@@ -110,7 +110,6 @@ class BookDetailOriginal extends Component {
         return (
 
             <View style={styles.container}>
-                <Image style={{ width: 50, height: 50 }} source={{ uri: this.props.book.itemDetail.book_image }} />
                 <Text style={styles.description}>{this.props.book.itemDetail.description}</Text>
                 <>
                     {this.state.itemImage !== null ?
@@ -133,8 +132,10 @@ class BookDetailOriginal extends Component {
                                 </View>
 
                             </View>
+                            <View style={styles.buttonWrapper}>
+
                             {this.state.addFavorite == true &&
-                                <Button rounded dark style={styles.buttonDelete} onPress={() => this.handleDeleteFavorite(this.props.book.itemDetail.id)}>
+                                <Button rounded dark style={styles.buttonDel} onPress={() => this.handleDeleteFavorite(this.props.book.itemDetail.id)}>
                                     <Text style={styles.buttonText}>Delete To Favorite</Text>
                                 </Button>
                             }
@@ -146,10 +147,10 @@ class BookDetailOriginal extends Component {
                             }
 
 
-                            <Button rounded dark style={styles.button} onPress={() => this.setState({ modalVisible: true })}>
+                            <Button rounded dark style={styles.button2} onPress={() => this.setState({ modalVisible: true })}>
                                 <Text style={styles.buttonText}>Get Book</Text>
                             </Button>
-
+                            </View>
                             {/* <View style={styles.categoryWrapper}>
                                         {this.props.book.itemDetail.map((v, i) => (
                                             <TouchableOpacity style={styles.categories} key={i} onPress={() => this.props.navigation.navigate('Search', { search: [{ name: "category", value: v.id }] })}>
@@ -157,7 +158,7 @@ class BookDetailOriginal extends Component {
                                             </TouchableOpacity>
                                         ))}
                                     </View> */}
-                            <Text style={{ fontFamily: 'Nunito-Regular', marginTop: 10 }}>We Found Related Books for You</Text>
+                            <Text style={{ fontFamily: 'Nunito-Regular', marginTop: 10,paddingTop:80 }}>We Found Related Books for You</Text>
                             {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                                         {this.props.item.itemDetail.suggests.map((v, i) => {
                                             console.log(v);
@@ -175,7 +176,7 @@ class BookDetailOriginal extends Component {
                                             )
                                         })}
                                     </ScrollView> */}
-                            <Text style={{ fontFamily: 'Nunito-Regular', marginTop: 10 }}>Review</Text>
+                            <Text style={{ fontFamily: 'Nunito-Regular', marginTop: 10,paddingTop:30 }}>Review</Text>
                             {/* {
                                         this.props.item.itemDetail.reviews.map((v, i) => {
                                             return (
@@ -222,6 +223,11 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 50,
         padding: 30
     },
+    buttonWrapper: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
     infoWrapper: {
         flex: 1,
         flexDirection: 'row',
@@ -256,8 +262,39 @@ const styles = StyleSheet.create({
         marginTop: 5,
         padding: 15
     },
-    button: { justifyContent: 'center', marginTop: 10, backgroundColor: '#008080' },
-    buttonDelete: { justifyContent: 'center', marginTop: 10, backgroundColor: 'red' },
+    button: {
+        backgroundColor: '#3399ff',
+        padding: 8,
+        borderBottomLeftRadius:20,
+        borderTopLeftRadius:20,
+        justifyContent: 'center',
+        flex: 1,
+        flexDirection: 'row',
+        marginTop: 10,
+        marginRight: 5
+    },   
+    buttonDel: {
+        backgroundColor: 'red',
+        padding: 10,
+        borderBottomLeftRadius:20,
+        borderTopLeftRadius:20,
+        justifyContent: 'center',
+        flex: 1,
+        flexDirection: 'row',
+        marginTop: 10,
+        marginRight: 5
+    },
+    button2: {
+        backgroundColor: '#00cc00',
+        padding: 10,
+        borderBottomRightRadius:20,
+        borderTopRightRadius:20,
+        justifyContent: 'center',
+        flex: 1,
+        flexDirection: 'row',
+        marginTop: 10,
+        marginLeft: 5
+    },
     buttonText: {
         color: 'white',
         textTransform: 'uppercase',
